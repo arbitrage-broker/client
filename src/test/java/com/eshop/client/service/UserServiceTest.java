@@ -1,10 +1,10 @@
-package com.eshop.client.service;
+package com.arbitragebroker.client.service;
 
-import com.eshop.client.model.UserModel;
-import com.eshop.client.entity.RoleEntity;
-import com.eshop.client.entity.UserEntity;
-import com.eshop.client.repository.UserRepository;
-import com.eshop.client.exception.BadRequestException;
+import com.arbitragebroker.client.model.UserModel;
+import com.arbitragebroker.client.entity.RoleEntity;
+import com.arbitragebroker.client.entity.UserEntity;
+import com.arbitragebroker.client.repository.UserRepository;
+import com.arbitragebroker.client.exception.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

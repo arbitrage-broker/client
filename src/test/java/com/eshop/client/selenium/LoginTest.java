@@ -1,4 +1,4 @@
-package com.eshop.client.selenium;
+package com.arbitragebroker.client.selenium;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

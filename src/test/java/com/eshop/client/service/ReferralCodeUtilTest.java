@@ -1,6 +1,6 @@
-package com.eshop.client.service;
+package com.arbitragebroker.client.service;
 
-import com.eshop.client.util.ReferralCodeGenerator;
+import com.arbitragebroker.client.util.ReferralCodeGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

@@ -1,7 +1,7 @@
-package com.eshop.client.service;
+package com.arbitragebroker.client.service;
 
-import com.eshop.client.enums.DistanceType;
-import com.eshop.client.util.DistanceUtil;
+import com.arbitragebroker.client.enums.DistanceType;
+import com.arbitragebroker.client.util.DistanceUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

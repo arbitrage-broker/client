@@ -1,6 +1,6 @@
-package com.eshop.client.selenium;
+package com.arbitragebroker.client.selenium;
 
-import com.eshop.client.ClientApplication;
+import com.arbitragebroker.client.ClientApplication;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;

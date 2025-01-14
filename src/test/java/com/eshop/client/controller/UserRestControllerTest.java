@@ -1,7 +1,7 @@
-package com.eshop.client.controller;
+package com.arbitragebroker.client.controller;
 
-import com.eshop.client.enums.RoleType;
-import com.eshop.client.model.UserModel;
+import com.arbitragebroker.client.enums.RoleType;
+import com.arbitragebroker.client.model.UserModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;

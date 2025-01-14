@@ -1,8 +1,8 @@
-package com.eshop.client.repository;
+package com.arbitragebroker.client.repository;
 
-import com.eshop.client.enums.RoleType;
-import com.eshop.client.entity.RoleEntity;
-import com.eshop.client.entity.UserEntity;
+import com.arbitragebroker.client.enums.RoleType;
+import com.arbitragebroker.client.entity.RoleEntity;
+import com.arbitragebroker.client.entity.UserEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
