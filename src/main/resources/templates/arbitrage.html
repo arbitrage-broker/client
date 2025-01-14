@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/iCheck/skins/flat/green.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'"/>
+    <style>
+        .disabled {
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+    </style>
+</th:block>
+<div layout:fragment="content">
+    <input type="hidden" id="selectedSubscription" name="selectedSubscription" th:value="${selectedSubscription}" />
+    <input type="hidden" id="purchaseLimit" name="purchaseLimit" th:value="${purchaseLimit}" />
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Arbitrage</h3>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12"></div>
+    <div class="row" id="subscription-package-content">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Subscription Packages</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="row">
+                        <div id="subscription-package" class="col-md-12">
+                            <th:block th:if="${subscriptionPackages != null && subscriptionPackages.size > 0}">
+                                <th:block th:each="s: ${subscriptionPackages}">
+                                    <div class="col-md-3 col-sm-6" th:id="'subscription-package-item-' + ${s.id}">
+                                        <div class="pricing">
+                                            <div class="title">
+                                                <h2 th:text="${s.name}"></h2>
+                                                <h1 th:text="${#numbers.formatDecimal(s.price, 0, 'COMMA', 0, 'POINT')} + ' ' + ${s.currency}"></h1>
+                                            </div>
+                                            <div class="x_content">
+                                                <div class="">
+                                                    <div class="pricing_features">
+                                                        <ul class="list-unstyled text-left">
+                                                            <li><i th:class="'fa ' + ${s.name == 'Free' ? 'fa-times text-danger' : 'fa-check text-success'}"></i> <strong>Allow withdrawal</strong>.</li>
+                                                            <li><i class="fa fa-check text-success"></i> Order count <strong th:text="${s.orderCount}"></strong> times</li>
+                                                            <li><i class="fa fa-check text-success"></i> Trading reward between range (<strong th:text="|${#numbers.formatDecimal(s.minTradingReward, 1, 'NONE', 2, 'POINT')} - ${#numbers.formatDecimal(s.maxTradingReward, 1, 'NONE', 2, 'POINT')}|"></strong>) <th:block th:text="${s.currency}"/> </li>
+                                                            <li><i class="fa fa-check text-success"></i> User profit percentage (<strong th:text="${s.userProfitPercentage} + '%'"></strong>)</li>
+                                                            <li><i class="fa fa-check text-success"></i> Site profit percentage (<strong th:text="${s.siteProfitPercentage} + '%'"></strong>)</li>
+                                                            <li><i class="fa fa-check text-success"></i> Will Expire in (<strong><th:block th:if="${s.duration >= 0}" th:text="${s.duration}"></th:block><th:block th:if="${s.duration < 0}"><i class="fa fa-infinity"></i></th:block></strong>) days</li>
+                                                            <li><i class="fa fa-check text-success"></i> Parent referral bonus <strong th:text="${#numbers.formatDecimal(s.parentReferralBonus, 0, 'COMMA', 2, 'POINT')}"></strong> <th:block th:text="${s.currency}"/></li>
+                                                            <li><i class="fa fa-check text-success"></i> Maximum acceptable amount <strong th:text="${#numbers.formatDecimal(s.maxPrice, 0, 'COMMA', 2, 'POINT')}"></strong> <th:block th:text="${s.currency}"/></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="pricing_footer">
+                                                    <a th:id="'trade-btn-' + ${s.id}" th:href="'javascript:trade(' + ${s.id} + ');'" th:class="'btn btn-success btn-block ' + ${selectedSubscriptionPackagePrice != s.price ? 'disabled' : ''}" th:attr="aria-disabled=${selectedSubscriptionPackagePrice != s.price}" role="button" th:text="|Trade ${purchaseLimit == null ? 'Now' : purchaseLimit}|"></a>
+                                                    <a th:href="'javascript:purchase(' + ${s.id} +',' + ${#numbers.formatDecimal(s.price, 0, 'NONE', 0, 'POINT')} +')'" th:class="'btn btn-primary btn-block ' + ${selectedSubscriptionPackagePrice >= s.price ? 'disabled' : ''}" th:attr="aria-disabled=${selectedSubscriptionPackagePrice >= s.price}" role="button">Purchase<span></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="trading-content" class="row" th:style="${selectedSubscriptionPackagePrice == null} ? 'display:none;' : 'display:block;'">
+        <div class="col-md-12 col-sm-12  ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Trading Orders <small th:text="${selectedSubscriptionPackageName}">Subscription package name</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div id="trading-order" class="row">
+                        <th:block th:if="${coinExchanges != null && coinExchanges.size > 0}">
+                            <th:block th:each="c: ${coinExchanges}">
+                                <div class="col-md-3 widget widget_tally_box">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2 th:text="'Order ' + ${c.index}"></h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+                                            <div style="text-align: center; margin-bottom: 17px">
+                                                 <span th:id="'order-' + ${c.index}" class="chart" data-percent="100">
+                                                      <span class="percent"></span>
+                                                 </span>
+                                            </div>
+                                            <h3 class="name_title"><img width="40px" th:src="${c.coin.logo}"/> <th:block th:text="${c.coin.name}"></th:block></h3>
+                                            <p>From exchange <img width="20px" th:src="${c.exchanges[0].logo}"/> <th:block th:text="${c.exchanges[0].name}"></th:block> to <img width="20px" th:src="${c.exchanges[1].logo}"/> <th:block th:text="${c.exchanges[1].name}"></th:block></p>
+
+                                            <div class="divider"></div>
+                                            <a th:id="'buy-btn-' + ${c.index}" th:href="|javascript:buy(${c.index}, ${c.exchanges[0].id}, ${c.coin.id}, ${selectedSubscriptionId})|"  class="btn btn-primary btn-block" role="button">Buy/Sell</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="footer">
+    <script type="text/javascript" th:src="#{direction} +'/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js'"></script>
+    <script th:src="@{/js/script/arbitrage.js}"></script>
+</th:block>
+</html>

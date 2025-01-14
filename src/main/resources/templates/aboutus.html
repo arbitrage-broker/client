@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+
+  <title th:text="#{siteName}"></title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="ltr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link rel="stylesheet" type="text/css" href="ltr/font-awesome/css/font-awesome.min.css"/>
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" type="text/css" href="css/lib/landing-style.css"/>
+  <!-- responsive style -->
+  <link rel="stylesheet" type="text/css" href="css/lib/landing-responsive.css"/>
+<style>
+  .heading_container{
+    text-align: left!important;
+  }
+</style>
+</head>
+
+<body class="sub_page">
+
+<div class="hero_area">
+
+  <div class="hero_bg_box">
+    <div class="bg_img_box">
+      <img src="images/hero-bg.png" alt="">
+    </div>
+  </div>
+
+  <!-- header section strats -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="index.html">
+          <span th:text="#{siteName}"></span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  ">
+            <li class="nav-item active">
+              <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index#about_section"> About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index#service_section">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index#why_section">Why Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index#team_section">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
+            </li>
+            <form class="form-inline">
+              <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+</div>
+
+
+<!-- about section -->
+
+<section class="about_section layout_padding" id="about_section">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>
+        About <span>Us</span>
+      </h2>
+      <br/>
+      <div class="row">
+        <div class="col-md-12">
+          <p>Arbitrage Broker began its operations in the Netherlands in 2019, collaborating with many
+            successful traders worldwide and leveraging various trading tools and resources. By
+            2020, we developed our first arbitrage bot, allowing us to achieve reliable, error-free
+            profits in the cryptocurrency market. Currently, Arbitrage Broker operates approximately
+            100 bots to support and manage trades across the top 100 cryptocurrencies, providing
+            successful, seamless gains for users globally, helping them trade confidently and
+            without errors.</p>
+          <br/>
+          <h3>What is an Arbitrage Bot and Its Uses</h3>
+          <p>An arbitrage bot is a sophisticated computer program or algorithm designed to conduct
+            automated trading in cryptocurrency markets on behalf of traders or brokers. These bots
+            are specifically programmed to profit from price differences of a particular asset
+            across various exchanges. The primary goal of an arbitrage bot is to exploit price
+            discrepancies across different exchanges, enabling traders to buy an asset at a lower
+            price and almost immediately sell it at a higher price on another exchange. This
+            automated process allows traders to earn consistent profits with minimal human
+            intervention and reduced risk.</p>
+          <br/>
+          <h3>Arbitrage Concept</h3>
+          <p>In cryptocurrency, arbitrage involves leveraging the price difference of an asset across
+            different markets. This process focuses on buying at a lower price and simultaneously
+            selling at a higher price to profit from the spread. Such opportunities arise due to
+            market fluctuations and are quickly utilized by bots to ensure price alignment across
+            markets and secure profits.</p>
+          <br/>
+          <h3>Key Features of Arbitrage Broker Bot</h3>
+          <ul>
+            <li>High reliability with nearly zero error margin</li>
+            <li>Bot security</li>
+            <li>Ease of use</li>
+            <li>High speed and support across all networks</li>
+            <li>High accuracy and a high level of automation during trades</li>
+            <li>Low fees and support for up to 100 cryptocurrencies simultaneously</li>
+          </ul>
+          <br/>
+          <h3>Deposits</h3>
+          <p>Currently, Arbitrage Broker operates on the TRC20 network for Tether (USDT) transactions
+            and will soon support other networks as well. When making a deposit, users should
+            double-check the broker's wallet address to avoid any potential loss of funds. <br><strong>Note:</strong>
+            all deposits on the TRC20 network will be credited to user accounts after the
+            transaction hash is verified, enabling users to start trading. If any issues arise,
+            users should contact customer support. The capital amount deposited varies by plan and
+            is locked for a period of 3 to 9 months, depending on the plan. After this period, users
+            may withdraw their entire balance or start a new contract on the platform.</p>
+          <br/>
+          <h3>Withdrawals</h3>
+          <p>Arbitrage Broker imposes no withdrawal limits. The minimum withdrawal amount is $15,
+            allowing users to withdraw all profits earned from trading or from referrals.
+            Withdrawals are processed to user accounts within 3 to 24 business hours after
+            applicable fees are deducted.</p>
+          <br/>
+          <h3>Invite Friends</h3>
+          <p>Arbitrage Broker offers an opportunity for users to share their invite codes with friends
+            and family, earning income through successful referrals. For each successful referral
+            that joins Arbitrage Broker, a reward of $1 to $20 is awarded to the primary user based
+            on the referred person’s capital. The reward is credited automatically with the first
+            deposit made by the referred user, and the primary user continues to receive rewards
+            from each arbitrage the referral completes. <strong>Note:</strong> these rewards are
+            provided by the platform itself, not from the referral’s earnings. Arbitrage Broker
+            supports two levels of referrals. Users can earn rewards and participate in events and
+            prizes held by the platform at the end of each period. For each referral at level A, 18%
+            of the arbitrage profit is credited to the inviter’s account. For each referral at level
+            B, 8% of the arbitrage profit is credited to the initial inviter's account.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end about section -->
+
+
+<!-- footer section -->
+<section class="footer_section" id="footer_section">
+  <div class="container">
+    <p>
+      &copy;2019 All Rights Reserved By
+      <a th:href="#{siteUrl}" th:text="#{siteName}"></a>
+    </p>
+  </div>
+</section>
+<!-- footer section -->
+
+<!-- jQery -->
+<script type="text/javascript" src="ltr/jquery/dist/jquery.min.js"></script>
+<!-- popper js -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<!-- bootstrap js -->
+<script type="text/javascript" src="ltr/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- owl slider -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+</script>
+<!-- custom js -->
+<script type="text/javascript" src="js/lib/landing-custom.js"></script>
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+</script>
+<!-- End Google Map -->
+
+</body>
+</html>

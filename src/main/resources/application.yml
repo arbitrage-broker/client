@@ -1,0 +1,105 @@
+server:
+  port: ${PORT:443}
+  servlet:
+    session:
+      timeout: 1d
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: ArbitrageBroker2024
+    key-store-type: PKCS12
+    key-alias: arbitrage-broker.com
+  error:
+    include-message: always
+    include-binding-errors: always
+    path: /error
+# Spring Boot configuration
+spring:
+  application:
+    name: client
+    version: 0.0.1-SNAPSHOT
+  liquibase:
+    enabled: false
+  tomcat:
+    uri-encoding: UTF-8
+  messages:
+    basename: i18n.messages
+    encoding: UTF-8
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://dbpostgresql:5432/eshop}
+    username: ${DB_USER:eshop_user}
+    password: ${DB_PASS:xmrtuKNbeE7O1kU}
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: false
+    properties:
+      org:
+        hibernate:
+          envers:
+            store_data_at_delete: true
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: "UTC"
+  mail:
+    host: smtp0101.titan.email
+    username: admin@arbitrage-broker.com
+    password: B_m31012
+    port: 587
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+#Logging
+logging:
+  file:
+    path: logs/
+    name: logs/client.log
+    max-size: 20MB
+    max-history: 180
+    clean-history-on-start: true
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: ERROR
+      hibernate: ERROR
+    guru:
+      springframework:
+        controllers: ERROR
+  pattern:
+    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} [%thread] %-5level [traceId:%X{traceId:-}, clientIp:%X{clientIp:-}, userId:%X{userId:-}] %logger{36} - %msg%n"
+    rolling-file-name: logs/client-%d{yyyy-MM-dd-HH}.%i.log
+
+site:
+  url: arbitrage-broker.com
+  name: Arbitrage Broker
+
+mailjet:
+  url: https://api.mailjet.com/v3.1/send
+  token: ZmIzMTlkZTc1MGUwYWI1NmZiOTYwN2QyNTdiMTFmYjA6ZjQxNTJkMzY4YjFlNTVkNDJjYmZmYjNiOWMyZDMxMmY=
+
+cache:
+  ttl: 1200

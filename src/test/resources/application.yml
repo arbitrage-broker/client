@@ -1,0 +1,30 @@
+server.port: 2022
+
+# Spring Boot configuration
+spring:
+  application:
+    name: client
+    version: 1.0.0-SNAPSHOT
+  # Database
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:eshop;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username:
+    password:
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+#      naming:
+#        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+#        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        envers:
+          store_data_at_delete: true
+    show-sql: false
+    database: H2
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    generate-ddl: true

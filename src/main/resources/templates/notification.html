@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/select2/dist/css/select2.min.css'">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/select2-bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/iCheck/skins/flat/green.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/google-code-prettify/bin/prettify.min.css'"/>
+    <style>
+        .payment-method .form-group{
+            width: 100%;
+        }
+        .payment-method img{
+            width: 40px;
+            margin-bottom: 34px;
+        }
+        .payment-method .disabled{
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        .form-control-feedback.right {
+            margin-top: 34px;
+        }
+    </style>
+    <script type="text/javascript" th:src="#{direction} +'/select2/dist/js/select2.full.min.js'"></script>
+</th:block>
+<div layout:fragment="content">
+    <input type="hidden" value="/api/v1/notification" id="requestMapping"/>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Notifications</h3>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Inbox</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div id="inbox-list" class="col-sm-3 mail_list_column">
+                            <button class="btn btn-sm btn-success btn-block" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">COMPOSE</button>
+                        </div>
+                        <!-- /MAIL LIST -->
+
+                        <!-- CONTENT MAIL -->
+                        <div class="col-sm-9 mail_view">
+                            <div id="inbox-body" class="inbox-body">
+                            </div>
+
+                        </div>
+                        <!-- /CONTENT MAIL -->
+                    </div>
+                    <div id="send-notification-modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">New Message</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+<!--                                        <div class="col-md-6 form-group has-feedback">-->
+<!--                                            <label th:text="#{to}"></label>-->
+<!--                                            <th:block th:replace="fragments/select2 :: select2('1', #{to}, 'recipient', 'api/v1/user/findAllSelect','{title:params.term}',false, 'send-notification-modal')"></th:block>-->
+<!--                                        </div>-->
+                                        <div class="col-md-12 form-group has-feedback">
+                                            <label th:text="#{subject}"></label>
+                                            <input type="text" class="form-control" id="subject" name="subject" tabindex="2" th:placeholder="#{subject}">
+                                            <span class="fa fa-book-open form-control-feedback right" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group has-feedback">
+                                            <label th:text="#{body}"></label>
+                                            <textarea class="form-control" tabindex="3"  rows="5" th:placeholder="#{body}"
+                                                      th:title="#{body}" id="body"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="sendNotification" onclick="sendNotification()">Send</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Sent</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div id="sent-list" class="col-sm-3 mail_list_column">
+                            <button class="btn btn-sm btn-success btn-block" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">COMPOSE</button>
+                        </div>
+                        <!-- /MAIL LIST -->
+
+                        <!-- CONTENT MAIL -->
+                        <div class="col-sm-9 mail_view">
+                            <div id="sent-body" class="inbox-body">
+                            </div>
+
+                        </div>
+                        <!-- /CONTENT MAIL -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="footer">
+    <script type="text/javascript" th:src="@{/js/lib/qrcode.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/jquery.validate.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/lib/jquery.validate.additional-methods.js}" ></script>
+    <script type="text/javascript" th:src="#{direction} +'/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/jquery.hotkeys/jquery.hotkeys.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/google-code-prettify/src/prettify.js'"></script>
+
+    <script th:src="@{/js/script/notification.js}"></script>
+</th:block>
+</html>

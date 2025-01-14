@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <style>
+        .label p{
+            font-size: 17px;
+        }
+        .form-control-feedback.right {
+            margin-top: 33px;
+        }
+    </style>
+</th:block>
+<div layout:fragment="content">
+    <div class="row" style="display: inline-block;width: 100%" >
+        <div class="tile_count">
+            <div class="col-md-4 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-users"></i> <th:block th:text="#{totalReferralCount}"/></span>
+                <div class="count green" id="totalReferralCount" th:text="${countActiveChild}"></div>
+                <span th:text="#{friends}"></span>
+            </div>
+            <div class="col-md-4 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-users"></i> <th:block th:text="#{claimedReferralsCount}"/></span>
+                <div class="count green" id="claimedReferralsCount" th:text="${claimedReferralsCount}"></div>
+                <span th:text="#{friends}"></span>
+            </div>
+            <div class="col-md-4 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-users"></i> <th:block th:text="#{remainedReferralsCount}"/></span>
+                <div class="count green" id="remainedReferralsCount" th:text="${remainedReferralsCount}"></div>
+                <span th:text="#{friends}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="referral-rewards-content">
+        <th:block th:if="${referralRewards != null && referralRewards.size > 0}">
+            <th:block th:each="r: ${referralRewards}" th:with="percentage=${remainedReferralsCount} * 100 / ${r.title}">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2 th:text="#{invite} +' '+  ${r.title} +' '+  #{friends}"></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="row">
+                                    <table class="col-md-12 col-sm-12" style="width: 100%">
+                                        <tr>
+                                            <td style="padding-left: 10px"><i class="fa fa-coins"></i>&nbsp;<th:block th:text="${r.value} + ' USD'"></th:block></td>
+                                            <td style="text-align: right"><a th:href="'javascript:claimReferralReward(' + ${r.title} +')'" th:attr="aria-disabled=${percentage < 100}" type="button" th:class="'btn btn-sm ' + ${percentage >= 100 ? 'btn-success' : 'btn-secondary disabled'}" th:text="#{claim}"></a></td>
+                                        </tr>
+                                    </table>
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="progress progress_sm">
+                                            <div class="progress-bar bg-green" role="progressbar" th:attr="data-transitiongoal=${percentage}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </th:block>
+    </div>
+</div>
+    <th:block layout:fragment="footer">
+        <script th:src="@{/js/script/referral-reward.js}"></script>
+    </th:block>
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html th:dir="#{direction}" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{siteName}"></title>
+    <link rel="icon" type="image/ico" th:href="@{/images/favicon.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/bootstrap/dist/css/bootstrap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/font-awesome/css/font-awesome.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/animate.css/animate.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/pnotify/dist/pnotify.css'">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/pnotify/dist/pnotify.buttons.css'">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/pnotify/dist/pnotify.nonblock.css'">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/select2/dist/css/select2.min.css'">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/select2-bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/build/css/custom.css'"/>
+    <style>
+        .login_content form input {
+            margin: 0!important;
+        }
+        .login_content .form-group {
+            margin: 0 0 20px!important;
+        }
+        .form-group {
+            margin-right: auto!important;
+            margin-left: auto!important;
+            width: 100% !important;
+        }
+        .form-control, .form-group {
+            border-radius: 0 !important;
+            width: 100% !important;
+        }
+        .bad input, .bad select, .bad textarea {
+            border: 1px solid #CE5454!important;
+            -webkit-box-shadow: 0 0 4px -2px #CE5454!important;
+            box-shadow: 0 0 4px -2px #CE5454!important;
+        }
+        label, input, input[placeholder] {
+            font-size: 12px !important;
+        }
+
+        .btn {
+            margin-right: 0;
+        }
+
+        .alert {
+            padding: 10px;
+        }
+        .form-control-feedback.right {
+            margin-top: 5px;
+        }
+        span .select2-selection {
+            text-align: left;
+        }
+        .select2-container--bootstrap .select2-selection--single,.select2-search__field {
+            border-radius: 0 !important;
+        }
+
+        .select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
+            border-radius: 0 !important; /* Remove border-radius for arrow */
+        }
+
+        .select2-container--bootstrap .select2-selection--single:focus {
+            outline: none;
+        }
+        .select2-container--bootstrap .select2-selection__arrow {
+            display: none; /* Hide the arrow icon */
+        }
+        .select2-container--bootstrap .select2-selection__clear{
+            margin-right: 20px;
+        }
+        .select2-container--bootstrap .select2-selection {
+            color: rgb(108, 117, 122) !important;
+            font-size: 12px!important;
+        }
+        .honeypot {
+            display: none;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            z-index: -1;
+        }
+        .modal-body{
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+        }
+        h1, h2, h4 {
+            color: #333;
+        }
+        p, li {
+            color: #555;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script type="text/javascript" th:src="'/js/messages/messages.' + #{locale} + '.js'" ></script>
+    <script type="text/javascript" th:src="#{direction} +'/jquery/dist/jquery.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/pnotify/dist/pnotify.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/pnotify/dist/pnotify.buttons.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/pnotify/dist/pnotify.nonblock.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/select2/dist/js/select2.full.min.js'"></script>
+    <script type="text/javascript" th:src="@{/js/lib/jquery.validate.min.js}" ></script>
+    <script type="text/javascript" th:src="#{direction} +'/bootstrap/dist/js/bootstrap.bundle.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/build/js/custom.min.js'"></script>
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="fec1c405-8dfd-4f63-bb36-ab8b9fbb991a";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+</head>
+<body class="login" th:dir="#{direction}">
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+    <a class="hiddenanchor" id="send_otp"></a>
+    <a class="hiddenanchor" id="reset_pass"></a>
+
+    <div class="login_wrapper">
+        <input type="text" name="website" autocomplete="off" class="honeypot"  tabindex="-1">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form id="login-form" th:action="@{/login}" method="POST" class="form-horizontal">
+                    <h1 th:text="#{login} + ' ' + #{form}"></h1>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p th:text="#{${errorMsg}}" style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{usernameOrEmail}" name="login" autofocus
+                               tabindex="1">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="password" class="form-control" th:placeholder="#{password}" name="password"
+                               tabindex="2">
+                        <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button tabindex="3" type="submit" class="btn btn-secondary" style="width: 100%;" th:value="#{enter}">Enter</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="change_link">
+                                    <th:block th:text="#{lostYourPass}"></th:block>
+                                    <a class="send_otp" href="#send_otp" th:text="#{send} + ' OTP'">Send OTP</a>
+                                </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="change_link">New to site?
+                                    <a href="#signup" class="to_register"> Create Account </a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h2><img th:src="@{/images/favicon.png}" style="width: 40px">
+                                <th:block th:text="#{siteName}"></th:block>
+                            </h2>
+                            <p>
+                                <th:block th:text="#{AllRightReserved}"></th:block>
+                                <th:block th:text="#{siteName}"></th:block>
+                                <th:block th:text="#{forCompanyAt}"></th:block>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="animate form send_otp_form">
+            <section class="login_content">
+                <form id="send_otp-form" th:action="@{/send-OTP}" method="POST" class="form-horizontal">
+                    <h1 th:text="#{send} + ' OTP'"></h1>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p th:text="#{${errorMsg}}" style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{email}" name="email" autofocus tabindex="4">
+                        <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <button tabindex="5" type="submit" class="btn btn-secondary" style="width: 100%;" th:value="#{enter}">Enter</button>
+                    </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="separator">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="change_link">Remember the password?
+                                    <a href="#signin" class="to_register" th:text="#{login}">Log in</a>
+                                </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="change_link">New to site?&nbsp;
+                                    <a href="#signup" class="to_register" th:text="#{createAccount}">Create Account</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h2><img th:src="@{/images/favicon.png}" style="width: 50px;"/>
+                                <th:block th:text="#{siteName}"></th:block>
+                            </h2>
+                            <p>
+                                <th:block th:text="#{AllRightReserved}"></th:block>
+                                <th:block th:text="#{siteName}"></th:block>
+                                <th:block th:text="#{forCompanyAt}"></th:block>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="animate form reset_pass_form">
+            <section class="login_content">
+                <form id="reset_pass-form" th:action="@{/reset-pass}" method="POST" class="form-horizontal">
+                    <h1 th:text="#{resetPassword}"></h1>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p th:text="#{${errorMsg}}" style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <input type="text" class="form-control" th:placeholder="#{usernameOrEmail}" name="login" tabindex="6">
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <input type="text" class="form-control" th:placeholder="#{oneTimePassword}" id="otp" name="otp" tabindex="7">
+                            <span class="fa fa-lock form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <input type="password" class="form-control" th:placeholder="#{password}" id="newPassword"
+                                   name="newPassword" tabindex="8">
+                            <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <input type="password" class="form-control" th:placeholder="#{repeatPassword}" id="repeatNewPassword"
+                                   name="repeatNewPassword" tabindex="9">
+                            <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <button tabindex="10" type="submit" class="btn btn-secondary" style="width: 100%;" th:value="#{enter}">Enter</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="separator">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="change_link">Remember the password?
+                                    <a href="#signin" class="to_register" th:text="#{login}">Log in</a>
+                                </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="change_link">New to site?&nbsp;
+                                    <a href="#signup" class="to_register" th:text="#{createAccount}">Create Account</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h2><img th:src="@{/images/favicon.png}" style="width: 50px;"/>
+                                <th:block th:text="#{siteName}"></th:block>
+                            </h2>
+                            <p>
+                                <th:block th:text="#{AllRightReserved}"></th:block>
+                                <th:block th:text="#{siteName}"></th:block>
+                                <th:block th:text="#{forCompanyAt}"></th:block>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div id="register" class="animate form registration_form">
+            <section class="login_content">
+                <form id="register-form">
+                    <h1 th:text="#{createAccount}">Create Account</h1>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
+                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                            <p th:text="#{${errorMsg}}" style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;"></p>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{userName}" id="userName"
+                               name="userName" autofocus
+                               tabindex="11">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="email" class="form-control" th:placeholder="#{email}" id="email"
+                               name="email"
+                               tabindex="12">
+                        <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="password" class="form-control" th:placeholder="#{password}" id="password"
+                               name="password" tabindex="13">
+                        <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="password" class="form-control" th:placeholder="#{repeatPassword}"
+                               id="repeatPassword" name="repeatPassword" tabindex="14">
+                        <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{name}" id="firstName" name="firstName"
+                               oninput="validateInput(this)" tabindex="15">
+                        <span class="fa fa-pencil form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{lastName}" id="lastName"
+                               name="lastName" oninput="validateInput(this)" tabindex="16">
+                        <span class="fa fa-pencil form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <th:block th:replace="fragments/select2 :: select2('17', #{country}, 'country', 'api/v1/country/findAllSelect','{name:params.term}',false, null)"></th:block>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <input type="text" class="form-control" th:placeholder="#{referralCode}" id="referralCode"
+                               th:value="${referralCode ?: ''}" name="referralCode" tabindex="18">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Please consent the Terms of Use before proceeding</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <button tabindex="19" type="submit" class="btn btn-secondary" style="width: 100%;" th:value="#{register}">Register</button>
+                    </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="change_link">Already a member ?
+                                    <a href="#signin" class="to_register" th:text="#{login}">Log in</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h2><img th:src="@{/images/favicon.png}" style="width: 50px;"/>
+                                <th:block th:text="#{siteName}"></th:block>
+                            </h2>
+                            <p>
+                                <th:block th:text="#{AllRightReserved}"/>
+                                <th:block th:text="#{siteName}"/>
+                                <th:block th:text="#{forCompanyAt}"/>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Please give your consent to the Terms of Use before proceeding.</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="section">
+                    <h2>1. Introduction</h2>
+                    <p>
+                        By accessing or using the services of Arbitrage Broker (the "Platform"), you agree to comply with these Terms of Use. If you do not agree, you must refrain from using the Platform.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>2. Eligibility</h2>
+                    <p>The Platform is available to users who:</p>
+                    <ul>
+                        <li>Are at least 18 years of age.</li>
+                        <li>Reside in a country that is not restricted (e.g., Iraq, Syria, Lebanon, Iran, etc.).</li>
+                        <li>Comply with applicable laws and regulations.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>3. Account Management</h2>
+                    <ul>
+                        <li>Users must provide accurate and complete information when creating an account.</li>
+                        <li>Each user may only have one account.</li>
+                        <li>It is your responsibility to safeguard your login credentials. Arbitrage Broker is not responsible for unauthorized account access.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>4. Deposits and Withdrawals</h2>
+                    <ul>
+                        <li>Deposits are only accepted in USDT via the TRC20 network (other networks will be supported soon).</li>
+                        <li>Withdrawal requests have no upper limit but require a minimum of $15 and may take 3-24 business hours to process.</li>
+                        <li>Deposited funds are locked based on plan duration (3 to 9 months). Early withdrawals are restricted to specific percentages.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>5. Referral System</h2>
+                    <ul>
+                        <li>Users may share invite codes to earn referral rewards.</li>
+                        <li>Rewards are credited automatically after the referred user makes their first deposit.</li>
+                        <li>The inviter earns 18% of profits from direct referrals (Level A) and 8% from indirect referrals (Level B).</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>6. Prohibited Activities</h2>
+                    <p>You agree not to:</p>
+                    <ul>
+                        <li>Engage in fraudulent or illegal activities.</li>
+                        <li>Misuse the referral system.</li>
+                        <li>Use unauthorized methods to access the Platform or interfere with its operations.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>7. Intellectual Property</h2>
+                    <p>
+                        All content on the Platform, including text, images, and algorithms, is the property of Arbitrage Broker and protected by copyright laws. Unauthorized use is strictly prohibited.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>8. Liability Limitation</h2>
+                    <p>
+                        Arbitrage Broker is not liable for:
+                    </p>
+                    <ul>
+                        <li>Losses incurred from market fluctuations or incorrect user actions.</li>
+                        <li>Technical issues beyond our control.</li>
+                        <li>Unauthorized access resulting from user negligence.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2>9. Privacy and Data Protection</h2>
+                    <p>
+                        Arbitrage Broker is committed to safeguarding your data in compliance with Dutch laws. By using the Platform, you consent to the processing of your information as described in our Privacy Policy.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>10. Modifications to Terms</h2>
+                    <p>
+                        Arbitrage Broker reserves the right to amend these Terms of Use at any time. Changes will be effective upon posting to the Platform.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>11. Governing Law</h2>
+                    <p>
+                        These Terms are governed by the laws of the Netherlands. Any disputes will be resolved under Dutch jurisdiction.
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button tabindex="9" type="button" class="btn btn-secondary" data-dismiss="modal">Decline</button>
+                <button tabindex="10" type="button" class="btn btn-primary" id="consentUser" onclick="consentUser()">Accept</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let startTime = Date.now();
+    let consent = false;
+    if (!String.prototype.format) {
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match
+                    ;
+            });
+        };
+    }
+    function consentUser(){
+        consent=true;
+        $('#myModal').modal('hide');
+    }
+    $(function () {
+        $(".toggle-password").click(function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $(this).prev('input');
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+        $('#login-form').validate({
+            rules: {
+                login: "required",
+                password: "required"
+            },
+            messages: {
+                login: resources.pleaseEnter.format(resources.usernameOrEmail),
+                password: resources.pleaseEnter.format(resources.password)
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid').closest('div').addClass('bad');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid').closest('div').removeClass('bad');
+            },
+            errorElement: 'span',
+            errorClass: 'invalid-feedback',
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            },
+            submitHandler: function (form) {
+                const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
+                if (elapsedTime < 3000) { // Limit to 3 seconds
+                    alert("You are filling this out too quickly!"); // Alert message for bots
+                    return; // Stop the form submission
+                }
+                $(form).find("button:submit").attr('disabled','disabled');
+                form.submit();
+            }
+        });
+        $('#send_otp-form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                email: {
+                    required: resources.pleaseEnter.format(resources.email),
+                    email: resources.invalidFormat.format(resources.email)
+                }
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid').closest('div').addClass('bad');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid').closest('div').removeClass('bad');
+            },
+            errorElement: 'span',
+            errorClass: 'invalid-feedback',
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            },
+            submitHandler: function (form) {
+                const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
+                if (elapsedTime < 3000) { // Limit to 3 seconds
+                    alert("You are filling this out too quickly!"); // Alert message for bots
+                    return; // Stop the form submission
+                }
+                $(form).find("button:submit").attr('disabled','disabled');
+                form.submit();
+            }
+        });
+
+        $('#register-form').validate({
+            ignore: '.skip',
+            rules: {
+                userName: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                firstName: "required",
+                lastName: "required",
+                countrySelect2: "required",
+                referralCode: "required",
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                repeatPassword: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#password"
+                },
+            },
+            messages: {
+                userName: resources.pleaseEnter.format(resources.userName),
+                email: {
+                    required: resources.pleaseEnter.format(resources.email),
+                    email: resources.invalidFormat.format(resources.email)
+                },
+                firstName: resources.pleaseEnter.format(resources.name),
+                lastName: resources.pleaseEnter.format(resources.lastName),
+                countrySelect2: resources.pleaseSelect.format(resources.country),
+                referralCode: resources.pleaseEnter.format(resources.referralCode),
+                password: {
+                    required: resources.pleaseEnter.format(resources.password),
+                    minlength: resources.mustBeMoreThan.format(resources.password, 5, resources.character)
+                },
+                repeatPassword: {
+                    required: resources.pleaseEnter.format(resources.repeatPassword),
+                    minlength: resources.mustBeMoreThan.format(resources.password, 5, resources.character),
+                    equalTo: resources.confirmPasswordDoesNotMach
+                }
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid').closest('div').addClass('bad');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid').closest('div').removeClass('bad');
+            },
+            errorElement: 'span',
+            errorClass: 'invalid-feedback',
+            errorPlacement: function (error, element) {
+                if (element.hasClass('select2-hidden-accessible')) {
+                    element.parent().append(error);
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+                const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
+                if (elapsedTime < 3000) { // Limit to 3 seconds
+                    alert("You are filling this out too quickly!"); // Alert message for bots
+                    return; // Stop the form submission
+                }
+                if(!consent) {
+                    $("#myModal").modal('show');
+                    return;
+                }
+                $(form).find("button:submit").attr('disabled','disabled');
+                $.ajax({
+                    type: "POST",
+                    url: "/api/v1/user/register",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({country:{id: $("#countrySelect2").val()}, userName:$("#userName").val(),email:$("#email").val(), password:$("#password").val(),firstName: $("#firstName").val(),lastName: $("#lastName").val(),referralCode: $("#referralCode").val() }),
+                    success: function (data) {
+                        $(form).find("button:submit").removeAttr('disabled');
+                        if (data.error == null) {
+                            clearAll();
+                            new PNotify({
+                                title: 'Success',
+                                text: 'your information successfully registered.',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                            window.location.href = "#signin";
+                        } else {
+                            new PNotify({
+                                title: 'Oh No!',
+                                text: data.error,
+                                type: 'error',
+                                hide: false,
+                                styling: 'bootstrap3'
+                            });
+                        }
+                    },
+                    error: function (header, status, error) {
+                        $(form).find("button:submit").removeAttr('disabled');
+                        if(isNullOrEmpty(get(() => header.responseJSON)))
+                            new PNotify({
+                                title: 'Oh No!',
+                                text: 'ajax answer post returned error: ' + error.responseText,
+                                type: 'error',
+                                hide: false,
+                                styling: 'bootstrap3'
+                            });
+                        else new PNotify({
+                            title: 'Oh No!',
+                            text: header.responseJSON.error + ' (' + header.responseJSON.status + ') <br>' + header.responseJSON.message,
+                            type: 'error',
+                            hide: false,
+                            styling: 'bootstrap3'
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    $('#reset_pass-form').validate({
+        ignore: '.skip',
+        rules: {
+            login: "required",
+            otp: "required",
+            newPassword: {
+                required: true,
+                minlength: 5
+            },
+            repeatNewPassword: {
+                required: true,
+                minlength: 5,
+                equalTo: "#newPassword"
+            },
+        },
+        messages: {
+            login: resources.pleaseEnter.format(resources.usernameOrEmail),
+            otp: resources.pleaseEnter.format(resources.oneTimePassword),
+            newPassword: {
+                required: resources.pleaseEnter.format(resources.password),
+                minlength: resources.mustBeMoreThan.format(resources.password, 5, resources.character)
+            },
+            repeatNewPassword: {
+                required: resources.pleaseEnter.format(resources.repeatPassword),
+                minlength: resources.mustBeMoreThan.format(resources.password, 5, resources.character),
+                equalTo: resources.confirmPasswordDoesNotMach
+            }
+        },
+        highlight: function (element) {
+            $(element).addClass('is-invalid').closest('div').addClass('bad');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid').closest('div').removeClass('bad');
+        },
+        errorElement: 'span',
+        errorClass: 'invalid-feedback',
+        errorPlacement: function (error, element) {
+            if (element.hasClass('select2-hidden-accessible')) {
+                element.parent().append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        submitHandler: function (form) {
+            const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
+            if (elapsedTime < 3000) { // Limit to 3 seconds
+                alert("You are filling this out too quickly!"); // Alert message for bots
+                return; // Stop the form submission
+            }
+            $(form).find("button:submit").attr('disabled','disabled');
+            form.submit();
+            // $.ajax({
+            //     type: "POST",
+            //     url: "/api/v1/user/reset-pass",
+            //     dataType: "json",
+            //     contentType: "application/json;charset=utf-8",
+            //     data: JSON.stringify({country:{id: $("#countrySelect2").val()}, userName:$("#userName").val(),email:$("#email").val(), password:$("#password").val(),firstName: $("#firstName").val(),lastName: $("#lastName").val(),referralCode: $("#referralCode").val() }),
+            //     success: function (data) {
+            //         if (data.error == null) {
+            //             clearAll();
+            //             new PNotify({
+            //                 title: 'Success',
+            //                 text: 'your password successfully changed.',
+            //                 type: 'success',
+            //                 styling: 'bootstrap3'
+            //             });
+            //             window.location.href = "#signin";
+            //         } else {
+            //             new PNotify({
+            //                 title: 'Oh No!',
+            //                 text: data.error,
+            //                 type: 'error',
+            //                 hide: false,
+            //                 styling: 'bootstrap3'
+            //             });
+            //         }
+            //     },
+            //     error: function (header, status, error) {
+            //         if(isNullOrEmpty(get(() => header.responseJSON)))
+            //             new PNotify({
+            //                 title: 'Oh No!',
+            //                 text: 'ajax answer post returned error: ' + error.responseText,
+            //                 type: 'error',
+            //                 hide: false,
+            //                 styling: 'bootstrap3'
+            //             });
+            //         else new PNotify({
+            //             title: 'Oh No!',
+            //             text: header.responseJSON.error + ' (' + header.responseJSON.status + ') <br>' + header.responseJSON.message,
+            //             type: 'error',
+            //             hide: false,
+            //             styling: 'bootstrap3'
+            //         });
+            //     }
+            // });
+        }
+    });
+
+    function isNullOrEmpty(param) {
+        if (param == null)
+            return true;
+        if (param == "null")
+            return true;
+        if (param == undefined)
+            return true;
+        if (param == "undefined")
+            return true;
+        if ((param + "").trim() == "")
+            return true;
+        return false;
+    }
+
+    function flattenObject(obj, prefix = '') {
+        const result = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                const newKey = prefix ? `${prefix}.${key}` : key;
+                if (value && typeof value === 'object' && !Array.isArray(value)) {
+                    Object.assign(result, flattenObject(value, newKey));
+                } else if (!isNullOrEmpty(value)) {
+                    // Only include non-null values
+                    result[newKey] = value;
+                }
+            }
+        }
+        return result;
+    }
+    function jsonToUrlSearchParams(json) {
+        const flattened = flattenObject(json);
+        const params = new URLSearchParams();
+        for (const key in flattened) {
+            if (flattened.hasOwnProperty(key)) {
+                params.append(key, flattened[key]);
+            }
+        }
+        return params.toString();
+    }
+    function clearAll(){
+        $('form').each(function (index, frm) {
+            frm.reset();
+        });
+        $('form input:hidden:not(#myModal form input:hidden)').val('');
+        $("select.select2-hidden-accessible").val('').trigger('change');
+    }
+    function get(lambdaExpr, defaultValue) {// () => supplier expr
+        try {
+            return lambdaExpr();
+        } catch (e) {
+            return isNullOrEmpty(defaultValue) ? '' : defaultValue;
+        }
+    }
+    function validateInput(input) {
+        input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+    }
+</script>
+</body>
+</html>

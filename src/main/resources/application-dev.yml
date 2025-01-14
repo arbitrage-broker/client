@@ -1,0 +1,46 @@
+#keytool -genkey -alias arbitrage-broker.com -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 365
+server:
+  port: 2025
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: ArbitrageBroker2024
+    key-store-type: PKCS12
+    key-alias: arbitrage-broker.com
+spring:
+  # Database
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/eshop}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:password}
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: swagger
+    enabled: true
+
+#Logging
+logging:
+  level:
+    root:
+    org:
+      springframework:
+        web:
+        security:
+      hibernate:
+    guru:
+      springframework:
+        controllers:
+
+site:
+  url: arbitrage-broker.com

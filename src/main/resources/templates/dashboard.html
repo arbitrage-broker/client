@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/iCheck/skins/flat/green.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/jqvmap/dist/jqvmap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/bootstrap-daterangepicker/daterangepicker.css'"/>
+</th:block>
+<div layout:fragment="content">
+    <!-- top tiles -->
+    <div class="row" style="display: inline-block;" >
+        <div class="tile_count">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-users"></i> <th:block th:text="#{totalUsers}"/></span>
+                <div class="count" th:value="${totalUsers}">0</div>
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalUsersFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-users green"></i> <th:block th:text="#{totalOnline}"/></span>
+                <div class="count green" id="totalOnline">0</div>
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalOnlineFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-money-bill-trend-up"></i> <th:block th:text="#{totalArbitrage}"/></span>
+                <div class="count" id="totalArbitrage">0</div>
+                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalArbitrageFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-money-bill-trend-up"></i> <th:block th:text="#{dailyArbitrage}"/></span>
+                <div class="count" id="dailyArbitrage">0</div>
+                <span >USDT</span>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="dailyArbitrageFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-coins"></i> <th:block th:text="#{dailyProfit}"/></span>
+                <div class="count green" id="dailyProfit">0</div>
+                <span >USDT</span>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="dailyProfitFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-coins"></i> <th:block th:text="#{totalProfit}"/></span>
+                <div class="count green" id="totalProfit">0</div>
+                <span >USDT</span>
+                <span class="reverse_timer"><i class="green"><i class="fa fa-hourglass-half"></i> <span id="totalProfitReverseTimer"></span> </i> <th:block th:text="#{days}"/></span>
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-gift"></i> <th:block th:text="#{referralBonus}"/></span>
+                <div class="count green" id="referralBonus">0</div>
+                <span >USDT</span>
+                <!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="referralBonusFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-piggy-bank"></i> <th:block th:text="#{totalDeposit}"/></span>
+                <div class="count" id="totalDeposit">0</div>
+                <span >USDT</span>
+<!--                <span class="reverse_timer"><i class="green"><i class="fa fa-hourglass-half"></i> <span id="totalDepositReverseTimer">90</span> </i> <th:block th:text="#{days}"/></span>-->
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-hand-holding-usd"></i> <th:block th:text="#{totalWithdrawal}"/></span>
+                <div class="count" id="totalWithdrawal">0</div>
+                <span >USDT</span>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalWithdrawalFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
+            </div>
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i class="fa fa-wallet"></i> <th:block th:text="#{totalBalance}"/></span>
+                <div class="count green" id="totalBalance">0</div>
+                <span >USDT</span>
+                <!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalWithdrawalFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
+            </div>
+        </div>
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="x_panel tile">
+                <div class="x_title">
+                    <h2>Total Deposit and Total Withdrawal Activities <small>1 week a go</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_01" class="demo-placeholder"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="x_panel tile">
+                <div class="x_title">
+                    <h2>Referral Bonus and Total Profit Activities <small>1 week a go</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_02" class="demo-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 ">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2 th:text="#{topReferrals}">Top Referrals</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" id="top-referrals">
+                    <h4>Top Users across referrals</h4>
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>John Trader</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>80k</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>Robert1983</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>53k</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>David 8697</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>23k</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>Michelle Btc</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+                                    <span class="sr-only">40% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>14k</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>Sharon Rbt</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                                    <span class="sr-only">30% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>8k</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 ">
+            <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                    <h2>Top coins<small>today</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table class="" style="width:100%">
+                        <tr>
+                            <th style="width:37%;">
+                                <p>Top 5</p>
+                            </th>
+                            <th>
+                                <div style="display: inline-block; width: 40%;">Coin</div>
+                                <div style="display: inline-block; width: 50%;text-align: end;">Progress</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <canvas id="top-coin-doughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                            </td>
+                            <td>
+                                <table class="tile_info">
+                                    <tr>
+                                        <td>
+                                            <p><i class="fa fa-square blue"></i><span id="coinName-1"></span> </p>
+                                        </td>
+                                        <td id="coinPercentage-1">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><i class="fa fa-square green"></i><span id="coinName-2"></span> </p>
+                                        </td>
+                                        <td id="coinPercentage-2">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><i class="fa fa-square purple"></i><span id="coinName-3"></span> </p>
+                                        </td>
+                                        <td id="coinPercentage-3">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><i class="fa fa-square aero"></i><span id="coinName-4"></span> </p>
+                                        </td>
+                                        <td id="coinPercentage-4">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><i class="fa fa-square red"></i><span id="coinName-5"></span> </p>
+                                        </td>
+                                        <td id="coinPercentage-5">0%</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="row">
+
+
+
+        <div class="col-md-12 col-sm-12 ">
+
+
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Visitors location <small>geo-presentation</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                    </div>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="dashboard-widget-content">
+                                <div class="col-md-4 hidden-small">
+                                    <h2 class="line_30"><th:block th:value="${totalUsers}"></th:block> Views from 60 countries</h2>
+
+                                    <table class="countries_list">
+                                        <tbody>
+                                        <tr>
+                                            <td>United States</td>
+                                            <td class="fs15 fw700 text-right">33%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>China</td>
+                                            <td class="fs15 fw700 text-right">27%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>India</td>
+                                            <td class="fs15 fw700 text-right">16%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Russia</td>
+                                            <td class="fs15 fw700 text-right">9%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Netherlands</td>
+                                            <td class="fs15 fw700 text-right">8%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Britain</td>
+                                            <td class="fs15 fw700 text-right">4%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other</td>
+                                            <td class="fs15 fw700 text-right">3%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="world-map-gdp" class="col-md-8 col-sm-12 " style="height:230px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+
+                <!-- Start to do list -->
+
+                <!-- End to do list -->
+
+                <!-- start of weather widget -->
+
+                <!-- end of weather widget -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<th:block layout:fragment="footer">
+    <script type="text/javascript" th:src="#{direction} +'/Chart.js/dist/Chart.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/gauge.js/dist/gauge.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/bootstrap-progressbar/bootstrap-progressbar.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/iCheck/icheck.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/skycons/skycons.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/Flot/jquery.flot.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/Flot/jquery.flot.pie.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/Flot/jquery.flot.time.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/Flot/jquery.flot.stack.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/Flot/jquery.flot.resize.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/flot.orderbars/js/jquery.flot.orderBars.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/flot-spline/js/jquery.flot.spline.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/flot.curvedlines/curvedLines.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/DateJS/build/date.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/jqvmap/dist/jquery.vmap.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/jqvmap/dist/maps/jquery.vmap.world.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/jqvmap/examples/js/jquery.vmap.sampledata.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/moment/min/moment.min.js'"></script>
+    <script type="text/javascript" th:src="#{direction} +'/bootstrap-daterangepicker/daterangepicker.js'"></script>
+    <script th:src="@{/js/script/dashboard.js}"></script>
+</th:block>
+</html>

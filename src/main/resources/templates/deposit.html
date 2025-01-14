@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/iCheck/skins/flat/green.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-bs/css/dataTables.bootstrap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-scroller-bs/css/scroller.bootstrap.min.css'"/>
+    <style>
+        .payment-method .form-group{
+            width: 100%;
+        }
+        .payment-method img{
+            width: 40px;
+            margin-bottom: 34px;
+        }
+        .payment-method .disabled {
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        .form-control-feedback.right, .btn-primary, #qrcode {
+            margin-top: 34px;
+        }
+        .fa-copy{
+            font-size: 17px;
+        }
+    </style>
+</th:block>
+<div layout:fragment="content">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Deposit</h3>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12"></div>
+    <form id="deposit-form">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Wallet Address</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div class="row">
+                            <!-- accepted payments column -->
+                            <div class="col-md-6 payment-method">
+                                <p class="lead">Payment Methods:</p>
+                                <img th:src="@{/images/usdt.png}" alt="USDT">
+                                <img th:src="@{/images/tron.png}" alt="TRX">
+                                <img th:src="@{/images/BNB.png}" alt="BNB">
+                                <img class="disabled" th:src="@{/images/MATIC.png}" alt="MATIC">
+                                <img class="disabled" th:src="@{/images/visa.png}" alt="Visa">
+                                <img class="disabled" th:src="@{/images/mastercard.png}" alt="Mastercard">
+                                <img class="disabled" th:src="@{/images/paypal.png}" alt="Paypal">
+
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{network}"></label>
+                                    <select class="form-control" th:id="network" th:title="#{network}" tabindex="1" autofocus>
+                                        <option value="TRC20" th:text="TRC20" selected ></option>
+                                        <option value="BEP20" th:text="BEP20"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{currency}"></label>
+                                    <select class="form-control" th:id="currency" th:title="#{currency}" tabindex="2" autofocus>
+                                        <option data="USDT" value="USDT" th:text="USDT" selected ></option>
+                                        <option data="trx" value="TRX" th:text="TRX" ></option>
+                                        <option data="BNBUSDT" value="BNB" th:text="BNB" ></option>
+                                        <option data="BUSD" value="BUSD" th:text="BUSD" ></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{amountInUSD}"></label>
+                                    <input type="number" tabindex="3" class="form-control" id="amount" th:name="amount" th:value="${amount ?: ''}">
+                                    <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{wallet} +' '+ #{address}"></label>
+                                    <input type="text" class="form-control" disabled="disabled" id="walletAddress" name="walletAddress">
+                                    <span class="fa fa-wallet form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{actualAmount}"></label>
+                                    <input type="number" tabindex="4" class="form-control" id="actualAmount" placeholder="e.g. 0.0000">
+                                    <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-12 form-group has-feedback">
+                                    <label th:text="#{transactionHash}"></label>
+                                    <input type="text" tabindex="5" class="form-control" id="transactionHash" name="transactionHash" required>
+                                    <span class="fa fa-hashtag form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row"><div class="col-12 d-flex justify-content-center align-items-center" id="qrcode"></div></div>
+                                <div class="row" style="margin-top: 34px;">
+                                    <div class="col-12" id="walletAddress-title" style="text-align: center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="saveDeposit" tabindex="6" type="submit" class="btn btn-primary btn-block"><i class="fa fa-send"></i>&nbsp;<span th:text="#{send}"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 th:text="#{deposit} + ' ' + #{history}"></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table class="table table-striped table-bordered table-hover table-condensed dt-responsive nowrap" width="100%">
+                        <thead>
+                        <tr>
+                            <th th:text="#{amountInUSD}"></th>
+                            <th th:text="#{actualAmount}"></th>
+                            <th th:text="#{currency}"></th>
+                            <th th:text="#{transactionType}"></th>
+                            <th th:text="#{status}"></th>
+                            <th th:text="#{modifyDate}"></th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th th:text="#{amountInUSD}"></th>
+                            <th th:text="#{actualAmount}"></th>
+                            <th th:text="#{currency}"></th>
+                            <th th:text="#{transactionType}"></th>
+                            <th th:text="#{status}"></th>
+                            <th th:text="#{modifyDate}"></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <th:block layout:fragment="footer">
+        <script type="text/javascript" th:src="@{/js/lib/qrcode.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/lib/jquery.validate.min.js}" ></script>
+        <script type="text/javascript" th:src="@{/js/lib/jquery.validate.additional-methods.js}" ></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net/js/jquery.dataTables.1.10.16.js'"></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net-bs/js/dataTables.bootstrap.min.js'"></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net-responsive/js/dataTables.responsive.min.js'"></script>
+
+        <script th:src="@{/js/script/deposit.js}"></script>
+    </th:block>
+</html>

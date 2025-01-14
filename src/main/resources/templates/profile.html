@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/select2/dist/css/select2.min.css'">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/dropzone/dist/min/dropzone.min.css'">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/select2-bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-bs/css/dataTables.bootstrap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'"/>
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-scroller-bs/css/scroller.bootstrap.min.css'"/>
+    <style>
+        #profile-image-url {
+            width: 140px;
+        }
+        .label p{
+            font-size: 14px;
+        }
+        .form-control-feedback.right {
+            margin-top: 33px;
+        }
+        .dropzone {
+            border: 1px solid rgba(0,0,0,0.2);
+            padding: 0;
+        }
+        .dashed-boarder{
+            border: 1px dashed #ccc;
+            margin-bottom: 10px;
+            padding: 3px;
+        }
+    </style>
+    <script type="text/javascript" th:src="#{direction} +'/select2/dist/js/select2.full.min.js'"></script>
+</th:block>
+<div layout:fragment="content">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>User Profile</h3>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>User Information</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-md-4 dashed-boarder">
+                            <div class="col-md-12">
+                                <div class="profile_img">
+                                    <div id="crop-avatar">
+                                        <!-- Current avatar -->
+                                        <img id="profile-image-url" class="img-responsive avatar-view" src="images/find_user.png" alt="Avatar" title="Change the avatar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h3 id="full-name"></h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4 label dashed-boarder">
+                            <div class="col-md-12"><p id="user-name"></p></div>
+                            <div class="col-md-12"><p id="email-label"></p></div>
+                            <div class="col-md-12"><p id="country-label"></p></div>
+                            <div class="col-md-12"><p id="wallet-label"></p></div>
+                            <div class="col-md-12"><p><strong><i class="fa fa-external-link"></i> Referral code:</strong> <a class="referral-code"></a> <a class="copy-referral-code fas fa-copy" href="javascript:copyLink('.referral-code', 'Referral code')"></a><span class="copiedMessage copied-message ">Copied!</span></p></div>
+                        </div>
+                        <div class="col-md-4 label  dashed-boarder">
+                            <div class="col-md-12"><p><strong>(10%) First name and last name has been filled?</strong> <span id="fullName-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Email has been filled?</strong> <span id="email-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Email has been verified?</strong> <span id="email-verified" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Profile image has been filled?</strong> <span id="profileImageUrl-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Country has been filled?</strong> <span id="country-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Wallet address has been filled?</strong> <span id="walletAddress-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Any amount has been deposited?</strong> <span id="anyDeposit-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(10%) Any arbitrage has been made?</strong> <span id="anyArbitrage-occupied" class="text-red">No</span></p></div>
+                            <div class="col-md-12"><p><strong>(20%) Any referral?</strong> <span id="anyReferral-occupied" class="text-red">No</span></p></div>
+                        </div>
+                        <div class="col-md-12">
+                            <p><button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="loadInputByEntity(currentUser.id)">Edit Profile</button></p>
+                        </div>
+                    </div>
+
+                    <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Edit User profile</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{name}"></label>
+                                                <input type="text" class="form-control" id="name" name="name" tabindex="1" oninput="validateInput(this)" autofocus>
+                                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{lastName}"></label>
+                                                <input type="text" class="form-control" id="lastName" name="lastName" tabindex="2" oninput="validateInput(this)">
+                                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{wallet} +' '+ #{address}"></label>
+                                                <input type="text" class="form-control" id="walletAddress" name="walletAddress" tabindex="3">
+                                                <span class="fa fa-wallet form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{email}"></label>
+                                                <input type="text" class="form-control" id="email" name="email" tabindex="4">
+                                                <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{password}"></label>
+                                                <input type="password" class="form-control" id="password" name="password" tabindex="5" autofocus>
+                                                <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{repeatPassword}"></label>
+                                                <input type="password" class="form-control" id="repeatPassword" name="repeatPassword" tabindex="6">
+                                                <span class="fa fa-eye-slash toggle-password form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group has-feedback">
+                                                <label th:text="#{country}"></label>
+                                                <th:block th:replace="fragments/select2 :: select2('7', #{country}, 'country', 'api/v1/country/findAllSelect','{name:params.term}',false,'edit-user-modal')"></th:block>
+                                            </div>
+                                        </div>
+                                    </form>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group has-feedback">
+                                                <label th:text="#{profile} + ' ' + #{image}"></label>
+                                                <form class="dropzone">
+                                                <div tabindex="8" class="dz-message" th:text="#{dropFileHere}"></div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button tabindex="9" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button tabindex="10" type="button" class="btn btn-primary" id="updateUser" onclick="updateUser()">Save changes</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>User Referrals</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class=""><a href="#tab_content_1" role="tab" id="referral1-tab" data-toggle="tab" aria-expanded="true">Referral Level 1</a>
+                            </li>
+                            <li role="presentation" class=""><a href="#tab_content_2" role="tab" id="referral2-tab" data-toggle="tab" aria-expanded="false">Referral Level 2</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+
+                            <div role="tabpanel" class="tab-pane active" id="tab_content_1" aria-labelledby="profile-tab">
+                                <table id="referral-table-1" class="table table-striped table-bordered table-hover table-condensed dt-responsive nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th th:text="#{profile} + ' ' + #{image}"></th>
+                                        <th th:text="#{fullName}"></th>
+                                        <th th:text="#{userName}"></th>
+                                        <th th:text="#{email}"></th>
+                                        <th th:text="#{referralCode}"></th>
+                                        <th th:text="#{country}"></th>
+                                        <th th:text="#{deposit}"></th>
+                                        <th th:text="#{withdrawal}"></th>
+                                        <th th:text="#{reward}"></th>
+                                        <th th:text="#{modifyDate}"></th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th th:text="#{profile} + ' ' + #{image}"></th>
+                                        <th th:text="#{fullName}"></th>
+                                        <th th:text="#{userName}"></th>
+                                        <th th:text="#{email}"></th>
+                                        <th th:text="#{referralCode}"></th>
+                                        <th th:text="#{country}"></th>
+                                        <th th:text="#{deposit}"></th>
+                                        <th th:text="#{withdrawal}"></th>
+                                        <th th:text="#{reward}"></th>
+                                        <th th:text="#{modifyDate}"></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content_2" aria-labelledby="profile-tab">
+                                <table id="referral-table-2" class="table table-striped table-bordered table-hover table-condensed dt-responsive nowrap" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th th:text="#{profile} + ' ' + #{image}"></th>
+                                        <th th:text="#{fullName}"></th>
+                                        <th th:text="#{userName}"></th>
+                                        <th th:text="#{email}"></th>
+                                        <th th:text="#{referralCode}"></th>
+                                        <th th:text="#{country}"></th>
+                                        <th th:text="#{deposit}"></th>
+                                        <th th:text="#{withdrawal}"></th>
+                                        <th th:text="#{reward}"></th>
+                                        <th th:text="#{modifyDate}"></th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th th:text="#{profile} + ' ' + #{image}"></th>
+                                        <th th:text="#{fullName}"></th>
+                                        <th th:text="#{userName}"></th>
+                                        <th th:text="#{email}"></th>
+                                        <th th:text="#{referralCode}"></th>
+                                        <th th:text="#{country}"></th>
+                                        <th th:text="#{deposit}"></th>
+                                        <th th:text="#{withdrawal}"></th>
+                                        <th th:text="#{reward}"></th>
+                                        <th th:text="#{modifyDate}"></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <th:block layout:fragment="footer">
+
+        <script type="text/javascript" th:src="@{/js/lib/jquery.validate.min.js}" ></script>
+        <script type="text/javascript" th:src="@{/js/lib/jquery.validate.additional-methods.js}" ></script>
+        <script type="text/javascript" th:src="#{direction} +'/dropzone/dist/min/dropzone.min.js'"></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net/js/jquery.dataTables.1.10.16.js'"></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net-bs/js/dataTables.bootstrap.min.js'"></script>
+        <script type="text/javascript" th:src="#{direction} +'/datatables.net-responsive/js/dataTables.responsive.min.js'"></script>
+        <script type="text/javascript" th:src="@{/js/script/profile.js}"></script>
+    </th:block>
+</html>

@@ -1,0 +1,10 @@
+${AnsiColor.GREEN}
+,------. ,--.   ,--.  ,-----.  ,---.   ,--.   ,--.
+|  .---'  \  `.'  /  '  .--./ '   .-'  |   `.'   |
+|  `--,    \     /   |  |     `.  `-.  |  |'.'|  |
+|  `---.    \   /    '  '--'\ .-'    | |  |   |  |
+`------'     `-'      `-----' `-----'  `--'   `--'
+
+::${spring.application.name}::  ${AnsiColor.WHITE}(v${spring.application.version})
+${AnsiColor.BLUE}Powered by Spring Boot ${spring-boot.version}
+${AnsiColor.WHITE}--------------------

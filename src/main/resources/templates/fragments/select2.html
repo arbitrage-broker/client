@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="select2(tabindex,title,id,url,filter,multiple,modalId)">
+    <div th:id="${id}">
+        <select class="form-control" th:multiple="${multiple}" th:id="${id} + 'Select2'" th:name="${id} + 'Select2'" th:tabindex="${tabindex}"></select>
+        <span class="fa fa-search form-control-feedback right" aria-hidden="true"></span>
+    </div>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        let [[${id}]]Select2Options = {
+            placeholder: '[[${title}]]',
+            language: resources.local,
+            dir: resources.dir,
+            allowClear: true,
+            theme: 'bootstrap',
+            minimumInputLength: 0,
+            width: 'resolve',
+            ajax: {
+                url: '[[${url}]]',
+                dataType: 'json',
+                cache: true,
+                quietMillis: 250,
+                delay: 250,
+                data: function (params) {
+                    $("#[[${id}]] i").removeClass('fa-search').addClass('fa-refresh fa-spin');
+                    let page = params.pageNumber || 0;
+                    return `page=${page}&` + jsonToUrlSearchParams([[${filter}]]);
+                },
+                processResults: function (result, params) {
+                    $("#[[${id}]] i").removeClass('fa-refresh fa-spin').addClass('fa-search');
+                    params.page = params.page || 0;
+                    return {
+                        results: result.content,
+                        pagination: {
+                            more: (params.page * 10) < result.totalElements
+                        }
+                    };
+                }
+            },
+            escapeMarkup: function (m) {
+                return m;
+            }
+        };
+        if ("[[${modalId}]]" != null && "[[${modalId}]]" != '' && "[[${modalId}]]" != undefined) {
+            [[${id}]]Select2Options.dropdownParent = $('#[[${modalId}]]');
+        }
+        $("#[[${id}]]Select2").select2([[${id}]]Select2Options);
+        /*.on('select2:select', function (e) {
+            $("#hdf_[[${id}]]_id").val(e.params.data.id);
+        });*/
+        $("#[[${id}]] span.form-control-feedback:not([disabled])").click(function () {
+            $("#[[${id}]]Select2:not([disabled]").select2('open');
+        });
+        /*]]>*/
+    </script>
+</th:block>
+</html>

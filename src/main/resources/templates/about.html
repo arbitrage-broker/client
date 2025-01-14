@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/master}">
+
+<th:block layout:fragment="header">
+    <link rel="stylesheet" type="text/css" th:href="#{direction} +'/iCheck/skins/flat/green.css'"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2A3F54;
+        }
+        ul {
+            margin-left: 20px;
+            list-style-type: disc;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        strong {
+            color: #333366;
+        }
+    </style>
+</th:block>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>About Us</h1>
+            <p>Arbitrage Broker began its operations in the Netherlands in 2019, collaborating with many
+                successful traders worldwide and leveraging various trading tools and resources. By
+                2020, we developed our first arbitrage bot, allowing us to achieve reliable, error-free
+                profits in the cryptocurrency market. Currently, Arbitrage Broker operates approximately
+                100 bots to support and manage trades across the top 100 cryptocurrencies, providing
+                successful, seamless gains for users globally, helping them trade confidently and
+                without errors.</p>
+
+            <h2>What is an Arbitrage Bot and Its Uses</h2>
+            <p>An arbitrage bot is a sophisticated computer program or algorithm designed to conduct
+                automated trading in cryptocurrency markets on behalf of traders or brokers. These bots
+                are specifically programmed to profit from price differences of a particular asset
+                across various exchanges. The primary goal of an arbitrage bot is to exploit price
+                discrepancies across different exchanges, enabling traders to buy an asset at a lower
+                price and almost immediately sell it at a higher price on another exchange. This
+                automated process allows traders to earn consistent profits with minimal human
+                intervention and reduced risk.</p>
+
+            <h2>Arbitrage Concept</h2>
+            <p>In cryptocurrency, arbitrage involves leveraging the price difference of an asset across
+                different markets. This process focuses on buying at a lower price and simultaneously
+                selling at a higher price to profit from the spread. Such opportunities arise due to
+                market fluctuations and are quickly utilized by bots to ensure price alignment across
+                markets and secure profits.</p>
+
+            <h2>Key Features of Arbitrage Broker Bot</h2>
+            <ul>
+                <li>High reliability with nearly zero error margin</li>
+                <li>Bot security</li>
+                <li>Ease of use</li>
+                <li>High speed and support across all networks</li>
+                <li>High accuracy and a high level of automation during trades</li>
+                <li>Low fees and support for up to 100 cryptocurrencies simultaneously</li>
+            </ul>
+
+            <h2>Deposits</h2>
+            <p>Currently, Arbitrage Broker operates on the TRC20 network for Tether (USDT) transactions
+                and will soon support other networks as well. When making a deposit, users should
+                double-check the broker's wallet address to avoid any potential loss of funds. <br><strong>Note:</strong>
+                all deposits on the TRC20 network will be credited to user accounts after the
+                transaction hash is verified, enabling users to start trading. If any issues arise,
+                users should contact customer support. The capital amount deposited varies by plan and
+                is locked for a period of 3 to 9 months, depending on the plan. After this period, users
+                may withdraw their entire balance or start a new contract on the platform.</p>
+
+            <h2>Withdrawals</h2>
+            <p>Arbitrage Broker imposes no withdrawal limits. The minimum withdrawal amount is $15,
+                allowing users to withdraw all profits earned from trading or from referrals.
+                Withdrawals are processed to user accounts within 3 to 24 business hours after
+                applicable fees are deducted.</p>
+
+            <h2>Invite Friends</h2>
+            <p>Arbitrage Broker offers an opportunity for users to share their invite codes with friends
+                and family, earning income through successful referrals. For each successful referral
+                that joins Arbitrage Broker, a reward of $1 to $20 is awarded to the primary user based
+                on the referred person’s capital. The reward is credited automatically with the first
+                deposit made by the referred user, and the primary user continues to receive rewards
+                from each arbitrage the referral completes. <strong>Note:</strong> these rewards are
+                provided by the platform itself, not from the referral’s earnings. Arbitrage Broker
+                supports two levels of referrals. Users can earn rewards and participate in events and
+                prizes held by the platform at the end of each period. For each referral at level A, 18%
+                of the arbitrage profit is credited to the inviter’s account. For each referral at level
+                B, 8% of the arbitrage profit is credited to the initial inviter's account.</p>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="footer">
+</th:block>
+</html>
