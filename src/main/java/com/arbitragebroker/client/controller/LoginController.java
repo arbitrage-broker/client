@@ -7,6 +7,7 @@ import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.filter.SubscriptionPackageFilter;
 import com.arbitragebroker.client.model.*;
 import com.arbitragebroker.client.service.*;
+import com.arbitragebroker.client.service.impl.BaseMailService;
 import com.arbitragebroker.client.util.SessionHolder;
 import com.arbitragebroker.client.exception.NotFoundException;
 import lombok.SneakyThrows;
@@ -36,7 +37,7 @@ public class LoginController {
     final SessionHolder sessionHolder;
     final HttpServletRequest request;
     final UserService userService;
-    final MailService mailService;
+    final BaseMailService mailService;
     final OneTimePasswordService oneTimePasswordService;
     final NotificationService notificationService;
     final ArbitrageService arbitrageService;
@@ -49,7 +50,7 @@ public class LoginController {
     private final List<ParameterModel> referralRewards;
 
     public LoginController(MessageConfig messages, SessionHolder sessionHolder, HttpServletRequest request, UserService userService,
-                           MailService mailService, OneTimePasswordService oneTimePasswordService, NotificationService notificationService,
+                           BaseMailService mailService, OneTimePasswordService oneTimePasswordService, NotificationService notificationService,
                            ArbitrageService arbitrageService, SubscriptionPackageService subscriptionPackageService,
                            SubscriptionService subscriptionService, CoinService coinService, ExchangeService exchangeService,
                            WalletService walletService, ParameterService parameterService) {
@@ -66,7 +67,7 @@ public class LoginController {
         this.coinService = coinService;
         this.exchangeService = exchangeService;
         this.walletService = walletService;
-        this.totalUsers = parameterService.findValueByCodeOrDefault("TOTAL_USERS", "2M");
+        this.totalUsers = parameterService.findValueByCodeOrDefault("TOTAL_USERS", "2.5M");
         this.referralRewards = parameterService.findAllByParameterGroupCode("REFERRAL_REWARD");
     }
 
@@ -78,7 +79,17 @@ public class LoginController {
 
         UserModel user = sessionHolder.getCurrentUser();
         ModelAndView modelAndView = new ModelAndView(name);
-        if(user == null) return modelAndView;
+
+        if(name.equals("index")) {
+            var filter = new SubscriptionPackageFilter();
+            filter.setActive(true);
+            PageRequest pageable = PageRequest.of(0, 100, Sort.by(Sort.Order.asc("price")));
+            var subscriptionPackages = subscriptionPackageService.findAll(filter, pageable,generateFilterKey("SubscriptionPackage","findAll",filter, pageable));
+            modelAndView.addObject("subscriptionPackages", subscriptionPackages.getContent());
+        }
+        if(user == null)
+            return modelAndView;
+
         modelAndView.addObject("currentUser", sessionHolder.getCurrentUserAsJsonString());
         String cacheKey = generateFilterKey("Notification","findAllByRecipientIdAndNotRead",user.getId(),PageRequest.of(0,10));
         modelAndView.addObject("notifications", notificationService.findAllByRecipientIdAndNotRead(user.getId(), PageRequest.of(0,10),cacheKey));
@@ -89,7 +100,7 @@ public class LoginController {
             modelAndView.addObject(key, value[0]);
         });
 
-        if(name.equals("dashboard")) {
+        if (name.equals("dashboard")) {
             modelAndView.addObject("totalUsers", totalUsers);
         }
         else if(name.equals("referral-reward")) {
@@ -141,7 +152,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"/"})
     public String index() {
         var requestWrapper = sessionHolder.getRequestWrapper();
         String targetUrl = "/index";

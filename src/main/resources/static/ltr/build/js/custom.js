@@ -5039,3 +5039,6 @@ $(document).ready(function () {
 });
 
 
+function toggleMenu(){
+    $('#menu_toggle').click();
+}

@@ -4,255 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd1f851a-a212-4114-a9d0-59697f8b9b8f" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cicd.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/AnswerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/CountryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/ParameterGroupService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/QuestionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/RoleDetailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/RoleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/TransactionStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/validation/Create.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/validation/Update.java" afterDir="false" />
+    <list default="true" id="037ce9b3-02e4-49d6-806a-01ba143d19b2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/BaseMailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/FakeMailServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/ss-arbitrage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/ss-referral-reward.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/ourservices.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/ClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/AuditConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/AuditConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/CacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/CacheConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/CustomAccessDeniedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/CustomAccessDeniedHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/HoneypotAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/HoneypotAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/LimitInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/LimitInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/Limited.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/Limited.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/MessageConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/MessageConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/QuerydslConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/QuerydslConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/SuccessLoginConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/SuccessLoginConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/BaseRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/BaseRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/LogicalDeletedRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/LogicalDeletedRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/AnswerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/AnswerRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/ArbitrageRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/ArbitrageRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/BaseRestControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/BaseRestControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/CoinRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/CoinRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/CommonRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/CommonRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/CountryRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/CountryRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/ExchangeRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/ExchangeRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/FileRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/FileRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/NotificationRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/NotificationRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/ParameterGroupRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/ParameterGroupRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/ParameterRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/ParameterRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/QuestionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/QuestionRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/RoleDetailRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/RoleDetailRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/RoleRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/RoleRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/SubscriptionPackageDetailRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/SubscriptionPackageDetailRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/SubscriptionPackageRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/SubscriptionPackageRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/SubscriptionRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/SubscriptionRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/UserRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/controller/impl/WalletRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/impl/WalletRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/BsPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/BsPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/BsTxResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/BsTxResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/MailJetRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/MailJetRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/MailJetResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/MailJetResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TokenInfoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TokenInfoResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TokenResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TokenResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TransactionReceiptResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TransactionReceiptResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TransactionReceiptResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TransactionReceiptResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TransactionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TransactionResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/dto/TransactionResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/dto/TransactionResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/AnswerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/AnswerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/ArbitrageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/ArbitrageEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/BaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/CoinEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/CoinEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/CountryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/CountryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/ExchangeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/ExchangeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/LogicalDeleted.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/LogicalDeleted.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/NotificationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/NotificationEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/OneTimePasswordEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/OneTimePasswordEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/ParameterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/ParameterEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/ParameterGroupEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/ParameterGroupEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/QuestionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/QuestionEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/RoleDetailEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/RoleDetailEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/RoleEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/SubscriptionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/SubscriptionEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/SubscriptionPackageDetailEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/SubscriptionPackageDetailEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/SubscriptionPackageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/SubscriptionPackageEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/TelegramEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/TelegramEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/entity/WalletEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/entity/WalletEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/AnswerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/AnswerType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/CurrencyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/CurrencyType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/DistanceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/DistanceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/EntityStatusType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/EntityStatusType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/NetworkType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/NetworkType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/QuestionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/QuestionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/RoleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/enums/TransactionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/enums/TransactionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/BadRequestException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/BadRequestException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/BaseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/BaseException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/BaseExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/BaseExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/ConflictException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/ConflictException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/ErrorResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/ExpectationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/ExpectationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/InsufficentBalanceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/InsufficentBalanceException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/MaximumRequestPerMinuteExceededException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/MaximumRequestPerMinuteExceededException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/NotAcceptableException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/NotAcceptableException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/exception/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/exception/NotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/AnswerFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/AnswerFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/ArbitrageFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/ArbitrageFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/CoinFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/CoinFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/CountryFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/CountryFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/ExchangeFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/ExchangeFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/NotificationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/NotificationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/ParameterFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/ParameterFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/ParameterGroupFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/ParameterGroupFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/QuestionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/QuestionFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/RoleDetailFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/RoleDetailFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/RoleFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/RoleFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/SubscriptionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/SubscriptionFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/SubscriptionPackageDetailFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/SubscriptionPackageDetailFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/SubscriptionPackageFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/SubscriptionPackageFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/UserFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/UserFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/filter/WalletFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/filter/WalletFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/AnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/AnswerMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/ArbitrageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/ArbitrageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/BaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/BaseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/CoinMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/CoinMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/CountryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/CountryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/ExchangeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/ExchangeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/NotificationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/NotificationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/ParameterGroupMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/ParameterGroupMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/ParameterMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/ParameterMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/QuestionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/QuestionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/RoleDetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/RoleDetailMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/RoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/RoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/SubscriptionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/SubscriptionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/SubscriptionPackageDetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/SubscriptionPackageDetailMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/SubscriptionPackageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/SubscriptionPackageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/mapping/WalletMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/mapping/WalletMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/AnswerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/AnswerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/ArbitrageModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/ArbitrageModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/BalanceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/BalanceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/BaseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/BaseModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/CoinExchangeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/CoinExchangeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/CoinModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/CoinModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/CoinUsageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/CoinUsageDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/CountryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/CountryModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/ExchangeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/ExchangeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/FileModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/FileModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/NotificationModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/NotificationModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/PageModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/PageModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/ParameterGroupModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/ParameterGroupModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/ParameterModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/ParameterModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/QuestionModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/QuestionModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/ResetPassModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/ResetPassModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/RoleDetailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/RoleDetailModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/RoleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/RoleModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/Select2Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/Select2Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/SubscriptionModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/SubscriptionModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/SubscriptionPackageDetailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/SubscriptionPackageDetailModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/SubscriptionPackageModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/SubscriptionPackageModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/UserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/UserModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/model/WalletModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/model/WalletModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/AnswerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/ArbitrageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/ArbitrageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/BaseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/CoinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/CoinRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/CountryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/CountryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/CountryUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/CountryUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/ExchangeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/ExchangeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/NotificationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/OneTimePasswordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/OneTimePasswordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/ParameterGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/ParameterGroupRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/ParameterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/ParameterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/QuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/RoleDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/RoleDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/SubscriptionPackageDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/SubscriptionPackageDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/SubscriptionPackageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/SubscriptionPackageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/SubscriptionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/SubscriptionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/TelegramRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/TelegramRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/repository/WalletRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/repository/WalletRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/AnswerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/ArbitrageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/ArbitrageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/BaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/BaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/CoinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/CoinService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/CountryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/ExchangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/ExchangeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/LogicalDeletedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/LogicalDeletedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/MailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/OneTimePasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/OneTimePasswordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/ParameterGroupService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/ParameterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/ParameterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/QuestionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/RoleDetailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/RoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/SubscriptionPackageDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/SubscriptionPackageDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/SubscriptionPackageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/SubscriptionPackageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/SubscriptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/SubscriptionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/TelegramService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/TelegramService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/WalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/WalletService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/AnswerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/AnswerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/ArbitrageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ArbitrageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/BaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/BaseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/CoinServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/CoinServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/CountryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/CountryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/CustomUserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/CustomUserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/ExchangeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ExchangeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/MailJetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailJetServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/OneTimePasswordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/OneTimePasswordServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/ParameterGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ParameterGroupServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/ParameterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ParameterServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/QuestionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/QuestionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/RoleDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/RoleDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/SubscriptionPackageDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/SubscriptionPackageDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/SubscriptionPackageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/SubscriptionPackageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/SubscriptionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/SubscriptionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/TelegramServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/TelegramServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/service/impl/WalletServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/WalletServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/NetworkStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/NetworkStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/NetworkStrategyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/NetworkStrategyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/TransactionStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/TransactionStrategyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/TransactionStrategyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/BnbStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/BnbStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/BonusStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/BonusStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/DepositStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/DepositStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/RewardReferralStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/RewardReferralStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/RewardStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/RewardStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/TronStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/TronStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/WithdrawalProfitStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/WithdrawalProfitStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/strategy/impl/WithdrawalStrategyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/strategy/impl/WithdrawalStrategyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/DateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/DistanceUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/DistanceUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/MapperHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/MapperHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/NumberUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/NumberUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/ReferralCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/ReferralCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/ReflectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/ReflectionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/SessionHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/SessionHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/util/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/util/StringUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/validation/Create.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/eshop/client/validation/Update.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/controller/UserRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/controller/UserRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/repository/UserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/repository/UserRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/selenium/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/selenium/BaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/selenium/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/selenium/LoginTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/DistanceUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/DistanceUtilTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/ReferralCodeUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/ReferralCodeUtilTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/eshop/client/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/MailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ArbitrageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/ArbitrageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailJetServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailJetServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/MailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/WalletServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/service/impl/WalletServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/lib/landing-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/lib/landing-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/lib/landing-custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/lib/landing-custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/script/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/script/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/script/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/script/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ltr/build/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ltr/build/js/custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ltr/build/js/custom.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ltr/build/js/custom.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/aboutus.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/aboutus.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/master.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/master.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -260,7 +50,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;bm-vip&quot;
+    &quot;assignee&quot;: &quot;arbitrage-broker&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
@@ -269,48 +59,70 @@
     &quot;accountId&quot;: &quot;19309fb6-8f3d-499a-85eb-c131ca1f9f0b&quot;
   }
 }</component>
-  <component name="MavenRunner">
-    <option name="skipTests" value="true" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2rcsSYFnUnxyXjHCR24uJ35VGSv" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2rd1AJaGxEr47OJ9IjYXY7Fr7Sg" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Maven.client [clean,compile,package].executor": "Run",
-    "Notification.DisplayName-DoNotAsk-Database detector": "Database detector",
-    "Notification.DoNotAsk-Database detector": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/behrooz/gitHub/Arbitrage Broker/admin",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "application.passwordSafe",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ClientApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/behrooz/gitHub/Arbitrage Broker/client/src/main/resources/static/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;application.passwordSafe&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;redis&quot;,
+      &quot;postgresql&quot;
+    ]
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/static/images" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.arbitragebroker.client.service.impl" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="ClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <configuration name="ClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="dev" />
       <module name="client" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.arbitragebroker.client.ClientApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.arbitragebroker.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ClientApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -323,45 +135,29 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fd1f851a-a212-4114-a9d0-59697f8b9b8f" name="Changes" comment="" />
-      <created>1736869701408</created>
+      <changelist id="037ce9b3-02e4-49d6-806a-01ba143d19b2" name="Changes" comment="" />
+      <created>1736873992506</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1736869701408</updated>
-      <workItem from="1736869704689" duration="1018000" />
-      <workItem from="1736870752781" duration="162000" />
-      <workItem from="1736870994530" duration="2596000" />
+      <updated>1736873992506</updated>
+      <workItem from="1736873993750" duration="312000" />
+      <workItem from="1736885443526" duration="2521000" />
+      <workItem from="1736925610384" duration="29757000" />
     </task>
-    <task id="LOCAL-00001" summary="Initial commit">
-      <option name="closed" value="true" />
-      <created>1736871498112</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1736871498112</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
-    <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/arbitragebroker/client/controller/LoginController.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

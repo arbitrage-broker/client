@@ -50,3 +50,6 @@ function goToByScroll(selector) {
         scrollTop: $(selector).offset().top
     }, 2000);
 }
+function loadPages(page) {
+    window.location.href =  page;
+}

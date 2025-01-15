@@ -48,14 +48,14 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     private final SessionHolder sessionHolder;
     private final String minWithdrawAmount;
     private final UserService userService;
-    private final MailService mailService;
+    private final BaseMailService mailService;
     private final List<ParameterModel> referralRewardParameters;
     private final TransactionStrategyFactory transactionStrategyFactory;
     private final UserRepository userRepository;
     private final String subUserPercentage;
     private final String userPercentage;
 
-    public WalletServiceImpl(WalletRepository repository, WalletMapper mapper, SubscriptionService subscriptionService, JPAQueryFactory queryFactory, SessionHolder sessionHolder, ParameterService parameterService, UserService userService, MailService mailService, TransactionStrategyFactory transactionStrategyFactory, UserRepository userRepository) {
+    public WalletServiceImpl(WalletRepository repository, WalletMapper mapper, SubscriptionService subscriptionService, JPAQueryFactory queryFactory, SessionHolder sessionHolder, ParameterService parameterService, UserService userService, BaseMailService mailService, TransactionStrategyFactory transactionStrategyFactory, UserRepository userRepository) {
         super(repository, mapper);
         this.walletRepository = repository;
         this.subscriptionService = subscriptionService;

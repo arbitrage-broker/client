@@ -129,6 +129,11 @@ function loadTable() {
     }], "/api/v1/user", "loadSearchReferralEntity2ByInput");
     $.subscribe('reloadReferral2Table', referralDataTable2.ajax.reload);
 }
+function customTableOptions(){
+    let tbl_option = tableOptions();
+    tbl_option.order = [[9, 'desc']];
+    return tbl_option;
+}
 function loadInputByEntity(id) {
     $.getJSON(`${ajaxUrl}/${id}`,function(entity) {
         $("#countrySelect2").html("<option value='" + get(() => entity.country.id) + "' selected>" + get(() => entity.country.name) + "</option>").trigger('change');

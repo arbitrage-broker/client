@@ -1,23 +1,25 @@
 package com.arbitragebroker.client.service.impl;
 
-import com.arbitragebroker.client.model.SubscriptionModel;
-import com.arbitragebroker.client.model.SubscriptionPackageModel;
 import com.arbitragebroker.client.entity.ArbitrageEntity;
 import com.arbitragebroker.client.entity.QArbitrageEntity;
 import com.arbitragebroker.client.entity.WalletEntity;
 import com.arbitragebroker.client.enums.EntityStatusType;
 import com.arbitragebroker.client.enums.TransactionType;
+import com.arbitragebroker.client.exception.NotAcceptableException;
+import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.filter.ArbitrageFilter;
 import com.arbitragebroker.client.mapping.ArbitrageMapper;
 import com.arbitragebroker.client.model.ArbitrageModel;
 import com.arbitragebroker.client.model.CoinUsageDTO;
-import com.arbitragebroker.client.repository.*;
+import com.arbitragebroker.client.model.SubscriptionModel;
+import com.arbitragebroker.client.model.SubscriptionPackageModel;
+import com.arbitragebroker.client.repository.ArbitrageRepository;
+import com.arbitragebroker.client.repository.SubscriptionPackageRepository;
+import com.arbitragebroker.client.repository.UserRepository;
+import com.arbitragebroker.client.repository.WalletRepository;
 import com.arbitragebroker.client.service.ArbitrageService;
-import com.arbitragebroker.client.service.MailService;
 import com.arbitragebroker.client.service.SubscriptionService;
 import com.arbitragebroker.client.util.DateUtil;
-import com.arbitragebroker.client.exception.NotAcceptableException;
-import com.arbitragebroker.client.exception.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.DateTemplate;
@@ -52,10 +54,12 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
     private final WalletRepository walletRepository;
     private final UserRepository userRepository;
     private final JPAQueryFactory queryFactory;
-    private final MailService mailService;
+    private final BaseMailService mailService;
 
     @Autowired
-    public ArbitrageServiceImpl(ArbitrageRepository repository, ArbitrageMapper mapper, SubscriptionPackageRepository subscriptionPackageRepository, SubscriptionService subscriptionService, WalletRepository walletRepository, UserRepository userRepository, ArbitrageRepository arbitrageRepository, JPAQueryFactory queryFactory, MailService mailService) {
+    public ArbitrageServiceImpl(ArbitrageRepository repository, ArbitrageMapper mapper, SubscriptionPackageRepository subscriptionPackageRepository,
+                                SubscriptionService subscriptionService, WalletRepository walletRepository, UserRepository userRepository,
+                                ArbitrageRepository arbitrageRepository, JPAQueryFactory queryFactory, BaseMailService mailService) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;

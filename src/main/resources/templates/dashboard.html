@@ -14,18 +14,18 @@
         <div class="tile_count">
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i class="fa fa-users"></i> <th:block th:text="#{totalUsers}"/></span>
-                <div class="count" th:value="${totalUsers}">0</div>
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalUsersFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+                <div class="count" th:text="${totalUsers}">0</div>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalUsersFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i class="fa fa-users green"></i> <th:block th:text="#{totalOnline}"/></span>
                 <div class="count green" id="totalOnline">0</div>
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalOnlineFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalOnlineFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i class="fa fa-money-bill-trend-up"></i> <th:block th:text="#{totalArbitrage}"/></span>
                 <div class="count" id="totalArbitrage">0</div>
-                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalArbitrageFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>
+<!--                <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i><span id="totalArbitrageFromLastWeek">0% </span></i> <th:block th:text="#{fromLastWeek}"/></span>-->
             </div>
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i class="fa fa-money-bill-trend-up"></i> <th:block th:text="#{dailyArbitrage}"/></span>
@@ -320,7 +320,7 @@
                         <div class="x_content">
                             <div class="dashboard-widget-content">
                                 <div class="col-md-4 hidden-small">
-                                    <h2 class="line_30"><th:block th:value="${totalUsers}"></th:block> Views from 60 countries</h2>
+                                    <h2 class="line_30"><th:block th:text="${totalUsers}"></th:block> Views from 60 countries</h2>
 
                                     <table class="countries_list">
                                         <tbody>

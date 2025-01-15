@@ -14,6 +14,8 @@ server:
     path: /error
 # Spring Boot configuration
 spring:
+  profiles:
+    active: prod
   application:
     name: client
     version: 0.0.1-SNAPSHOT

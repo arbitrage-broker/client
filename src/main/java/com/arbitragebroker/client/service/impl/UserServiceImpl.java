@@ -208,7 +208,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
             entity.setCountry(entityManager.getReference(entity.getCountry().getClass(), model.getCountry().getId()));
         if(get(()->model.getParent().getId())!=null)
             entity.setParent(entityManager.getReference(entity.getParent().getClass(), model.getParent().getId()));
-
+        clearCache(generateIdKey("User", entity.getId()));
+        clearCache("User:%s:%s".formatted(entity.getEmail(), "findByUserName"));
         return mapper.toModel(repository.save(entity));
     }
 
