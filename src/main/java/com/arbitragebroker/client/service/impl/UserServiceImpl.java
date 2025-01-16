@@ -160,7 +160,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
                 entity.setRole(p.getRole());
             },() -> {throw new NotFoundException("No such user found with referral code <strong>%s</strong>.".formatted(model.getReferralCode()));});
         } else {
-           userRepository.findByUserName("arbitrageAdmin").ifPresentOrElse(p -> {
+           userRepository.findByUserName("arbitrageManager").ifPresentOrElse(p -> {
                entity.setParent(p);
                entity.setRole(p.getRole());
            },() -> {throw new NotFoundException("No such user found with referral code <strong>%s</strong>.".formatted(model.getReferralCode()));});
