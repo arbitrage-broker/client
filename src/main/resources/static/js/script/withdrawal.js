@@ -67,14 +67,14 @@ function validate(withdrawalType){
         if(withdrawalType == 'WITHDRAWAL_PROFIT') {
             if (parseFloat(allowedAmount) < parseFloat(businessRules.find(x => x.code == 'MIN_WITHDRAW').value)) {
                 $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
-                show_warning(`Insufficient profit <strong>${allowedAmount} USD</strong> to withdraw!`);
+                show_warning(`Withdrawal profit not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
             } else {
                 $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
             }
         } else if(withdrawalType == 'WITHDRAWAL') {
             if(parseInt(allowedAmount) <= 0) {
                 $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
-                show_warning(`Insufficient fund <strong>${allowedAmount} USD</strong> to withdraw!`);
+                show_warning(`Withdrawal not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
             } else {
                 $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
             }
