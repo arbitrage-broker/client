@@ -33,9 +33,6 @@ public class UserModel extends BaseModel<UUID> {
     private String lastName;
     private Boolean active;
     private String uid;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String referralCode;
     private UserModel parent;
     private String treePath;

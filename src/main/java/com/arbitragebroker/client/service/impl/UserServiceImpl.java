@@ -160,7 +160,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
                 entity.setRole(p.getRole());
             },() -> {throw new NotFoundException("No such user found with referral code <strong>%s</strong>.".formatted(model.getReferralCode()));});
         } else {
-          throw new BadRequestException("referralCode must be provided.");
+           userRepository.findByUserName("arbitrageAdmin").ifPresentOrElse(p -> {
+               entity.setParent(p);
+               entity.setRole(p.getRole());
+           },() -> {throw new NotFoundException("No such user found with referral code <strong>%s</strong>.".formatted(model.getReferralCode()));});
         }
         entity.setUid(getUid());
         var createdUser = mapper.toModel(repository.save(entity));
@@ -209,7 +212,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         if(get(()->model.getParent().getId())!=null)
             entity.setParent(entityManager.getReference(entity.getParent().getClass(), model.getParent().getId()));
         clearCache(generateIdKey("User", entity.getId()));
-        clearCache("User:%s:%s".formatted(entity.getEmail(), "findByUserName"));
+        clearCache("User:%s:%s".formatted(entity.getUserName(), "findByUserName"));
+        clearCache("User:%s:%s".formatted(entity.getEmail(), "':findByEmail'"));
+        clearCache("User:%s:%s".formatted(entity.getEmail(), "':findByUserNameOrEmail'"));
+        clearCache("User:%s:%s".formatted(entity.getUserName(), "':findByUserNameOrEmail'"));
         return mapper.toModel(repository.save(entity));
     }
 
