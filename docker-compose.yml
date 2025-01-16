@@ -3,7 +3,7 @@ services:
     image: client-image
     container_name: client-container
     build:
-      context: ./client/
+      context: .
       dockerfile: Dockerfile
     ports:
       - "443:443"
