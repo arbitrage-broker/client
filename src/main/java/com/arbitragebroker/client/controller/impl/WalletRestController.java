@@ -47,6 +47,10 @@ public class WalletRestController extends BaseRestControllerImpl<WalletFilter, W
     public ResponseEntity<BigDecimal> totalProfit(@PathVariable UUID userId){
         return ResponseEntity.ok(walletService.totalProfit(userId));
     }
+    @GetMapping("/total-withdrawal-profit/{userId}")
+    public ResponseEntity<BigDecimal> totalWithdrawalProfit(@PathVariable UUID userId){
+        return ResponseEntity.ok(walletService.totalWithdrawalProfit(userId));
+    }
     @GetMapping("/daily-profit/{userId}")
     public ResponseEntity<BigDecimal> dailyProfit(@PathVariable UUID userId){
         return ResponseEntity.ok(walletService.dailyProfit(userId));

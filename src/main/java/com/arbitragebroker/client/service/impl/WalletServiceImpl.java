@@ -185,6 +185,11 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     public BigDecimal totalProfit(UUID userId) {
         return walletRepository.totalProfit(userId);
     }
+    @Override
+    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalWithdrawalProfit'")
+    public BigDecimal totalWithdrawalProfit(UUID userId) {
+        return walletRepository.totalWithdrawalProfit(userId);
+    }
 
     @Override
     @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':dailyProfit'")

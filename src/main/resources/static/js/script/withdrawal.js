@@ -57,28 +57,32 @@ function onLoad() {
     });
 }
 function validate(withdrawalType){
-    $.get(`api/v1/wallet/allowed-withdrawal-balance/${currentUser.id}/${withdrawalType}`, function (allowedAmount){
-        let minWithdraw = businessRules.find(x => x.code == 'MIN_WITHDRAW').value ?? '15';
-        let transferFee = businessRules.find(x => x.code == 'TRANSFER_FEE').value ?? '2';
-        $("#amount").attr('placeholder',`${minWithdraw} ~ ${allowedAmount}`);
-        $("#withdraw-notice .alert-content ul").html(`<li>${resources.minWithdrawalNotice.format(minWithdraw)}</li>
-                                                      <li>${resources.maxWithdrawalNotice.format(allowedAmount)}</li>
-                                                      <li>${resources.transferFee.format(transferFee)}</li>`);
-        if(withdrawalType == 'WITHDRAWAL_PROFIT') {
-            if (parseFloat(allowedAmount) < parseFloat(businessRules.find(x => x.code == 'MIN_WITHDRAW').value)) {
-                $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
-                show_warning(`Withdrawal profit not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
-            } else {
-                $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
+
+    $.get(`api/v1/wallet/total-withdrawal-profit/${currentUser.id}`, function (totalWithdrawalProfit){
+        $.get(`api/v1/wallet/allowed-withdrawal-balance/${currentUser.id}/${withdrawalType}`, function (allowedAmount){
+            let minWithdraw = businessRules.find(x => x.code == 'MIN_WITHDRAW').value ?? '15';
+            let transferFee = businessRules.find(x => x.code == 'TRANSFER_FEE').value ?? '2';
+            $("#amount").attr('placeholder',`${minWithdraw} ~ ${allowedAmount}`);
+            $("#withdraw-notice .alert-content ul").html(`<li>${resources.minWithdrawalNotice.format(minWithdraw)}</li>
+                                                          <li>${resources.maxWithdrawalNotice.format(allowedAmount)}</li>
+                                                          <li>${resources.totalWithdrawalProfit.format(totalWithdrawalProfit)}</li>                                                          
+                                                          <li>${resources.transferFee.format(transferFee)}</li>`);
+            if(withdrawalType == 'WITHDRAWAL_PROFIT') {
+                if (parseFloat(allowedAmount) < parseFloat(businessRules.find(x => x.code == 'MIN_WITHDRAW').value)) {
+                    $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
+                    show_warning(`Withdrawal profit not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
+                } else {
+                    $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
+                }
+            } else if(withdrawalType == 'WITHDRAWAL') {
+                if(parseInt(allowedAmount) <= 0) {
+                    $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
+                    show_warning(`Withdrawal not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
+                } else {
+                    $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
+                }
             }
-        } else if(withdrawalType == 'WITHDRAWAL') {
-            if(parseInt(allowedAmount) <= 0) {
-                $("#saveWithdraw").addClass("disabled").attr("aria-disabled", true).attr('disabled',true);
-                show_warning(`Withdrawal not allowed due to insufficient allowed amount <strong>${allowedAmount} USD</strong>!`);
-            } else {
-                $("#saveWithdraw").removeClass("disabled").removeAttr("aria-disabled").removeAttr('disabled');
-            }
-        }
+        });
     });
 }
 function loadSaveEntityByInput() {
