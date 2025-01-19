@@ -34,13 +34,15 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     private final NotificationMapper mapper;
     private final SessionHolder sessionHolder;
     private final TelegramService telegramService;
+    private final UserService userService;
 
-    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder, TelegramService telegramService) {
+    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder, TelegramService telegramService, UserService userService) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;
         this.sessionHolder = sessionHolder;
         this.telegramService = telegramService;
+        this.userService = userService;
     }
 
     @Override
@@ -82,6 +84,7 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     public NotificationModel createForSupport(NotificationModel model) {
         model.setRecipient(new UserModel().setUserId(UUID.fromString(getSupportUID(sessionHolder.getCurrentUser().getRole()))));
         var result = create(model,"Notification:*");
+        model.setSender(userService.findById(model.getSender().getId(),generateIdKey("User", model.getSender().getId())));
         telegramService.sendToRole(sessionHolder.getCurrentUser().getRole(), """
             *New Notification*\n
             %s""".formatted(result.toString()));
