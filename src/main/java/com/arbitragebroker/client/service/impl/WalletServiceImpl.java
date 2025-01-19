@@ -108,7 +108,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
             try {
                 mailService.sendVerification(user.getEmail(), "Email Verification");
                 throw new ExpectationException("""
-                        We have sent a verification email to <strong>%s</strong>.<br/>
+                        We have sent a verification email to <strong>%s</strong><br/>
                         Please verify your email before make this transaction!
                         """.formatted(user.getEmail()));
             } catch (IllegalStateException ignored){}
