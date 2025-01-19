@@ -3,11 +3,14 @@ package com.arbitragebroker.client.service.impl;
 
 import com.arbitragebroker.client.entity.NotificationEntity;
 import com.arbitragebroker.client.entity.QNotificationEntity;
+import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.filter.NotificationFilter;
 import com.arbitragebroker.client.mapping.NotificationMapper;
 import com.arbitragebroker.client.model.NotificationModel;
+import com.arbitragebroker.client.model.UserModel;
 import com.arbitragebroker.client.repository.NotificationRepository;
 import com.arbitragebroker.client.service.NotificationService;
+import com.arbitragebroker.client.service.TelegramService;
 import com.arbitragebroker.client.service.UserService;
 import com.arbitragebroker.client.util.SessionHolder;
 import com.arbitragebroker.client.exception.NotFoundException;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+import static com.arbitragebroker.client.enums.RoleType.getSupportUID;
 import static com.arbitragebroker.client.util.StringUtils.generateIdKey;
 
 @Service
@@ -29,12 +33,14 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     private final NotificationRepository repository;
     private final NotificationMapper mapper;
     private final SessionHolder sessionHolder;
+    private final TelegramService telegramService;
 
-    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder) {
+    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder, TelegramService telegramService) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;
         this.sessionHolder = sessionHolder;
+        this.telegramService = telegramService;
     }
 
     @Override
@@ -70,6 +76,16 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     @Cacheable(cacheNames = "client", key = "#key")
     public Page<NotificationModel> findAllByRecipientIdAndNotRead(UUID recipientId, Pageable pageable, String key) {
         return repository.findAllByRecipientIdAndReadIsFalseOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
+    }
+
+    @Override
+    public NotificationModel createForSupport(NotificationModel model) {
+        model.setRecipient(new UserModel().setUserId(UUID.fromString(getSupportUID(sessionHolder.getCurrentUser().getRole()))));
+        var result = create(model,"Notification:*");
+        telegramService.sendToRole(sessionHolder.getCurrentUser().getRole(), """
+            *New Notification*\n
+            %s""".formatted(result.toString()));
+        return result;
     }
 
     @Override

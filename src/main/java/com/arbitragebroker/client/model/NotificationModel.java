@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 @Data
 @Accessors(chain = true)
@@ -30,5 +31,14 @@ public class NotificationModel extends BaseModel<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return """              
+                Sender: %s\n
+                Subject: %s\n               
+                Body: %s\n               
+                """.formatted(sender.getSelectTitle(),subject,body.substring(0,30));
     }
 }

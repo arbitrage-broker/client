@@ -20,4 +20,15 @@ public class RoleType {
         }
         return false;
     }
+
+    public static String getSupportUID(String role) {
+        switch (role) {
+            case SUPER_WISER:
+                return "6303b84a-04cf-49e1-8416-632ebd84495e";
+            case MANAGER:
+                return "97041d85-4cb3-420b-b046-4a27091389ce";
+            default:
+                return "6303b84a-04cf-49e1-8416-632ebd84495e";
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface NotificationService extends BaseService<NotificationFilter, Not
     Page<NotificationModel> findAllByRecipientId(UUID recipientId, Pageable pageable, String key);
     Page<NotificationModel> findAllBySenderId(UUID senderId, Pageable pageable, String key);
     Page<NotificationModel> findAllByRecipientIdAndNotRead(UUID recipientId, Pageable pageable, String key);
+    NotificationModel createForSupport(NotificationModel model);
 }

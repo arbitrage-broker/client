@@ -51,11 +51,10 @@ public class NotificationRestController extends BaseRestControllerImpl<Notificat
     @ResponseBody
     @Operation(summary = "${api.baseRest.create}", description = "${api.baseRest.create.desc}")
     public ResponseEntity<NotificationModel> createForSupport(NotificationModel model) {
-        log.debug("call BaseRestImpl.save for {}", model);
+        log.debug("call NotificationRestController.createForSupport for {}", model);
         if (model.getId() != null) {
             throw new BadRequestException("The id must not be provided when creating a new record");
         }
-        model.setRecipient(new UserModel().setUserId(UUID.fromString("6303b84a-04cf-49e1-8416-632ebd84495e")));
-        return ResponseEntity.ok(service.create(model, String.format("%s:*", getClassName())));
+        return ResponseEntity.ok(notificationService.createForSupport(model));
     }
 }
