@@ -4,6 +4,7 @@ function onLoad(){
         loadContent(id,"#inbox-body");
     }
     $.getJSON("api/v1/notification/findAll-by-recipientId/" + currentUser.id + "?sort=read,desc", function (data) {
+        $('#inbox-list').empty();
         data.content.forEach(function (notif){
             const notifElement = `<a href="javascript:loadContent(${notif.id},'#inbox-body')">
                                 <div class="mail_list">
@@ -93,6 +94,7 @@ function sendNotification() {
                 clearModal();
                 $('#send-notification-modal').modal('hide');
                 show_success(resources.sentSuccess);
+                onLoad();
             } else {
                 show_error(data.error);
             }

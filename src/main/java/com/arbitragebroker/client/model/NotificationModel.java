@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static com.arbitragebroker.client.util.StringUtils.shortenText;
+
 @Data
 @Accessors(chain = true)
 public class NotificationModel extends BaseModel<Long> {
@@ -46,7 +48,7 @@ public class NotificationModel extends BaseModel<Long> {
         if(StringUtils.hasLength(subject))
             builder.append("Subject: ").append(subject).append("\n");
         if(StringUtils.hasLength(body))
-            builder.append("Body: ").append(body, 0, 30);
+            builder.append("Body: ").append(shortenText(body));
        return builder.toString();
     }
 }

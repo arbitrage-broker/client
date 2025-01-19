@@ -33,4 +33,17 @@ public class StringUtils {
     public static String getTargetClassName(Object obj) {
         return ClassUtils.getUserClass(obj).getSimpleName();
     }
+
+    public static String shortenText(String input) {
+        if (input == null) {
+            return null; // Handle null input
+        }
+
+        // Check if the string length exceeds 30 characters
+        if (input.length() > 30) {
+            return input.substring(0, 30) + "..";
+        } else {
+            return input;
+        }
+    }
 }

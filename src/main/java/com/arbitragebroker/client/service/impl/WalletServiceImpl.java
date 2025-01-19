@@ -104,7 +104,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     public WalletModel create(WalletModel model, String allKey) {
         var user = userService.findById(model.getUser().getId(), generateIdKey("User", model.getUser().getId()));
         model.setRole(user.getRole());
-        if(!user.getEmailVerified()) {
+        if(user.getEmailVerified() == null || !user.getEmailVerified()) {
             try {
                 mailService.sendVerification(user.getEmail(), "Email Verification");
                 throw new ExpectationException("""
