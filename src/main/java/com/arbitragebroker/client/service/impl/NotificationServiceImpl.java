@@ -86,7 +86,7 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
         model.setRecipient(new UserModel().setUserId(UUID.fromString(getSupportUID(sessionHolder.getCurrentUser().getRole()))));
         var result = create(model,"Notification:*");
         var userEntity = userRepository.findById(model.getSender().getId()).orElseThrow(()->new NotFoundException("user not found"));
-        model.setSender(new UserModel().setUserId(userEntity.getId()).setFirstName(userEntity.getFirstName()).setLastName(userEntity.getLastName()).setUserName(userEntity.getUserName()));
+        result.setSender(new UserModel().setUserId(userEntity.getId()).setFirstName(userEntity.getFirstName()).setLastName(userEntity.getLastName()).setUserName(userEntity.getUserName()));
         telegramService.sendToRole(sessionHolder.getCurrentUser().getRole(), """
             *New Notification*\n
             %s""".formatted(result.toString()));

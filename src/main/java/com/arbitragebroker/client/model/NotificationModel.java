@@ -44,9 +44,9 @@ public class NotificationModel extends BaseModel<Long> {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         if(sender!=null)
-            builder.append("Sender: ").append(sender.getSelectTitle()).append("\n");
+            builder.append("Sender: %s\n".formatted(sender.getSelectTitle()));
         if(StringUtils.hasLength(subject))
-            builder.append("Subject: ").append(subject).append("\n");
+            builder.append("Subject: %s\n".formatted(subject));
         if(StringUtils.hasLength(body))
             builder.append("Body: ").append(shortenText(body));
        return builder.toString();
