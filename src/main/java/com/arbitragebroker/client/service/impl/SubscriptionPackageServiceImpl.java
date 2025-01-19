@@ -90,7 +90,7 @@ public class SubscriptionPackageServiceImpl extends BaseServiceImpl<Subscription
         if(result == null)
             return null;
         var currentSubscription = subscriptionRepository.findByUserIdAndStatus(userId, EntityStatusType.Active);
-        if(currentSubscription.getSubscriptionPackage().getId().equals(result.getId()))
+        if(currentSubscription == null || currentSubscription.getSubscriptionPackage().getId().equals(result.getId()))
             return "noChange";
         return result.getName();
     }
