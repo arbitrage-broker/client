@@ -9,6 +9,7 @@ import com.arbitragebroker.client.mapping.NotificationMapper;
 import com.arbitragebroker.client.model.NotificationModel;
 import com.arbitragebroker.client.model.UserModel;
 import com.arbitragebroker.client.repository.NotificationRepository;
+import com.arbitragebroker.client.repository.UserRepository;
 import com.arbitragebroker.client.service.NotificationService;
 import com.arbitragebroker.client.service.TelegramService;
 import com.arbitragebroker.client.service.UserService;
@@ -34,15 +35,15 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     private final NotificationMapper mapper;
     private final SessionHolder sessionHolder;
     private final TelegramService telegramService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder, TelegramService telegramService, UserService userService) {
+    public NotificationServiceImpl(NotificationRepository repository, NotificationMapper mapper, SessionHolder sessionHolder, TelegramService telegramService, UserRepository userRepository) {
         super(repository, mapper);
         this.repository = repository;
         this.mapper = mapper;
         this.sessionHolder = sessionHolder;
         this.telegramService = telegramService;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -84,7 +85,8 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     public NotificationModel createForSupport(NotificationModel model) {
         model.setRecipient(new UserModel().setUserId(UUID.fromString(getSupportUID(sessionHolder.getCurrentUser().getRole()))));
         var result = create(model,"Notification:*");
-        model.setSender(userService.findById(model.getSender().getId(),generateIdKey("User", model.getSender().getId())));
+        var userEntity = userRepository.findById(model.getSender().getId()).orElseThrow(()->new NotFoundException("user not found"));
+        model.setSender(new UserModel().setUserId(userEntity.getId()).setFirstName(userEntity.getFirstName()).setLastName(userEntity.getLastName()).setUserName(userEntity.getUserName()));
         telegramService.sendToRole(sessionHolder.getCurrentUser().getRole(), """
             *New Notification*\n
             %s""".formatted(result.toString()));

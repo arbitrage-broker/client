@@ -3,6 +3,7 @@ package com.arbitragebroker.client.model;
 import com.arbitragebroker.client.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Data
+@Accessors(chain = true)
 public class UserModel extends BaseModel<UUID> {
     @NotNull
     @NotBlank
