@@ -3,16 +3,21 @@ package com.arbitragebroker.client.model;
 import com.arbitragebroker.client.util.DateUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 @Data
 @Accessors(chain = true)
 public class NotificationModel extends BaseModel<Long> {
+    @NotNull
     private UserModel sender;
     private UserModel recipient;
+    @NotNull
     private String subject;
+    @NotNull
     private String body;
     private boolean read = false;
     private String role;
@@ -35,10 +40,13 @@ public class NotificationModel extends BaseModel<Long> {
 
     @Override
     public String toString() {
-        return """              
-                Sender: %s\n
-                Subject: %s\n               
-                Body: %s\n               
-                """.formatted(sender.getSelectTitle(),subject,body.substring(0,30));
+        StringBuilder builder = new StringBuilder();
+        if(sender!=null)
+            builder.append("Sender: ").append(sender.getSelectTitle()).append("\n");
+        if(StringUtils.hasLength(subject))
+            builder.append("Subject: ").append(subject).append("\n");
+        if(StringUtils.hasLength(body))
+            builder.append("Body: ").append(body, 0, 30);
+       return builder.toString();
     }
 }

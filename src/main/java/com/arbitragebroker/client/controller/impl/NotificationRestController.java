@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -50,7 +51,7 @@ public class NotificationRestController extends BaseRestControllerImpl<Notificat
     @PostMapping("/support")
     @ResponseBody
     @Operation(summary = "${api.baseRest.create}", description = "${api.baseRest.create.desc}")
-    public ResponseEntity<NotificationModel> createForSupport(NotificationModel model) {
+    public ResponseEntity<NotificationModel> createForSupport(@RequestBody @Validated NotificationModel model) {
         log.debug("call NotificationRestController.createForSupport for {}", model);
         if (model.getId() != null) {
             throw new BadRequestException("The id must not be provided when creating a new record");
