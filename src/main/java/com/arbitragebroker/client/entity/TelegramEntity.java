@@ -1,11 +1,14 @@
 package com.arbitragebroker.client.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "tbl_telegram")
+@Where(clause = "deleted=false")
 public class TelegramEntity extends BaseEntity<Long> {
 
 	@Id
@@ -18,6 +21,7 @@ public class TelegramEntity extends BaseEntity<Long> {
 	@Column(nullable = false)
 	private String phone;
 	private String role;
+	private boolean deleted;
 
 	@Override
 	public String getSelectTitle() {
