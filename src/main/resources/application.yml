@@ -3,6 +3,10 @@ server:
   servlet:
     session:
       timeout: 1d
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json, application/xml
+    min-response-size: 1024
   ssl:
     key-store: classpath:keystore.p12
     key-store-password: ArbitrageBroker2024
@@ -14,6 +18,8 @@ server:
     path: /error
 # Spring Boot configuration
 spring:
+  cache:
+    type: ehcache
   profiles:
     active: prod
   application:
@@ -27,7 +33,7 @@ spring:
     basename: i18n.messages
     encoding: UTF-8
   thymeleaf:
-    cache: false
+    cache: true
     encoding: UTF-8
   # Database
   datasource:
@@ -35,6 +41,10 @@ spring:
     url: ${DB_URL:jdbc:postgresql://dbpostgresql:5432/eshop}
     username: ${DB_USER:eshop_user}
     password: ${DB_PASS:xmrtuKNbeE7O1kU}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+
   # JPA properties
   jpa:
     hibernate:
