@@ -1,30 +1,32 @@
 package com.arbitragebroker.client.config;
 
+import com.arbitragebroker.client.service.HCaptchaService;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CountryResponse;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.UUID;
 
-public class HoneypotAuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final String honeypotFieldName;
     private DatabaseReader dbReader;
+    private final HCaptchaService hCaptchaService;
 
     @SneakyThrows
-    public HoneypotAuthenticationFilter(String honeypotFieldName) {
+    public AuthenticationFilter(String honeypotFieldName, HCaptchaService hCaptchaService) {
         this.honeypotFieldName = honeypotFieldName;
+        this.hCaptchaService = hCaptchaService;
         InputStream databaseStream = getClass().getClassLoader().getResourceAsStream("GeoLite2-Country.mmdb");
         dbReader = new DatabaseReader.Builder(databaseStream).build();
     }
@@ -63,6 +65,12 @@ public class HoneypotAuthenticationFilter extends OncePerRequestFilter {
             if (honeypotValue != null && !honeypotValue.isEmpty()) {
                 // Bot detected - redirect to login page with error
                 response.sendRedirect("/login?errorMsg=botDetected");
+                return;
+            }
+            String captchaResponse = request.getParameter("h-captcha-response");
+            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
+                // Handle failed captcha verification
+                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
                 return;
             }
         }

@@ -46,9 +46,8 @@ $(function () {
             error.insertAfter(element);
         },
         submitHandler: function (form) {
-            const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
-            if (elapsedTime < 3000) { // Limit to 3 seconds
-                alert("You are filling this out too quickly!"); // Alert message for bots
+            if (!hcaptcha.getResponse()) {
+                alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
             $(form).find("button:submit").attr('disabled','disabled');
@@ -80,9 +79,8 @@ $(function () {
             error.insertAfter(element);
         },
         submitHandler: function (form) {
-            const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
-            if (elapsedTime < 3000) { // Limit to 3 seconds
-                alert("You are filling this out too quickly!"); // Alert message for bots
+            if (!hcaptcha.getResponse()) {
+                alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
             $(form).find("button:submit").attr('disabled','disabled');
@@ -146,9 +144,8 @@ $(function () {
             }
         },
         submitHandler: function (form) {
-            const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
-            if (elapsedTime < 3000) { // Limit to 3 seconds
-                alert("You are filling this out too quickly!"); // Alert message for bots
+            if (!hcaptcha.getResponse()) {
+                alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
             if(!consent) {
@@ -250,9 +247,8 @@ $('#reset_pass-form').validate({
         }
     },
     submitHandler: function (form) {
-        const elapsedTime = Date.now() - startTime; // Calculate time elapsed since start
-        if (elapsedTime < 3000) { // Limit to 3 seconds
-            alert("You are filling this out too quickly!"); // Alert message for bots
+        if (!hcaptcha.getResponse()) {
+            alert("Please solve the captcha before submitting."); // Alert message for bots
             return; // Stop the form submission
         }
         $(form).find("button:submit").attr('disabled','disabled');

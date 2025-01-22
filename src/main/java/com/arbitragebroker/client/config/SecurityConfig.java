@@ -1,7 +1,9 @@
 package com.arbitragebroker.client.config;
 
+import com.arbitragebroker.client.service.HCaptchaService;
 import com.arbitragebroker.client.service.impl.CustomUserDetailsServiceImpl;
 import com.arbitragebroker.client.enums.RoleType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -14,22 +16,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    private CustomUserDetailsServiceImpl userDetailsService;
-    @Autowired
-    SuccessLoginConfig successLoginConfig;
-    @Autowired
-    CustomAccessDeniedHandler accessDeniedHandler;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CustomUserDetailsServiceImpl userDetailsService;
+    private final SuccessLoginConfig successLoginConfig;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final HCaptchaService hCaptchaService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,9 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        HoneypotAuthenticationFilter honeypotFilter =
-                new HoneypotAuthenticationFilter("website");
-        http.addFilterBefore(honeypotFilter, UsernamePasswordAuthenticationFilter.class)
+        http.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/index","/aboutus","/ourservices","/ltr/**","/logout","/page_404","/page_200","/page_403","/region_denied","/login","/registration","/send-OTP","/reset-pass","/api/v1/country/findAllSelect*","/api/v1/user/verify-email/**","/api/v1/user/register*","/actuator/**").permitAll()
@@ -79,5 +79,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
+    }
+
+    @Bean
+    public AuthenticationFilter authenticationFilter() {
+        return new AuthenticationFilter("website",hCaptchaService);
     }
 }

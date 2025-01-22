@@ -115,3 +115,6 @@ mailjet:
 
 cache:
   ttl: 1200
+
+hcaptcha:
+  secret: ES_e25e1dc5d8944993bc0977ee459e4d5c
