@@ -7,8 +7,15 @@
   <div class="content" style="margin: 20px 0;padding: 20px;">
     <p>Hello <strong>[user_first_name]</strong>,</p>
     <p>For security reasons, you're required to use the following OTP link to verify your email:</p>
-    <a class="verification-link" href="[verification_link]">[verification_code]</a>
+    <a href="[verification_link]"
+       target="_blank"
+       style="display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: bold; color: #ffffff; text-decoration: none; background-color: #007BFF; border-radius: 5px; font-family: Arial, sans-serif;">
+      Click here</a>
     <br>
+    <p>If the button above doesn’t work, simply copy the URL below and paste it into your browser:</p>
+    <div style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; font-family: Arial, sans-serif; font-size: 14px; color: #333; word-wrap: break-word;">
+      [verification_link]
+    </div>
     <p>Note: This Link is set to expire in 5 minutes.</p>
   </div>
 </div>
