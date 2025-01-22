@@ -67,12 +67,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.sendRedirect("/login?errorMsg=botDetected");
                 return;
             }
-            String captchaResponse = request.getParameter("h-captcha-response");
-            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
-                // Handle failed captcha verification
-                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
-                return;
-            }
+//            String captchaResponse = request.getParameter("h-captcha-response");
+//            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
+//                // Handle failed captcha verification
+//                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
+//                return;
+//            }
         }
         filterChain.doFilter(request, response);
     }
