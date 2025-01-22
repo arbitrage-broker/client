@@ -120,11 +120,12 @@ $.validator.addMethod("currency", function (value, element, param) {
 
     symbol = symbol.replace(/,/g, "");
     symbol = soft ? symbol + "]" : symbol + "]?";
-    regex = "^[" + symbol + "([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$";
+    regex = "^[" + symbol + "([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,6})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,6})?|0(\\.[0-9]{0,6})?|(\\.[0-9]{1,6})?)$";
     regex = new RegExp(regex);
     return this.optional(element) || regex.test(value);
 
 }, "Please specify a valid currency");
+
 /*
  * partnumber:	{require_from_group: [1,".productinfo"]},
  * description: {require_from_group: [1,".productinfo"]}

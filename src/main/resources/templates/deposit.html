@@ -8,6 +8,15 @@
     <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'"/>
     <link rel="stylesheet" type="text/css" th:href="#{direction} +'/datatables.net-scroller-bs/css/scroller.bootstrap.min.css'"/>
     <style>
+        .wallet-section{
+            margin-left: 0;
+            margin-right: 15px;
+        }
+        @media (max-width: 768px) {
+            .wallet-section {
+                margin-top: 30px;
+            }
+        }
         .payment-method .form-group{
             width: 100%;
         }
@@ -20,7 +29,7 @@
             pointer-events: none;
         }
 
-        .form-control-feedback.right, .btn-primary, #qrcode {
+        .form-control-feedback.right, .btn-primary {
             margin-top: 34px;
         }
         .fa-copy{
@@ -78,32 +87,34 @@
                                         <option data="BUSD" value="BUSD" th:text="BUSD" ></option>
                                     </select>
                                 </div>
-                                <div class="col-md-12 form-group has-feedback">
-                                    <label th:text="#{amountInUSD}"></label>
-                                    <input type="number" tabindex="3" class="form-control" id="amount" th:name="amount" th:value="${amount ?: ''}">
-                                    <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
-                                </div>
-                                <div class="col-md-12 form-group has-feedback">
-                                    <label th:text="#{wallet} +' '+ #{address}"></label>
-                                    <input type="text" class="form-control" disabled="disabled" id="walletAddress" name="walletAddress">
-                                    <span class="fa fa-wallet form-control-feedback right" aria-hidden="true"></span>
-                                </div>
-                                <div class="col-md-12 form-group has-feedback">
-                                    <label th:text="#{actualAmount}"></label>
-                                    <input type="number" tabindex="4" class="form-control" id="actualAmount" placeholder="e.g. 0.0000">
-                                    <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
-                                </div>
-                                <div class="col-md-12 form-group has-feedback">
-                                    <label th:text="#{transactionHash}"></label>
-                                    <input type="text" tabindex="5" class="form-control" id="transactionHash" name="transactionHash" required>
-                                    <span class="fa fa-hashtag form-control-feedback right" aria-hidden="true"></span>
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row"><div class="col-12 d-flex justify-content-center align-items-center" id="qrcode"></div></div>
-                                <div class="row" style="margin-top: 34px;">
+                                <div class="row">
                                     <div class="col-12" id="walletAddress-title" style="text-align: center"></div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row wallet-section">
+                            <div class="col-md-6 form-group has-feedback">
+                                <label th:text="#{amountInUSD}"></label>
+                                <input type="number" tabindex="3" class="form-control" id="amount" th:name="amount" th:value="${amount ?: ''}" placeholder="e.g. 0.0000">
+                                <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-6 form-group has-feedback">
+                                <label th:text="#{actualAmount}"></label>
+                                <input type="number" tabindex="4" class="form-control" id="actualAmount" placeholder="e.g. 0.0000">
+                                <span class="fa fa-dollar-sign form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-6 form-group has-feedback">
+                                <label th:text="#{wallet} +' '+ #{address}"></label>
+                                <input type="text" class="form-control" disabled="disabled" id="walletAddress" name="walletAddress">
+                                <span class="fa fa-wallet form-control-feedback right" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-6 form-group has-feedback">
+                                <label th:text="#{transactionHash}"></label>
+                                <input type="text" tabindex="5" class="form-control" id="transactionHash" name="transactionHash" required>
+                                <span class="fa fa-hashtag form-control-feedback right" aria-hidden="true"></span>
                             </div>
                         </div>
                         <div class="row">
