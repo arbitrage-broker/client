@@ -19,6 +19,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 import static com.arbitragebroker.client.enums.RoleType.getSupportUID;
+import static com.arbitragebroker.client.util.StringUtils.generateFilterKey;
 import static com.arbitragebroker.client.util.StringUtils.generateIdKey;
 
 @Service
@@ -60,6 +62,7 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
         clearCache(key);
         clearCache("Notification:findAllBySenderId:%s".formatted(entity.getSender().getId()));
         clearCache("Notification:findAllByRecipientId:%s".formatted(entity.getRecipient().getId()));
+        clearCache(generateFilterKey("Notification","findAllByRecipientIdAndNotRead",entity.getRecipient().getId(), PageRequest.of(0,10)));
         return mapper.toModel(entity);
     }
 
