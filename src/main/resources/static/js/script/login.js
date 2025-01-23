@@ -1,4 +1,4 @@
-let startTime = Date.now();
+let hcaptchaInstances = {};
 let consent = false;
 if (!String.prototype.format) {
     String.prototype.format = function () {
@@ -11,6 +11,26 @@ if (!String.prototype.format) {
         });
     };
 }
+
+function onLoadCaptcha() {
+    // Render hCaptcha widgets and store their widget IDs
+    hcaptchaInstances['login'] = hcaptcha.render('login-captcha', {
+        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+    });
+
+    hcaptchaInstances['register'] = hcaptcha.render('register-captcha', {
+        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+    });
+
+    hcaptchaInstances['reset'] = hcaptcha.render('reset-captcha', {
+        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+    });
+
+    hcaptchaInstances['otp'] = hcaptcha.render('otp-captcha', {
+        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+    });
+}
+
 function consentUser(){
     consent=true;
     $('#myModal').modal('hide');
@@ -46,7 +66,7 @@ $(function () {
             error.insertAfter(element);
         },
         submitHandler: function (form) {
-            if (!hcaptcha.getResponse()) {
+            if (!hcaptcha.getResponse(hcaptchaInstances['login'])) {
                 alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
@@ -79,7 +99,7 @@ $(function () {
             error.insertAfter(element);
         },
         submitHandler: function (form) {
-            if (!hcaptcha.getResponse()) {
+            if (!hcaptcha.getResponse(hcaptchaInstances['otp'])) {
                 alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
@@ -144,7 +164,7 @@ $(function () {
             }
         },
         submitHandler: function (form) {
-            if (!hcaptcha.getResponse()) {
+            if (!hcaptcha.getResponse(hcaptchaInstances['register'])) {
                 alert("Please solve the captcha before submitting."); // Alert message for bots
                 return; // Stop the form submission
             }
@@ -247,7 +267,7 @@ $('#reset_pass-form').validate({
         }
     },
     submitHandler: function (form) {
-        if (!hcaptcha.getResponse()) {
+        if (!hcaptcha.getResponse(hcaptchaInstances['reset'])) {
             alert("Please solve the captcha before submitting."); // Alert message for bots
             return; // Stop the form submission
         }
@@ -357,3 +377,5 @@ function get(lambdaExpr, defaultValue) {// () => supplier expr
 function validateInput(input) {
     input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
 }
+
+window.onload = onLoadCaptcha;
