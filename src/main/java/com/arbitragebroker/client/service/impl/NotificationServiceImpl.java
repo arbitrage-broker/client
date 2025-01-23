@@ -58,6 +58,8 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
             entity.setRead(true);
         repository.save(entity);
         clearCache(key);
+        clearCache("Notification:findAllBySenderId:%s".formatted(entity.getSender().getId()));
+        clearCache("Notification:findAllByRecipientId:%s".formatted(entity.getRecipient().getId()));
         return mapper.toModel(entity);
     }
 
