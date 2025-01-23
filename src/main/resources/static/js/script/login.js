@@ -15,19 +15,19 @@ if (!String.prototype.format) {
 function onLoadCaptcha() {
     // Render hCaptcha widgets and store their widget IDs
     hcaptchaInstances['login'] = hcaptcha.render('login-captcha', {
-        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+        sitekey: 'aa988f36-059e-4026-9d34-f68c0f4c7300'
     });
 
     hcaptchaInstances['register'] = hcaptcha.render('register-captcha', {
-        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+        sitekey: 'aa988f36-059e-4026-9d34-f68c0f4c7300'
     });
 
     hcaptchaInstances['reset'] = hcaptcha.render('reset-captcha', {
-        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+        sitekey: 'aa988f36-059e-4026-9d34-f68c0f4c7300'
     });
 
     hcaptchaInstances['otp'] = hcaptcha.render('otp-captcha', {
-        sitekey: '7f70359e-7d7c-42ac-b1c2-5a1078f40e70'
+        sitekey: 'aa988f36-059e-4026-9d34-f68c0f4c7300'
     });
 }
 
