@@ -46,7 +46,7 @@
                     <h1 th:text="#{login} + ' ' + #{form}"></h1>
 
                     <div class="row">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group error-content">
                             <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
                                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
                                 </button>
@@ -116,7 +116,7 @@
                     <h1 th:text="#{send} + ' OTP'"></h1>
 
                     <div class="row">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group error-content">
                             <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
                                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
                                 </button>
@@ -176,7 +176,7 @@
                     <h1 th:text="#{resetPassword}"></h1>
 
                     <div class="row">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group error-content">
                             <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
                                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
                                 </button>
@@ -255,7 +255,7 @@
                 <form id="register-form">
                     <h1 th:text="#{createAccount}">Create Account</h1>
                     <div class="row">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-12 form-group error-content">
                         <div class='alert alert-danger' th:if="${errorMsg != null && errorMsg!='invalidSession'}">
                             <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                             <p th:text="#{${errorMsg}}" style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;"></p>

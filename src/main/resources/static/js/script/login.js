@@ -67,7 +67,11 @@ $(function () {
         },
         submitHandler: function (form) {
             if (!hcaptcha.getResponse(hcaptchaInstances['login'])) {
-                alert("Please solve the captcha before submitting."); // Alert message for bots
+                $('.error-content').empty().html(`<div class='alert alert-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;">Please solve the captcha challenge.</p>
+                            </div>`);
                 return; // Stop the form submission
             }
             $(form).find("button:submit").attr('disabled','disabled');
@@ -100,7 +104,11 @@ $(function () {
         },
         submitHandler: function (form) {
             if (!hcaptcha.getResponse(hcaptchaInstances['otp'])) {
-                alert("Please solve the captcha before submitting."); // Alert message for bots
+                $('.error-content').empty().html(`<div class='alert alert-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;">Please solve the captcha challenge.</p>
+                            </div>`);
                 return; // Stop the form submission
             }
             $(form).find("button:submit").attr('disabled','disabled');
@@ -165,7 +173,11 @@ $(function () {
         },
         submitHandler: function (form) {
             if (!hcaptcha.getResponse(hcaptchaInstances['register'])) {
-                alert("Please solve the captcha before submitting."); // Alert message for bots
+                $('.error-content').empty().html(`<div class='alert alert-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;">Please solve the captcha challenge.</p>
+                            </div>`);
                 return; // Stop the form submission
             }
             if(!consent) {
@@ -268,7 +280,11 @@ $('#reset_pass-form').validate({
     },
     submitHandler: function (form) {
         if (!hcaptcha.getResponse(hcaptchaInstances['reset'])) {
-            alert("Please solve the captcha before submitting."); // Alert message for bots
+            $('.error-content').empty().html(`<div class='alert alert-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;
+                                </button>
+                                <p style="color: white;text-shadow: none;font-size: 1rem;margin-bottom: 0px;">Please solve the captcha challenge.</p>
+                            </div>`);
             return; // Stop the form submission
         }
         $(form).find("button:submit").attr('disabled','disabled');

@@ -5,6 +5,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CountryResponse;
 import lombok.SneakyThrows;
 import org.slf4j.MDC;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -67,12 +68,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.sendRedirect("/login?errorMsg=botDetected");
                 return;
             }
-//            String captchaResponse = request.getParameter("h-captcha-response");
-//            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
-//                // Handle failed captcha verification
-//                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
-//                return;
-//            }
+            String captchaResponse = request.getParameter("h-captcha-response");
+            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
+                // Handle failed captcha verification
+                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
+                return;
+            }
         }
         filterChain.doFilter(request, response);
     }
