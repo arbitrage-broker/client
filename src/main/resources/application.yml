@@ -39,8 +39,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://dbpostgresql:5432/eshop}
-    username: ${DB_USER:eshop_user}
-    password: ${DB_PASS:xmrtuKNbeE7O1kU}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:password}
     hikari:
       maximum-pool-size: 10
       minimum-idle: 5
