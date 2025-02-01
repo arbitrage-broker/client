@@ -5,8 +5,8 @@ import com.arbitragebroker.client.enums.EntityStatusType;
 import com.arbitragebroker.client.util.NumberUtil;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;

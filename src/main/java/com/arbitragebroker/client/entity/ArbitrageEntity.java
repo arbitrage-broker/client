@@ -4,7 +4,7 @@ import com.arbitragebroker.client.enums.CurrencyType;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 import static com.arbitragebroker.client.util.MapperHelper.getOrDefault;

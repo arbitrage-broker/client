@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.util.Objects;
 

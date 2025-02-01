@@ -8,7 +8,7 @@ import com.arbitragebroker.client.model.Select2Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;

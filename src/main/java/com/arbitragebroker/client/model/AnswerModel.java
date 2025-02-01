@@ -3,7 +3,7 @@ package com.arbitragebroker.client.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Data

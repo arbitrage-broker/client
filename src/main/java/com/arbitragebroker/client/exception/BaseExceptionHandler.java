@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,8 +71,8 @@ public class BaseExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(status,path,"constraint violation occurred." + ex.getMessage()), status);
     }
 
-    @ExceptionHandler({javax.validation.ConstraintViolationException.class, ConstraintViolationException.class})
-    public ResponseEntity<?> handleConstraintViolationException(javax.validation.ConstraintViolationException exception, HttpServletRequest request) {
+    @ExceptionHandler({jakarta.validation.ConstraintViolationException.class, ConstraintViolationException.class})
+    public ResponseEntity<?> handleConstraintViolationException(jakarta.validation.ConstraintViolationException exception, HttpServletRequest request) {
         String details = exception.getConstraintViolations().stream()
                 .map(m -> String.format("{%s %s %s}", m.getRootBeanClass().getName(), m.getPropertyPath(), m.getMessage()))
                 .collect(Collectors.joining(", "));

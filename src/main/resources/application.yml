@@ -19,7 +19,11 @@ server:
 # Spring Boot configuration
 spring:
   cache:
-    type: ehcache
+    type: redis
+  session:
+    store-type: redis
+  redis:
+    host: redis
   profiles:
     active: prod
   application:
@@ -45,6 +49,12 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 5
 
+  data:
+    redis:
+      host: redis
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
   # JPA properties
   jpa:
     hibernate:
@@ -59,6 +69,12 @@ spring:
         hibernate:
           envers:
             store_data_at_delete: true
+      hibernate:
+#        cache:
+#          use_second_level_cache: true
+#          use_query_cache: false
+#          region:
+#            factory_class: org.redisson.hibernate.RedissonRegionFactory
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -114,7 +130,7 @@ mailjet:
   token: ZmIzMTlkZTc1MGUwYWI1NmZiOTYwN2QyNTdiMTFmYjA6ZjQxNTJkMzY4YjFlNTVkNDJjYmZmYjNiOWMyZDMxMmY=
 
 cache:
-  ttl: 1200
+  ttl: 1800
 
 hcaptcha:
   secret: ES_e25e1dc5d8944993bc0977ee459e4d5c

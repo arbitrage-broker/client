@@ -4,7 +4,7 @@ import com.arbitragebroker.client.util.DateUtil;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 

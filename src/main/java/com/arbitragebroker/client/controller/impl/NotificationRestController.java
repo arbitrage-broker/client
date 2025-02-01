@@ -1,16 +1,15 @@
 package com.arbitragebroker.client.controller.impl;
 
 import com.arbitragebroker.client.controller.LogicalDeletedRestController;
+import com.arbitragebroker.client.dto.PagedResponse;
+import com.arbitragebroker.client.exception.BadRequestException;
 import com.arbitragebroker.client.filter.NotificationFilter;
 import com.arbitragebroker.client.model.NotificationModel;
-import com.arbitragebroker.client.model.UserModel;
 import com.arbitragebroker.client.service.LogicalDeletedService;
 import com.arbitragebroker.client.service.NotificationService;
-import com.arbitragebroker.client.exception.BadRequestException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
-import static com.arbitragebroker.client.util.StringUtils.generateFilterKey;
 
 @RestController
 @Tag(name = "Notification Rest Service v1")
@@ -39,12 +36,12 @@ public class NotificationRestController extends BaseRestControllerImpl<Notificat
     }
 
     @GetMapping("findAll-by-recipientId/{recipientId}")
-    public ResponseEntity<Page<NotificationModel>> findAllByRecipientId(@PathVariable UUID recipientId, @PageableDefault Pageable pageable) {
+    public ResponseEntity<PagedResponse<NotificationModel>> findAllByRecipientId(@PathVariable UUID recipientId, @PageableDefault Pageable pageable) {
         String key = "Notification:findAllByRecipientId:%s".formatted(recipientId);
         return ResponseEntity.ok(notificationService.findAllByRecipientId(recipientId,pageable, key));
     }
     @GetMapping("findAll-by-senderId/{senderId}")
-    public ResponseEntity<Page<NotificationModel>> findAllBySenderId(@PathVariable UUID senderId, @PageableDefault Pageable pageable) {
+    public ResponseEntity<PagedResponse<NotificationModel>> findAllBySenderId(@PathVariable UUID senderId, @PageableDefault Pageable pageable) {
         String key = "Notification:findAllBySenderId:%s".formatted(senderId);
         return ResponseEntity.ok(notificationService.findAllBySenderId(senderId,pageable,key));
     }

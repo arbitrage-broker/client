@@ -9,7 +9,12 @@ import com.arbitragebroker.client.filter.SubscriptionPackageFilter;
 import com.arbitragebroker.client.model.*;
 import com.arbitragebroker.client.service.*;
 import com.arbitragebroker.client.service.impl.BaseMailService;
+import com.arbitragebroker.client.util.CustomObjectMapper;
 import com.arbitragebroker.client.util.SessionHolder;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -18,10 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class LoginController {
     final SubscriptionService subscriptionService;
     final CoinService coinService;
     final ExchangeService exchangeService;
+    final CustomObjectMapper objectMapper;
     private final WalletService walletService;
     private final String totalUsers;
     private final List<ParameterModel> referralRewards;
@@ -67,6 +69,7 @@ public class LoginController {
         this.coinService = coinService;
         this.exchangeService = exchangeService;
         this.walletService = walletService;
+        this.objectMapper = new CustomObjectMapper();
         this.totalUsers = parameterService.findValueByCodeOrDefault("TOTAL_USERS", "2.5M");
         this.referralRewards = parameterService.findAllByParameterGroupCode("REFERRAL_REWARD");
     }
@@ -77,7 +80,7 @@ public class LoginController {
         if (name == null || name.isEmpty() || name.equals("favicon.ico"))
             return new ModelAndView("dashboard");
 
-        UserModel user = sessionHolder.getCurrentUser();
+        var user = sessionHolder.getCurrentUser();
         ModelAndView modelAndView = new ModelAndView(name);
 
         if(name.equals("index")) {
@@ -90,7 +93,8 @@ public class LoginController {
         if(user == null)
             return modelAndView;
 
-        modelAndView.addObject("currentUser", sessionHolder.getCurrentUserAsJsonString());
+        var userAsString = user != null ? objectMapper.writeValueAsString(user) : "{}";
+        modelAndView.addObject("currentUser", userAsString);
         String cacheKey = generateFilterKey("Notification","findAllByRecipientIdAndNotRead",user.getId(),PageRequest.of(0,10));
         modelAndView.addObject("notifications", notificationService.findAllByRecipientIdAndNotRead(user.getId(), PageRequest.of(0,10),cacheKey));
         modelAndView.addObject("fullName", user.getFirstName() + " " + user.getLastName());
@@ -123,7 +127,7 @@ public class LoginController {
             modelAndView.addObject("selectedSubscriptionPackagePrice", subscription == null ? null : subscription.getSubscriptionPackage().getPrice());
             modelAndView.addObject("selectedSubscriptionPackageName", subscription == null ? null : subscription.getSubscriptionPackage().getName());
             modelAndView.addObject("selectedSubscriptionId", subscription == null ? null : subscription.getId());
-            modelAndView.addObject("selectedSubscription", subscription == null ? null : sessionHolder.getObjectMapper().writeValueAsString(subscription));
+            modelAndView.addObject("selectedSubscription", subscription == null ? null : objectMapper.writeValueAsString(subscription));
             modelAndView.addObject("subscriptionPackages", subscriptionPackages.getContent());
             if(limit == null && subscription!=null && subscription.getSubscriptionPackage().getOrderCount()>0) {
                 var coins = coinService.findAllByRandom(subscription.getSubscriptionPackage().getOrderCount());
@@ -200,7 +204,7 @@ public class LoginController {
             var newUser = new UserModel().setUserId(user.getId());
             newUser.setPassword(resetPassModel.getNewPassword());
             newUser.setEmailVerified(true);
-            userService.update(newUser, generateIdKey("User",user.getUid().toString()),"User:*");
+            userService.update(newUser, generateIdKey("User",user.getId().toString()),"User:*");
             return "redirect:/login#signin";
         }
         return "redirect:/login?errorMsg=invalidOTPCode#reset_pass";

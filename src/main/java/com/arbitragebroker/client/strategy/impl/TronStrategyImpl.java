@@ -2,8 +2,8 @@ package com.arbitragebroker.client.strategy.impl;
 
 import com.arbitragebroker.client.strategy.NetworkStrategy;
 import com.arbitragebroker.client.dto.TransactionResponse;
+import com.arbitragebroker.client.util.CustomObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class TronStrategyImpl implements NetworkStrategy {
                 .toUriString();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            var objectMapper = new CustomObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.getBody());
             String priceInUsd = rootNode.get("price_in_usd").asText();
             return new BigDecimal(priceInUsd);
@@ -57,7 +57,7 @@ public class TronStrategyImpl implements NetworkStrategy {
     public static TransactionResponse mapFromJson(String json) throws IOException {
         if(json.trim() == null || json.trim().isEmpty() || json.trim().equals("{}"))
             return null;
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new CustomObjectMapper();
         JsonNode rootNode = objectMapper.readTree(json);
 
         TransactionResponse response = new TransactionResponse();

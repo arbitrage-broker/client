@@ -1,7 +1,7 @@
 package com.arbitragebroker.client.controller.impl;
 
 import com.arbitragebroker.client.model.FileModel;
-import com.arbitragebroker.client.model.PageModel;
+import com.arbitragebroker.client.dto.PageDto;
 import com.arbitragebroker.client.util.DateUtil;
 import com.arbitragebroker.client.exception.NotFoundException;
 import org.springframework.data.domain.Pageable;
@@ -51,12 +51,12 @@ public class FileRestController {
         }
     }
     @GetMapping("/findAllTable")
-    public ResponseEntity<PageModel> findAllTable(@RequestParam Optional<String> name, @PageableDefault Pageable pageable) {
+    public ResponseEntity<PageDto> findAllTable(@RequestParam Optional<String> name, @PageableDefault Pageable pageable) {
         File folder = new File(UPLOAD_DIR);
         File[] files = folder.listFiles();
 
         if (files == null) {
-            return ResponseEntity.ok(new PageModel(0,0,null));
+            return ResponseEntity.ok(new PageDto(0,0,null));
         }
 
         List<FileModel> list = Arrays.stream(files)
@@ -69,7 +69,7 @@ public class FileRestController {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), list.size());
         var pageResult = list.subList(start, end);
-        return ResponseEntity.ok(new PageModel(files.length, list.size(), pageResult));
+        return ResponseEntity.ok(new PageDto(files.length, list.size(), pageResult));
     }
     private Comparator<FileModel> getFileModelComparator(Pageable pageable) {
         Sort.Order sortOrder = pageable.getSort().getOrderFor("modifiedDate");

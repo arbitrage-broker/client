@@ -1,46 +1,45 @@
 package com.arbitragebroker.client.util;
 
-import com.arbitragebroker.client.model.UserModel;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.SneakyThrows;
+import com.arbitragebroker.client.dto.UserDetailDto;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import javax.servlet.http.HttpServletRequest;
-
-import static com.arbitragebroker.client.util.MapperHelper.get;
+import java.beans.Transient;
+import java.io.Serializable;
+import java.util.UUID;
 
 @Component
 @SessionScope
-public class SessionHolder {
-    private HttpServletRequest request;
-    private ObjectMapper objectMapper;
+public class SessionHolder implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private transient HttpServletRequest httpServletRequest;
+    private UUID userId;
 
     public SessionHolder(HttpServletRequest request) {
-        this.request = request;
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        this.httpServletRequest = request;
     }
 
-    public UserModel getCurrentUser() {
-        return (UserModel) request.getSession().getAttribute("currentUser");
+    public UserDetailDto getCurrentUser() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof org.springframework.security.core.userdetails.UserDetails) {
+            return (UserDetailDto) authentication.getPrincipal();
+        }
+        return null;
     }
-    public void setCurrentUser(UserModel user) {
-        if(get(()->request.getSession()) != null)
-            request.getSession().setAttribute("currentUser", user);
-    }
-    @SneakyThrows
-    public String getCurrentUserAsJsonString() {
-        return  objectMapper.writeValueAsString(request.getSession().getAttribute("currentUser"));
-    }
+
+    @Transient
     public SecurityContextHolderAwareRequestWrapper getRequestWrapper() {
-        return new SecurityContextHolderAwareRequestWrapper(request, "");
+        return new SecurityContextHolderAwareRequestWrapper(httpServletRequest, "");
     }
-    public ObjectMapper getObjectMapper() {
-        return objectMapper;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

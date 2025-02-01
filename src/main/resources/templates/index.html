@@ -6,7 +6,7 @@
         </div>
         <div class="team_container">
             <div class="row">
-                <th:block th:if="${subscriptionPackages != null && subscriptionPackages.size > 0}">
+                <th:block th:each="s: ${not #lists.isEmpty(subscriptionPackages)}">
                     <th:block th:each="s: ${subscriptionPackages}">
                         <div class="col-lg-3 col-sm-6">
                             <div class="box">
@@ -37,6 +37,7 @@
                         </div>
                     </th:block>
                 </th:block>
+
             </div>
         </div>
     </div>

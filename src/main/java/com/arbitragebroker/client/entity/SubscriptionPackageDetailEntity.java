@@ -3,10 +3,10 @@ package com.arbitragebroker.client.entity;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-import static javax.persistence.FetchType.LAZY;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Data
 @Entity

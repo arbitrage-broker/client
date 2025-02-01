@@ -1,63 +1,62 @@
 package com.arbitragebroker.client.service.impl;
 
+import com.arbitragebroker.client.dto.PageDto;
+import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.entity.BaseEntity;
+import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.mapping.BaseMapper;
 import com.arbitragebroker.client.model.BaseModel;
-import com.arbitragebroker.client.model.PageModel;
 import com.arbitragebroker.client.model.Select2Model;
 import com.arbitragebroker.client.repository.BaseRepository;
 import com.arbitragebroker.client.service.BaseService;
-import com.arbitragebroker.client.exception.NotFoundException;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.caffeine.CaffeineCache;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends BaseEntity<ID>, ID extends Serializable> implements BaseService<F, M, ID> {
 
     protected final BaseRepository<E, ID> repository;
     protected final BaseMapper<M, E> mapper;
-    @PersistenceContext
-    protected EntityManager entityManager;
+
     @Autowired
-    protected CacheManager cacheManager;
+    private RedisTemplate<String, Object> redisTemplate;
 
     public abstract Predicate queryBuilder(F filter);
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "client", key = "#key")
-    public Page<M> findAll(F filter, Pageable pageable, String key) {
-        return repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
+    public PagedResponse<M> findAll(F filter, Pageable pageable, String key) {
+        var page = repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
+        return PagedResponse.fromPage(page);
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "client", key = "#key")
-    public PageModel<M> findAllTable(F filter, Pageable pageable, String key) {
+    public PageDto<M> findAllTable(F filter, Pageable pageable, String key) {
         Predicate predicate = queryBuilder(filter);
         var page = repository.findAll(predicate, pageable);
-        return new PageModel<>(repository.count(), page.getTotalElements(), mapper.toModel(page.getContent()));
+        return new PageDto<>(repository.count(), page.getTotalElements(), mapper.toModel(page.getContent()));
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "client", key = "#key")
-    public Page<Select2Model> findAllSelect(F filter, Pageable pageable, String key) {
-        return repository.findAll(queryBuilder(filter), pageable)
+    public PagedResponse<Select2Model> findAllSelect(F filter, Pageable pageable, String key) {
+        var page = repository.findAll(queryBuilder(filter), pageable)
                 .map(m -> new Select2Model(m.getId().toString(), m.getSelectTitle()));
+        return PagedResponse.fromPage(page);
     }
 
     @Override
@@ -111,9 +110,20 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     @CacheEvict(cacheNames = "client", key = "#allKey")
     public void clearCache(String allKey) {
-        CaffeineCache cache = (CaffeineCache) cacheManager.getCache("client");
-        if(cache != null) {
-            cache.getNativeCache().asMap().keySet().removeIf(key -> key.toString().startsWith(allKey.replace("*","")));
+        try {
+            // Convert the pattern to Redis format
+            String redisPattern = "client::" + allKey.replace("*", "") + "*";
+
+            // Find all keys matching the pattern
+            Set<String> keys = redisTemplate.keys(redisPattern);
+
+            if (keys != null && !keys.isEmpty()) {
+                // Delete all matching keys
+                redisTemplate.delete(keys);
+            }
+        } catch (Exception e) {
+            // Log the error but don't throw it to prevent cache issues from breaking the application
+            System.err.println("Error clearing cache: " + e.getMessage());
         }
     }
 }

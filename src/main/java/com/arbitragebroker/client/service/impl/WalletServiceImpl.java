@@ -45,7 +45,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     private final WalletRepository walletRepository;
     private final SubscriptionService subscriptionService;
     private final JPAQueryFactory queryFactory;
-    private final SessionHolder sessionHolder;
+    private final transient SessionHolder sessionHolder;
     private final String minWithdrawAmount;
     private final UserService userService;
     private final BaseMailService mailService;

@@ -1,8 +1,8 @@
 package com.arbitragebroker.client.service;
 
+import com.arbitragebroker.client.entity.LogicalDeleted;
 import com.arbitragebroker.client.exception.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.arbitragebroker.client.entity.LogicalDeleted;
 
 import java.io.Serializable;
 

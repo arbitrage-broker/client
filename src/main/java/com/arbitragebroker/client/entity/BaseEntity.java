@@ -9,7 +9,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,6 +20,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Audited
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @JsonIgnore
     @CreatedBy

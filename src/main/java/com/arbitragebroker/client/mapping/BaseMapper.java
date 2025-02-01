@@ -4,6 +4,7 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface BaseMapper<M,E> {

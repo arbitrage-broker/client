@@ -6,13 +6,12 @@ import com.maxmind.geoip2.model.CountryResponse;
 import lombok.SneakyThrows;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -68,11 +67,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.sendRedirect("/login?errorMsg=botDetected");
                 return;
             }
-            String captchaResponse = request.getParameter("h-captcha-response");
-            if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
-                // Handle failed captcha verification
-                response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
-                return;
+            var profile = System.getenv("SPRING_PROFILES_ACTIVE");
+            if(StringUtils.hasLength(profile) && profile.equals("prod")) {
+                String captchaResponse = request.getParameter("h-captcha-response");
+                if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
+                    // Handle failed captcha verification
+                    response.sendRedirect("/login?errorMsg=captchaVerificationFailed");
+                    return;
+                }
             }
         }
         filterChain.doFilter(request, response);

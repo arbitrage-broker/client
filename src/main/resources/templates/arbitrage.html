@@ -37,7 +37,7 @@
                 <div class="x_content">
                     <div class="row">
                         <div id="subscription-package" class="col-md-12">
-                            <th:block th:if="${subscriptionPackages != null && subscriptionPackages.size > 0}">
+                            <th:block th:if="${not #lists.isEmpty(subscriptionPackages)}">
                                 <th:block th:each="s: ${subscriptionPackages}">
                                     <div class="col-md-3 col-sm-6" th:id="'subscription-package-item-' + ${s.id}">
                                         <div class="pricing">
@@ -90,7 +90,7 @@
 
                 <div class="x_content">
                     <div id="trading-order" class="row">
-                        <th:block th:if="${coinExchanges != null && coinExchanges.size > 0}">
+                        <th:block th:if="${not #lists.isEmpty(coinExchanges)}">
                             <th:block th:each="c: ${coinExchanges}">
                                 <div class="col-md-3 widget widget_tally_box">
                                     <div class="x_panel">

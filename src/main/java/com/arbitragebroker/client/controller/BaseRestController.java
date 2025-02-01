@@ -1,6 +1,7 @@
 package com.arbitragebroker.client.controller;
 
-import com.arbitragebroker.client.model.PageModel;
+import com.arbitragebroker.client.dto.PageDto;
+import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.model.Select2Model;
 import com.arbitragebroker.client.validation.Create;
 import com.arbitragebroker.client.validation.Update;
@@ -23,15 +24,15 @@ public interface BaseRestController<F, M, ID extends Serializable> {
 
     @GetMapping
     @Operation(summary = "${api.baseRest.findAll}", description = "${api.baseRest.findAll.desc}")
-    ResponseEntity<Page<M>> findAll(F filter, @PageableDefault Pageable pageable);
+    ResponseEntity<PagedResponse<M>> findAll(F filter, @PageableDefault Pageable pageable);
 
     @GetMapping(value = {"/findAllTable"})
     @Operation(summary = "${api.baseRest.findAllTable}", description = "${api.baseRest.findAll.desc}")
-    ResponseEntity<PageModel<M>> findAllTable(F filter, @PageableDefault Pageable pageable);
+    ResponseEntity<PageDto<M>> findAllTable(F filter, @PageableDefault Pageable pageable);
 
     @GetMapping(value = {"/findAllSelect"})
     @Operation(summary = "${api.baseRest.findAllSelect}", description = "${api.baseRest.findAll.desc}")
-    Page<Select2Model> findAllSelect(F filter, @RequestParam int page);
+    PagedResponse<Select2Model> findAllSelect(F filter, @RequestParam int page);
 
     @GetMapping(value = {"/countAll"})
     @Operation(summary = "${api.baseRest.countAll}", description = "${api.baseRest.countAll.desc}")

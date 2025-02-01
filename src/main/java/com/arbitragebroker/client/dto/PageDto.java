@@ -1,10 +1,11 @@
-package com.arbitragebroker.client.model;
+package com.arbitragebroker.client.dto;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageModel<M> {
-    public PageModel(long recordsTotal, long recordsFiltered, List<M> data)
+public class PageDto<M> implements Serializable {
+    public PageDto(long recordsTotal, long recordsFiltered, List<M> data)
     {
         this.draw = 0;
         this.recordsTotal = recordsTotal;

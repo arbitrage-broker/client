@@ -11,26 +11,23 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
 public class SuccessLoginConfig implements AuthenticationSuccessHandler {
     private final UserService userService;
     private RedirectStrategy redirectStrategy;
-    private SessionHolder sessionHolder;
 
-    public SuccessLoginConfig(UserService userService, SessionHolder sessionHolder) {
+    public SuccessLoginConfig(UserService userService) {
         this.userService = userService;
-        this.sessionHolder = sessionHolder;
         this.redirectStrategy = new DefaultRedirectStrategy();
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         var userModel = userService.findByUserName(authentication.getName());
-        sessionHolder.setCurrentUser(userModel);
         MDC.put("userId",userModel.getId().toString());
 
         SecurityContextHolderAwareRequestWrapper requestWrapper = new SecurityContextHolderAwareRequestWrapper(request, "");

@@ -1,29 +1,39 @@
 package com.arbitragebroker.client.service.impl;
 
-import com.arbitragebroker.client.enums.EntityStatusType;
-import com.arbitragebroker.client.model.*;
-import com.arbitragebroker.client.service.*;
 import com.arbitragebroker.client.config.Limited;
 import com.arbitragebroker.client.config.MessageConfig;
+import com.arbitragebroker.client.dto.PageDto;
+import com.arbitragebroker.client.dto.PagedResponse;
+import com.arbitragebroker.client.dto.UserDetailDto;
 import com.arbitragebroker.client.entity.QUserEntity;
 import com.arbitragebroker.client.entity.UserEntity;
+import com.arbitragebroker.client.enums.EntityStatusType;
 import com.arbitragebroker.client.enums.RoleType;
-import com.arbitragebroker.client.filter.UserFilter;
-import com.arbitragebroker.client.mapping.UserMapper;
-import com.arbitragebroker.client.repository.*;
-import com.arbitragebroker.client.util.ReferralCodeGenerator;
-import com.arbitragebroker.client.util.SessionHolder;
 import com.arbitragebroker.client.exception.BadRequestException;
 import com.arbitragebroker.client.exception.NotFoundException;
+import com.arbitragebroker.client.filter.UserFilter;
+import com.arbitragebroker.client.mapping.UserMapper;
+import com.arbitragebroker.client.model.NotificationModel;
+import com.arbitragebroker.client.model.SubscriptionModel;
+import com.arbitragebroker.client.model.SubscriptionPackageModel;
+import com.arbitragebroker.client.model.UserModel;
+import com.arbitragebroker.client.repository.CountryUsers;
+import com.arbitragebroker.client.repository.RoleRepository;
+import com.arbitragebroker.client.repository.UserRepository;
+import com.arbitragebroker.client.repository.WalletRepository;
+import com.arbitragebroker.client.service.*;
+import com.arbitragebroker.client.util.ReferralCodeGenerator;
+import com.arbitragebroker.client.util.SessionHolder;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.SneakyThrows;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,11 +61,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     private final NotificationService notificationService;
     private final WalletRepository walletRepository;
     private final OneTimePasswordService oneTimePasswordService;
-    private final SessionHolder sessionHolder;
+    private final transient SessionHolder sessionHolder;
     private final SubscriptionService subscriptionService;
     private final TelegramService telegramService;
+    private EntityManager entityManager;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, MessageConfig messages, ResourceLoader resourceLoader, NotificationService notificationService, CountryRepository countryRepository, WalletRepository walletRepository, OneTimePasswordService oneTimePasswordService, SessionHolder sessionHolder, SubscriptionService subscriptionService, TelegramService telegramService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder, MessageConfig messages, ResourceLoader resourceLoader,
+                           NotificationService notificationService, WalletRepository walletRepository,OneTimePasswordService oneTimePasswordService,
+                           SessionHolder sessionHolder, SubscriptionService subscriptionService,TelegramService telegramService) {
         super(userRepository, userMapper);
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -69,15 +83,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         this.subscriptionService = subscriptionService;
         this.telegramService = telegramService;
     }
+    @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     @Cacheable(cacheNames = "client", key = "'User:' + #login + ':findByUserNameOrEmail'")
     @Limited(requestsPerMinutes = 3)
-    public UserModel findByUserNameOrEmail(String login) {
+    public UserDetailDto findByUserNameOrEmail(String login) {
         var entity = userRepository.findByUserNameOrEmail(login, login).orElseThrow(() -> new NotFoundException("User not found with username/email: " + login));
-        var model = mapper.toModel(entity);
-        model.setPassword(entity.getPassword());
-        return model;
+        return new UserDetailDto(entity);
     }
 
     @Override
@@ -116,7 +132,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    public Page<UserModel> findAll(UserFilter filter, Pageable pageable, String key) {
+    public PagedResponse<UserModel> findAll(UserFilter filter, Pageable pageable, String key) {
         return super.findAll(filter, pageable, key).map(m->{
             m.setDeposit(walletRepository.totalDeposit(m.getId()));
             m.setWithdrawal(walletRepository.totalWithdrawal(m.getId()));
@@ -126,7 +142,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    public PageModel<UserModel> findAllTable(UserFilter filter, Pageable pageable,String key) {
+    public PageDto<UserModel> findAllTable(UserFilter filter, Pageable pageable, String key) {
         var data = super.findAllTable(filter, pageable,key);
         if(!CollectionUtils.isEmpty(data.getData())) {
             for (UserModel m : data.getData()) {
@@ -167,7 +183,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         }
         entity.setUid(getUid());
         var createdUser = mapper.toModel(repository.save(entity));
-        sessionHolder.setCurrentUser(createdUser);
+        sessionHolder.setUserId(createdUser.getId());
         subscriptionService.create(new SubscriptionModel()
                 .setUser(createdUser)
                 .setSubscriptionPackage(new SubscriptionPackageModel().setSubscriptionPackageId(6L))

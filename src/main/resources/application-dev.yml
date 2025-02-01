@@ -7,11 +7,21 @@ server:
     key-store-type: PKCS12
     key-alias: arbitrage-broker.com
 spring:
+  cache:
+    type: redis
+  session:
+    store-type: redis
+  redis:
+    host: localhost
   # Database
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/eshop}
     username: ${DB_USER:postgres}
     password: ${DB_PASS:password}
+
+  data:
+    redis:
+      host: localhost
   # JPA properties
   jpa:
     hibernate:

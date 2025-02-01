@@ -1,6 +1,8 @@
 package com.arbitragebroker.client.model;
 
-public class Select2Model {
+import java.io.Serializable;
+
+public class Select2Model implements Serializable {
     private String id;
     private String text;
     private String image;

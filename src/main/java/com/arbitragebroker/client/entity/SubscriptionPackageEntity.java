@@ -6,7 +6,7 @@ import com.arbitragebroker.client.util.NumberUtil;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;

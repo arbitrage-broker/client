@@ -5,7 +5,7 @@ import com.arbitragebroker.client.enums.NetworkType;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

@@ -34,7 +34,7 @@
     </div>
     <div class="clearfix"></div>
     <div id="referral-rewards-content">
-        <th:block th:if="${referralRewards != null && referralRewards.size > 0}">
+        <th:block th:if="${not #lists.isEmpty(referralRewards)}">
             <th:block th:each="r: ${referralRewards}" th:with="percentage=${remainedReferralsCount} * 100 / ${r.title}">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 ">

@@ -20,7 +20,7 @@ import java.util.UUID;
 public class SubscriptionRestController extends BaseRestControllerImpl<SubscriptionFilter, SubscriptionModel, Long> implements LogicalDeletedRestController<Long> {
 
     private SubscriptionService subscriptionService;
-    private SessionHolder sessionHolder;
+    private transient SessionHolder sessionHolder;
 
     public SubscriptionRestController(SubscriptionService service, SessionHolder sessionHolder) {
         super(service);
@@ -39,7 +39,7 @@ public class SubscriptionRestController extends BaseRestControllerImpl<Subscript
     }
     @PostMapping("purchase")
     public ResponseEntity<SubscriptionModel> purchase(@RequestBody @Validated SubscriptionModel model){
-        if(!sessionHolder.getCurrentUser().equals(model.getUser()))
+        if(!sessionHolder.getCurrentUser().getId().equals(model.getUser().getId()))
             throw new NotAcceptableException("Other user can not purchase!");
 
         return ResponseEntity.ok(subscriptionService.purchase(model));

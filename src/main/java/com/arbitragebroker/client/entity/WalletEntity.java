@@ -7,10 +7,9 @@ import com.arbitragebroker.client.enums.TransactionType;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -56,6 +55,6 @@ public class WalletEntity extends BaseEntity<Long> {
 		if (transactionType.equals(TransactionType.WITHDRAWAL))
 			builder.append("-");
 		else builder.append("+");
-		return builder.append(amount).append(" ").append(currency).append(" ").append(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(modifiedDate)).toString();
+		return builder.append(amount).append(" ").append(currency).append(" ").append(modifiedDate.toString()).toString();
 	}
 }

@@ -3,7 +3,7 @@ package com.arbitragebroker.client.filter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;

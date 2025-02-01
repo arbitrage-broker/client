@@ -1,17 +1,18 @@
 package com.arbitragebroker.client.service;
 
+import com.arbitragebroker.client.dto.PagedResponse;
+import com.arbitragebroker.client.model.BaseModel;
+import com.arbitragebroker.client.dto.PageDto;
 import com.arbitragebroker.client.model.Select2Model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.arbitragebroker.client.model.BaseModel;
-import com.arbitragebroker.client.model.PageModel;
 
 import java.io.Serializable;
 
 public interface BaseService<F, M extends BaseModel<ID>, ID extends Serializable> {
-    Page<M> findAll(F filter, Pageable pageable, String key);
-    PageModel<M> findAllTable(F filter, Pageable pageable, String key);
-    Page<Select2Model> findAllSelect(F filter, Pageable pageable, String key);
+    PagedResponse<M> findAll(F filter, Pageable pageable, String key);
+    PageDto<M> findAllTable(F filter, Pageable pageable, String key);
+    PagedResponse<Select2Model> findAllSelect(F filter, Pageable pageable, String key);
     Long countAll(F filter, String key);
     boolean exists(F filter, String key);
     M findById(ID id, String key);
