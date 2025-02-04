@@ -3,15 +3,19 @@ package com.arbitragebroker.client.config;
 import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.service.HCaptchaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +26,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static com.arbitragebroker.client.enums.RoleType.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +51,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                //.cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
@@ -75,28 +81,32 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?errorMsg=invalidUserNameOrPassword")
-                        .successHandler(successLoginConfig)
+//                        .successHandler(successLoginConfig)
+                        .defaultSuccessUrl("/dashboard", true)
                         .usernameParameter("login")
                         .passwordParameter("password")
+                        .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .deleteCookies("JSESSIONID", "SESSION")
-                        .invalidateHttpSession(true)
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/index")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("SESSION") // Don't delete JSESSIONID
                 )
                 .exceptionHandling(exc -> exc
                         .authenticationEntryPoint((request, response, authException) ->
                                 response.sendRedirect("/index"))
-                        .accessDeniedHandler(accessDeniedHandler)
+//                        .accessDeniedHandler(accessDeniedHandler)
                 )
                 .sessionManagement(session -> session
-                        .sessionFixation().newSession()
-                        .invalidSessionUrl("/index")
+                        .sessionFixation().migrateSession() // Ensures session ID is retain
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//                        .invalidSessionUrl("/index")
                         .maximumSessions(1)
                         .sessionRegistry(sessionRegistry())
                         .expiredUrl("/index")
-                );
+                )
+        ;
 
         return http.build();
     }

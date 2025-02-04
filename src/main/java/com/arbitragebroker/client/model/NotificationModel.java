@@ -1,14 +1,12 @@
 package com.arbitragebroker.client.model;
 
 import com.arbitragebroker.client.util.DateUtil;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.util.StringUtils;
 
-import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 import static com.arbitragebroker.client.util.StringUtils.shortenText;
 
@@ -24,7 +22,8 @@ public class NotificationModel extends BaseModel<Long> {
     private String body;
     private boolean read = false;
     private String role;
-    @JsonProperty("createdDateAgo")
+    private String createdDateAgo;
+
     public String getCreatedDateAgo(){
         return DateUtil.timeAgo(this.createdDate);
     }

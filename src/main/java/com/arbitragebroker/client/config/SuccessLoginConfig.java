@@ -1,5 +1,6 @@
 package com.arbitragebroker.client.config;
 
+import com.arbitragebroker.client.dto.UserDetailDto;
 import com.arbitragebroker.client.util.SessionHolder;
 import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.service.UserService;
@@ -17,18 +18,16 @@ import java.io.IOException;
 
 @Component
 public class SuccessLoginConfig implements AuthenticationSuccessHandler {
-    private final UserService userService;
     private RedirectStrategy redirectStrategy;
 
-    public SuccessLoginConfig(UserService userService) {
-        this.userService = userService;
+    public SuccessLoginConfig() {
         this.redirectStrategy = new DefaultRedirectStrategy();
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        var userModel = userService.findByUserName(authentication.getName());
-        MDC.put("userId",userModel.getId().toString());
+        UserDetailDto user = (UserDetailDto) authentication.getCredentials();
+        MDC.put("userId", user.getId().toString());
 
         SecurityContextHolderAwareRequestWrapper requestWrapper = new SecurityContextHolderAwareRequestWrapper(request, "");
         String targetUrl = "/access-denied";
