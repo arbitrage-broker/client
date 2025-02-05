@@ -10,9 +10,8 @@ import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
 
 public interface BaseService<F, M extends BaseModel<ID>, ID extends Serializable> {
-    PagedResponse<M> findAll(F filter, Pageable pageable, String key);
-    PageDto<M> findAllTable(F filter, Pageable pageable, String key);
-    PagedResponse<Select2Model> findAllSelect(F filter, Pageable pageable, String key);
+    Page<M> findAll(F filter, Pageable pageable, String key);
+    Page<Select2Model> findAllSelect(F filter, Pageable pageable, String key);
     Long countAll(F filter, String key);
     boolean exists(F filter, String key);
     M findById(ID id, String key);

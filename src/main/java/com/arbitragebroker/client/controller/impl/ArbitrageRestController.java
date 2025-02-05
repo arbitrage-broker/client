@@ -1,11 +1,11 @@
 package com.arbitragebroker.client.controller.impl;
 
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.filter.ArbitrageFilter;
 import com.arbitragebroker.client.model.ArbitrageModel;
 import com.arbitragebroker.client.model.CoinUsageDTO;
 import com.arbitragebroker.client.service.ArbitrageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 import static com.arbitragebroker.client.util.DateUtil.toLocalDateTime;
@@ -42,7 +41,7 @@ public class ArbitrageRestController extends BaseRestControllerImpl<ArbitrageFil
         return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, LocalDateTime.now()));
     }
     @GetMapping("find-top-coins/{pageSize}")
-    public ResponseEntity<PagedResponse<CoinUsageDTO>> findMostUsedCoins(@PathVariable int pageSize) {
+    public ResponseEntity<Page<CoinUsageDTO>> findMostUsedCoins(@PathVariable int pageSize) {
         return ResponseEntity.ok(arbitrageService.findMostUsedCoins(pageSize));
     }
     @GetMapping("purchase-limit/{userId}")

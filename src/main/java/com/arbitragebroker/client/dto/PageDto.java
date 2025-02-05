@@ -1,9 +1,11 @@
 package com.arbitragebroker.client.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.io.Serializable;
 import java.util.List;
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class PageDto<M> implements Serializable {
     public PageDto(long recordsTotal, long recordsFiltered, List<M> data)
     {

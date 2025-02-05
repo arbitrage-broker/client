@@ -2,16 +2,15 @@ package com.arbitragebroker.client.controller.impl;
 
 
 import com.arbitragebroker.client.controller.BaseRestController;
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.exception.BadRequestException;
 import com.arbitragebroker.client.model.BaseModel;
-import com.arbitragebroker.client.dto.PageDto;
 import com.arbitragebroker.client.model.Select2Model;
 import com.arbitragebroker.client.service.BaseService;
 import com.arbitragebroker.client.util.CustomObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -47,21 +46,21 @@ public abstract class BaseRestControllerImpl<F,M extends BaseModel<ID>, ID exten
 
     @SneakyThrows
     @Override
-    public ResponseEntity<PagedResponse<M>> findAll(F filter, Pageable pageable) {
+    public ResponseEntity<Page<M>> findAll(F filter, Pageable pageable) {
         log.debug("call BaseRestImpl.findAll {}, for class {}", filter, service.getClass().getName());
         return ResponseEntity.ok(service.findAll(filter, pageable,generateFilterKey(getClassName(),"findAll",filter, pageable)));
     }
 
-    @SneakyThrows
-    @Override
-    public ResponseEntity<PageDto<M>> findAllTable(F filter, Pageable pageable) {
-        log.debug("call BaseRestImpl.findAllTable {}, for class {}", filter, service.getClass().getName());
-        return ResponseEntity.ok(service.findAllTable(filter, pageable,generateFilterKey(getClassName(),"findAllTable",filter,pageable)));
-    }
+//    @SneakyThrows
+//    @Override
+//    public ResponseEntity<PageDto<M>> findAllTable(F filter, Pageable pageable) {
+//        log.debug("call BaseRestImpl.findAllTable {}, for class {}", filter, service.getClass().getName());
+//        return ResponseEntity.ok(service.findAllTable(filter, pageable,generateFilterKey(getClassName(),"findAllTable",filter,pageable)));
+//    }
 
     @SneakyThrows
     @Override
-    public PagedResponse<Select2Model> findAllSelect(F filter, int page) {
+    public Page<Select2Model> findAllSelect(F filter, int page) {
         Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "id");
         return service.findAllSelect(filter, pageable,generateFilterKey(getClassName(),"findAllSelect",filter,pageable));
     }

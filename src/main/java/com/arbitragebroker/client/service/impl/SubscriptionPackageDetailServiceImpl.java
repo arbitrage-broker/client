@@ -1,6 +1,5 @@
 package com.arbitragebroker.client.service.impl;
 
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.entity.QSubscriptionPackageDetailEntity;
 import com.arbitragebroker.client.entity.SubscriptionPackageDetailEntity;
 import com.arbitragebroker.client.filter.SubscriptionPackageDetailFilter;
@@ -10,6 +9,7 @@ import com.arbitragebroker.client.repository.SubscriptionPackageDetailRepository
 import com.arbitragebroker.client.service.SubscriptionPackageDetailService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +39,7 @@ public class SubscriptionPackageDetailServiceImpl extends BaseServiceImpl<Subscr
     }
 
     @Override
-    public PagedResponse<SubscriptionPackageDetailModel> findBySubscriptionPackageId(long subscriptionPackageId, Pageable pageable) {
-        var page = repository.findBySubscriptionPackageId(subscriptionPackageId, pageable).map(mapper::toModel);
-        return PagedResponse.fromPage(page);
+    public Page<SubscriptionPackageDetailModel> findBySubscriptionPackageId(long subscriptionPackageId, Pageable pageable) {
+        return repository.findBySubscriptionPackageId(subscriptionPackageId, pageable).map(mapper::toModel);
     }
 }

@@ -1,7 +1,5 @@
 package com.arbitragebroker.client.service.impl;
 
-
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.entity.NotificationEntity;
 import com.arbitragebroker.client.entity.QNotificationEntity;
 import com.arbitragebroker.client.exception.NotFoundException;
@@ -17,6 +15,7 @@ import com.arbitragebroker.client.util.SessionHolder;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -66,24 +65,21 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
-    public PagedResponse<NotificationModel> findAllByRecipientId(UUID recipientId, Pageable pageable, String key) {
-        var page = repository.findAllByRecipientIdOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
-        return PagedResponse.fromPage(page);
+    public Page<NotificationModel> findAllByRecipientId(UUID recipientId, Pageable pageable, String key) {
+        return repository.findAllByRecipientIdOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
     }
 
     @Override
     @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
-    public PagedResponse<NotificationModel> findAllBySenderId(UUID senderId, Pageable pageable, String key) {
-        var page = repository.findAllBySenderIdOrderByCreatedDateDesc(senderId, pageable).map(mapper::toModel);
-        return PagedResponse.fromPage(page);
+    public Page<NotificationModel> findAllBySenderId(UUID senderId, Pageable pageable, String key) {
+        return repository.findAllBySenderIdOrderByCreatedDateDesc(senderId, pageable).map(mapper::toModel);
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
-    public PagedResponse<NotificationModel> findAllByRecipientIdAndNotRead(UUID recipientId, Pageable pageable, String key) {
-        var page = repository.findAllByRecipientIdAndReadIsFalseOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
-        return PagedResponse.fromPage(page);
+    public Page<NotificationModel> findAllByRecipientIdAndNotRead(UUID recipientId, Pageable pageable, String key) {
+        return repository.findAllByRecipientIdAndReadIsFalseOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
     }
 
     @Override

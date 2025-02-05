@@ -1,6 +1,5 @@
 package com.arbitragebroker.client.service.impl;
 
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.entity.ArbitrageEntity;
 import com.arbitragebroker.client.entity.QArbitrageEntity;
 import com.arbitragebroker.client.entity.WalletEntity;
@@ -38,7 +37,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.UUID;
 
 import static com.arbitragebroker.client.util.MapperHelper.get;
@@ -179,13 +177,12 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
 
     @Override
     @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:findMostUsedCoins:' + #pageSize")
-    public PagedResponse<CoinUsageDTO> findMostUsedCoins(int pageSize) {
+    public Page<CoinUsageDTO> findMostUsedCoins(int pageSize) {
         long count = repository.countSince(LocalDateTime.now().minusDays(1));
-        var page = repository.findMostUsedCoins(LocalDateTime.now().minusDays(1),PageRequest.ofSize(pageSize)).map(m->{
+        return repository.findMostUsedCoins(LocalDateTime.now().minusDays(1),PageRequest.ofSize(pageSize)).map(m->{
             m.setUsagePercentage(m.getUsageCount()*100L/count);
             return m;
         });
-        return PagedResponse.fromPage(page);
     }
     @Override
     @Transactional(readOnly = true)

@@ -2,7 +2,11 @@ package com.arbitragebroker.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class PagedResponse<T> implements Serializable {
     private List<T> content;
     private int pageNumber;
@@ -47,6 +52,9 @@ public class PagedResponse<T> implements Serializable {
                 page.getTotalPages(),
                 page.isLast()
         );
+    }
+    public Page<T> toPage() {
+        return new PageImpl<>(content, PageRequest.of(pageNumber, pageSize), totalElements);
     }
 
     public <U> PagedResponse<U> map(Function<? super T, ? extends U> converter) {

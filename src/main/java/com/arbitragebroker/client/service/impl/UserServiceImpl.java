@@ -2,8 +2,6 @@ package com.arbitragebroker.client.service.impl;
 
 import com.arbitragebroker.client.config.Limited;
 import com.arbitragebroker.client.config.MessageConfig;
-import com.arbitragebroker.client.dto.PageDto;
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.dto.UserDetailDto;
 import com.arbitragebroker.client.entity.QUserEntity;
 import com.arbitragebroker.client.entity.UserEntity;
@@ -34,11 +32,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
@@ -132,7 +130,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    public PagedResponse<UserModel> findAll(UserFilter filter, Pageable pageable, String key) {
+    public Page<UserModel> findAll(UserFilter filter, Pageable pageable, String key) {
         return super.findAll(filter, pageable, key).map(m->{
             m.setDeposit(walletRepository.totalDeposit(m.getId()));
             m.setWithdrawal(walletRepository.totalWithdrawal(m.getId()));
@@ -141,18 +139,18 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         });
     }
 
-    @Override
-    public PageDto<UserModel> findAllTable(UserFilter filter, Pageable pageable, String key) {
-        var data = super.findAllTable(filter, pageable,key);
-        if(!CollectionUtils.isEmpty(data.getData())) {
-            for (UserModel m : data.getData()) {
-                m.setDeposit(walletRepository.totalDeposit(m.getId()));
-                m.setWithdrawal(walletRepository.totalWithdrawal(m.getId()));
-                m.setReward(walletRepository.totalProfit(m.getId()));
-            }
-        }
-        return data;
-    }
+//    @Override
+//    public PageDto<UserModel> findAllTable(UserFilter filter, Pageable pageable, String key) {
+//        var data = super.findAllTable(filter, pageable,key);
+//        if(!CollectionUtils.isEmpty(data.getData())) {
+//            for (UserModel m : data.getData()) {
+//                m.setDeposit(walletRepository.totalDeposit(m.getId()));
+//                m.setWithdrawal(walletRepository.totalWithdrawal(m.getId()));
+//                m.setReward(walletRepository.totalProfit(m.getId()));
+//            }
+//        }
+//        return data;
+//    }
 
     @Override
     @Transactional
