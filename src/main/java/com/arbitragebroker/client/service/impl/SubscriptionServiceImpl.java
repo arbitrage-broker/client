@@ -163,7 +163,7 @@ public class SubscriptionServiceImpl extends BaseServiceImpl<SubscriptionFilter,
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "'Subscription:' + #userId.toString() + ':findByUserAndActivePackage'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Subscription:' + #userId.toString() + ':findByUserAndActivePackage'")
     public SubscriptionModel findByUserAndActivePackage(UUID userId) {
         return mapper.toModel(subscriptionRepository.findByUserIdAndStatus(userId, EntityStatusType.Active));
     }

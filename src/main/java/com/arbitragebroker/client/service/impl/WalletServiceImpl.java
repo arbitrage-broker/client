@@ -4,19 +4,22 @@ import com.arbitragebroker.client.entity.QWalletEntity;
 import com.arbitragebroker.client.entity.UserEntity;
 import com.arbitragebroker.client.entity.WalletEntity;
 import com.arbitragebroker.client.enums.*;
+import com.arbitragebroker.client.exception.ExpectationException;
+import com.arbitragebroker.client.exception.NotAcceptableException;
+import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.filter.WalletFilter;
 import com.arbitragebroker.client.mapping.WalletMapper;
 import com.arbitragebroker.client.model.ParameterModel;
 import com.arbitragebroker.client.model.WalletModel;
 import com.arbitragebroker.client.repository.UserRepository;
 import com.arbitragebroker.client.repository.WalletRepository;
-import com.arbitragebroker.client.service.*;
+import com.arbitragebroker.client.service.ParameterService;
+import com.arbitragebroker.client.service.SubscriptionService;
+import com.arbitragebroker.client.service.UserService;
+import com.arbitragebroker.client.service.WalletService;
 import com.arbitragebroker.client.strategy.TransactionStrategyFactory;
 import com.arbitragebroker.client.util.DateUtil;
 import com.arbitragebroker.client.util.SessionHolder;
-import com.arbitragebroker.client.exception.ExpectationException;
-import com.arbitragebroker.client.exception.NotAcceptableException;
-import com.arbitragebroker.client.exception.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -29,6 +32,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +41,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static com.arbitragebroker.client.util.DateUtil.toLocalDate;
+import static com.arbitragebroker.client.util.DateUtil.*;
 import static com.arbitragebroker.client.util.StringUtils.generateIdKey;
 
 @Service
@@ -151,51 +156,51 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalBalanceByUserId'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalBalanceByUserId'")
     public BigDecimal totalBalanceByUserId(UUID userId) {
         return walletRepository.calculateUserBalance(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalDeposit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalDeposit'")
     public BigDecimal totalDeposit(UUID userId) {
         return walletRepository.totalDeposit(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalWithdrawal'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalWithdrawal'")
     public BigDecimal totalWithdrawal(UUID userId) {
         return walletRepository.totalWithdrawal(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalBonus'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalBonus'")
     public BigDecimal totalBonus(UUID userId) {
         return walletRepository.totalBonus(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalReward'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalReward'")
     public BigDecimal totalReward(UUID userId) {
         return walletRepository.totalReward(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalProfit'")
     public BigDecimal totalProfit(UUID userId) {
         return walletRepository.totalProfit(userId);
     }
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':totalWithdrawalProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalWithdrawalProfit'")
     public BigDecimal totalWithdrawalProfit(UUID userId) {
         return walletRepository.totalWithdrawalProfit(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':dailyProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':dailyProfit'")
     public BigDecimal dailyProfit(UUID userId) {
         QWalletEntity path = QWalletEntity.walletEntity;
-        DateTemplate<Date> truncatedDate = Expressions.dateTemplate(Date.class, "date_trunc('day', {0})", path.createdDate);
+        DateTemplate<LocalDateTime> truncatedDate = Expressions.dateTemplate(LocalDateTime.class, "date_trunc('day', {0})", path.createdDate);
         var rewardBonusSum =
                 new CaseBuilder()
                         .when(path.transactionType.eq(TransactionType.REWARD)
@@ -218,25 +223,25 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
                 .from(path)
                 .where(path.user.id.eq(userId))
                 .where(path.status.eq(EntityStatusType.Active))
-                .where(truncatedDate.eq(DateUtil.truncate(new Date())))
+                .where(truncatedDate.eq(DateUtil.truncate(LocalDateTime.now())))
                 .fetchOne();
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:findAllWithinDateRange:startDate:' + #startDate + ':endDate:' + #endDate + ':transactionType:' + #transactionType")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:findAllWithinDateRange:startDate:' + #startDate + ':endDate:' + #endDate + ':transactionType:' + #transactionType")
     public Map<Long, BigDecimal> findAllWithinDateRange(long startDate, long endDate, TransactionType transactionType) {
         QWalletEntity path = QWalletEntity.walletEntity;
-        DateTemplate<Date> truncatedDate = Expressions.dateTemplate(Date.class, "date_trunc('day', {0})", path.createdDate);
+        DateTemplate<LocalDateTime> truncatedDate = Expressions.dateTemplate(LocalDateTime.class, "date_trunc('day', {0})", path.createdDate);
         var results = queryFactory.select(truncatedDate, path.amount.sum())
                 .from(path)
-                .where(truncatedDate.between(new Date(startDate), new Date(endDate)))
+                .where(truncatedDate.between(toLocalDateTime(startDate), toLocalDateTime(endDate)))
                 .where(path.transactionType.eq(transactionType))
                 .where(path.user.id.eq(sessionHolder.getCurrentUser().getId()))
                 .groupBy(truncatedDate)
                 .orderBy(truncatedDate.asc())
                 .fetch();
         Map<Long, BigDecimal> map = results.stream()
-                .collect(Collectors.toMap(tuple -> tuple.get(truncatedDate).getTime(), tuple -> tuple.get(path.amount.sum())));
+                .collect(Collectors.toMap(tuple -> toEpoch(tuple.get(truncatedDate)), tuple -> tuple.get(path.amount.sum())));
 
         var allDates = toLocalDate(startDate).datesUntil(toLocalDate(endDate).plusDays(1)).map(DateUtil::toEpoch);
 
@@ -244,7 +249,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':' + #transactionType.name() + ':allowedWithdrawalBalance'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':' + #transactionType.name() + ':allowedWithdrawalBalance'")
     public BigDecimal allowedWithdrawalBalance(UUID userId, TransactionType transactionType) {
         if (transactionType.equals(TransactionType.WITHDRAWAL)) {
             BigDecimal totalBalance = walletRepository.totalBalance(userId);
@@ -312,7 +317,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
 
     @Override
     @Transactional
-    @Cacheable(cacheNames = "client", key = "'Wallet:' + #userId.toString() + ':getClaimedReferrals'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':getClaimedReferrals'")
     public Integer getClaimedReferrals(UUID userId) {
         var rewardReferrals = walletRepository.findAllReferralRewardByUserId(userId);
         AtomicReference<Integer> count = new AtomicReference<>(0);

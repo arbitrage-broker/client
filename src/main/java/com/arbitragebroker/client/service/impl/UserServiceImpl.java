@@ -89,7 +89,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'User:' + #login + ':findByUserNameOrEmail'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'User:' + #login + ':findByUserNameOrEmail'")
     @Limited(requestsPerMinutes = 3)
     public UserDetailDto findByUserNameOrEmail(String login) {
         var entity = userRepository.findByUserNameOrEmail(login, login).orElseThrow(() -> new NotFoundException("User not found with username/email: " + login));
@@ -97,17 +97,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'User:' + #userName + ':findByUserName'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'User:' + #userName + ':findByUserName'")
     public UserModel findByUserName(String userName) {
         return mapper.toModel(userRepository.findByUserName(userName).orElseThrow(() -> new NotFoundException("username: " + userName)));
     }
     @Override
-    @Cacheable(cacheNames = "client", key = "'User:' + #email + ':findByEmail'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'User:' + #email + ':findByEmail'")
     public UserModel findByEmail(String email) {
         return mapper.toModel(userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("email: " + email)));
     }
     @Override
-    @Cacheable(cacheNames = "client", key = "'User:findAllUserCountByCountry'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'User:findAllUserCountByCountry'")
     public List<CountryUsers> findAllUserCountByCountry() {
         return userRepository.findAllUserCountByCountry();
     }
@@ -126,7 +126,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'User:' + #id.toString() + ':countAllActiveChild'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'User:' + #id.toString() + ':countAllActiveChild'")
     public Integer countAllActiveChild(UUID id) {
         return userRepository.countActiveChildrenByUserId(id);
     }

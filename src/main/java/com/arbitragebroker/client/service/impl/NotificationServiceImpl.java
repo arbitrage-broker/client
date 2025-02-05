@@ -65,14 +65,14 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PagedResponse<NotificationModel> findAllByRecipientId(UUID recipientId, Pageable pageable, String key) {
         var page = repository.findAllByRecipientIdOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
         return PagedResponse.fromPage(page);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PagedResponse<NotificationModel> findAllBySenderId(UUID senderId, Pageable pageable, String key) {
         var page = repository.findAllBySenderIdOrderByCreatedDateDesc(senderId, pageable).map(mapper::toModel);
         return PagedResponse.fromPage(page);
@@ -80,7 +80,7 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PagedResponse<NotificationModel> findAllByRecipientIdAndNotRead(UUID recipientId, Pageable pageable, String key) {
         var page = repository.findAllByRecipientIdAndReadIsFalseOrderByCreatedDateDesc(recipientId, pageable).map(mapper::toModel);
         return PagedResponse.fromPage(page);

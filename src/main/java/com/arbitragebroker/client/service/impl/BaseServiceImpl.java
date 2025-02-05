@@ -35,7 +35,7 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PagedResponse<M> findAll(F filter, Pageable pageable, String key) {
         var page = repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
         return PagedResponse.fromPage(page);
@@ -43,7 +43,7 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PageDto<M> findAllTable(F filter, Pageable pageable, String key) {
         Predicate predicate = queryBuilder(filter);
         var page = repository.findAll(predicate, pageable);
@@ -52,7 +52,7 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public PagedResponse<Select2Model> findAllSelect(F filter, Pageable pageable, String key) {
         var page = repository.findAll(queryBuilder(filter), pageable)
                 .map(m -> new Select2Model(m.getId().toString(), m.getSelectTitle()));
@@ -61,21 +61,21 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public Long countAll(F filter, String key) {
         return repository.count(queryBuilder(filter));
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public boolean exists(F filter, String key) {
         return repository.exists(queryBuilder(filter));
     }
 
     @Override
     @Transactional
-    @Cacheable(cacheNames = "client", key = "#key")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public M findById(ID id, String key) {
         return mapper.toModel(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("id: " + id)));

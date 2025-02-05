@@ -2,16 +2,12 @@ package com.arbitragebroker.client.config;
 
 import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.service.HCaptchaService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,10 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static com.arbitragebroker.client.enums.RoleType.*;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -34,81 +28,76 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final transient UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
     private final SuccessLoginConfig successLoginConfig;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final HCaptchaService hCaptchaService;
 
     @Bean
-    public AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(bCryptPasswordEncoder);
-        return new ProviderManager(authProvider);
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
-                //.cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                        // Static resources
                         .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                        .requestMatchers("/index", "/aboutus", "/ourservices", "/ltr/**", "/logout",
+                        // Public endpoints
+                        .requestMatchers("/", "/index", "/aboutus", "/ourservices", "/ltr/**",
                                 "/page_404", "/page_200", "/page_403", "/region_denied", "/login",
                                 "/registration", "/send-OTP", "/reset-pass", "/api/v1/country/findAllSelect*",
                                 "/api/v1/user/verify-email/**", "/api/v1/user/register*", "/actuator/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/v1/user*/**").hasAnyRole(
-                                RoleType.name(ADMIN), RoleType.name(SUPER_WISER),
-                                RoleType.name(MANAGER), RoleType.name(USER))
-                        .requestMatchers(HttpMethod.POST, "/api/v1/wallet*/**", "/api/v1/arbitrage*/**",
-                                "/api/v1/notification*/**", "/api/v1/subscription/purchase", "/api/v1/files")
-                        .hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER),
-                                RoleType.name(MANAGER), RoleType.name(USER))
-                        .requestMatchers(HttpMethod.GET, "/dashboard", "/subUsers", "/deposit", "/profile",
-                                "/withdrawal", "/notification", "/arbitrage", "/about", "/referral-reward",
-                                "/api/v1/files/**", "/api/v1/common/**", "/api/v1/wallet/**", "/api/v1/coin/**",
-                                "/api/v1/exchange/**", "/api/v1/parameter/**", "/api/v1/subscription/**",
-                                "/api/v1/subscription-package/**", "/api/v1/user/**", "/api/v1/role/**",
-                                "/api/v1/arbitrage/**", "/api/v1/notification/**", "/api/v1/role-detail/**")
-                        .hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER),
-                                RoleType.name(MANAGER), RoleType.name(USER))
+                        // Protected endpoints
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/user*/**").hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER), RoleType.name(MANAGER), RoleType.name(USER))
+                        .requestMatchers(HttpMethod.POST, "/api/v1/wallet*/**","/api/v1/arbitrage*/**","/api/v1/notification*/**","/api/v1/subscription/purchase","/api/v1/files").hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER), RoleType.name(MANAGER), RoleType.name(USER))
+                        .requestMatchers(HttpMethod.GET, "/dashboard","/subUsers","/deposit","/profile","/withdrawal","/notification","/arbitrage","/about","/referral-reward","/api/v1/files/**", "/api/v1/common/**","/api/v1/wallet/**","/api/v1/coin/**","/api/v1/exchange/**","/api/v1/parameter/**","/api/v1/subscription/**","/api/v1/subscription-package/**","/api/v1/user/**","/api/v1/role/**","/api/v1/arbitrage/**","/api/v1/notification/**","/api/v1/role-detail/**").hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER),RoleType.name(MANAGER), RoleType.name(USER))
                         .requestMatchers("/**").hasRole(RoleType.name(ADMIN))
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?errorMsg=invalidUserNameOrPassword")
-//                        .successHandler(successLoginConfig)
-                        .defaultSuccessUrl("/dashboard", true)
+                        .defaultSuccessUrl("/dashboard")
                         .usernameParameter("login")
                         .passwordParameter("password")
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/index")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("SESSION") // Don't delete JSESSIONID
+                        .clearAuthentication(true)
+                        .deleteCookies("SESSION","JSESSIONID")
                 )
                 .exceptionHandling(exc -> exc
-                        .authenticationEntryPoint((request, response, authException) ->
-                                response.sendRedirect("/index"))
-//                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            if (isAjaxRequest(request)) {
+                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                                response.getWriter().write("Unauthorized");
+                            } else {
+                                response.sendRedirect("/login");
+                            }
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            if (isAjaxRequest(request)) {
+                                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                                response.getWriter().write("Access Denied");
+                            } else {
+                                response.sendRedirect("/page_403");
+                            }
+                        })
                 )
                 .sessionManagement(session -> session
-                        .sessionFixation().migrateSession() // Ensures session ID is retain
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                        .invalidSessionUrl("/index")
                         .maximumSessions(1)
+                        .expiredUrl("/login?expired")
                         .sessionRegistry(sessionRegistry())
-                        .expiredUrl("/index")
-                )
-        ;
+                );
 
         return http.build();
+    }
+    private boolean isAjaxRequest(HttpServletRequest request) {
+        String requestedWithHeader = request.getHeader("X-Requested-With");
+        return requestedWithHeader != null && requestedWithHeader.equals("XMLHttpRequest");
     }
 
     @Bean

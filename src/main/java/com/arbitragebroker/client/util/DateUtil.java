@@ -2,6 +2,7 @@ package com.arbitragebroker.client.util;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class DateUtil {
@@ -41,8 +42,12 @@ public class DateUtil {
         else return value + "";
     }
     public static Date truncate(Date date) {
-        // Convert back to Date with time set to 00:00:00
+        // removes time part entirely Convert back to Date with time set to 00:00:00
         return Date.from(toLocalDate(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    public static LocalDateTime truncate(LocalDateTime date) {
+        // removes time part entirely Convert back to Date with time set to 00:00:00
+        return date.truncatedTo(ChronoUnit.DAYS);
     }
 
     public static String timeAgo(LocalDateTime dateTime) {

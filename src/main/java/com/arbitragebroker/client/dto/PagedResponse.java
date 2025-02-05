@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Data
-public class PagedResponse<T> {
+public class PagedResponse<T> implements Serializable {
     private List<T> content;
     private int pageNumber;
     private int pageSize;

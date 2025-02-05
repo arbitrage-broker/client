@@ -48,7 +48,7 @@ public class ParameterServiceImpl extends BaseServiceImpl<ParameterFilter,Parame
 
         return builder;
     }
-    @Cacheable(cacheNames = "client", key = "'Parameter:' + #code + ':findByCode'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Parameter:' + #code + ':findByCode'")
     public ParameterModel findByCode(String code) {
         Optional<ParameterEntity> optional = repository.findByCode(code);
         if (optional.isPresent())
@@ -57,7 +57,7 @@ public class ParameterServiceImpl extends BaseServiceImpl<ParameterFilter,Parame
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Parameter:' + #code + ':findByCodeOrDefault'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Parameter:' + #code + ':findByCodeOrDefault'")
     public String findValueByCodeOrDefault(String code, String defaultValue) {
         var model = findByCode(code);
         if(model == null || !StringUtils.hasLength(model.getValue()))
@@ -65,7 +65,7 @@ public class ParameterServiceImpl extends BaseServiceImpl<ParameterFilter,Parame
         return model.getValue();
     }
 
-    @Cacheable(cacheNames = "client", key = "'Parameter:' + #parameterGroupCode + ':findAllByParameterGroupCode'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Parameter:' + #parameterGroupCode + ':findAllByParameterGroupCode'")
     public List<ParameterModel> findAllByParameterGroupCode(String parameterGroupCode) {
         ParameterFilter filter = new ParameterFilter(){{setParameterGroup(new ParameterGroupFilter(){{setCode(parameterGroupCode);}});}};
         return super.findAll(filter, PageRequest.ofSize(1000), generateFilterKey("Parameter","findAllByParameterGroupCode",filter,PageRequest.ofSize(1000))).getContent();

@@ -68,7 +68,7 @@ public class SubscriptionPackageServiceImpl extends BaseServiceImpl<Subscription
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'SubscriptionPackage:findMatchedPackageByAmount:amount:' + #amount.toString()")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'SubscriptionPackage:findMatchedPackageByAmount:amount:' + #amount.toString()")
     public SubscriptionPackageModel findMatchedPackageByAmount(BigDecimal amount) {
         var result = subscriptionPackageRepository.findMatchedPackageByAmount(amount);
         if(result.isEmpty()) {
@@ -81,7 +81,7 @@ public class SubscriptionPackageServiceImpl extends BaseServiceImpl<Subscription
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'SubscriptionPackage:findMatchedPackageByUserIdAndAmount:'+ #userId +':amount:' + #amount.toString()")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'SubscriptionPackage:findMatchedPackageByUserIdAndAmount:'+ #userId +':amount:' + #amount.toString()")
     @Transactional
     public String findMatchedPackageByUserIdAndAmount(UUID userId, BigDecimal amount) {//will check from withdrawal page
         var balance = walletRepository.calculateUserBalance(userId);

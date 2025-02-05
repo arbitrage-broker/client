@@ -167,10 +167,10 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Arbitrage:' + #userId.toString() + ':' + #date.getTime() + ':countByUserIdAndDate'")
-    public long countByUserIdAndDate(UUID userId, Date date) {
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId.toString() + ':' + #date.atZone(T(java.time.ZoneOffset).UTC).toInstant().toEpochMilli() + ':countByUserIdAndDate'")
+    public long countByUserIdAndDate(UUID userId, LocalDateTime date) {
         QArbitrageEntity path = QArbitrageEntity.arbitrageEntity;
-        DateTemplate<Date> truncatedDate = Expressions.dateTemplate(Date.class, "date_trunc('day', {0})", path.createdDate);
+        DateTemplate<LocalDateTime> truncatedDate = Expressions.dateTemplate(LocalDateTime.class, "date_trunc('day', {0})", path.createdDate);
         return queryFactory.from(path)
                 .where(truncatedDate.eq(DateUtil.truncate(date)))
                 .where(path.user.id.eq(userId))
@@ -178,7 +178,7 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
     }
 
     @Override
-    @Cacheable(cacheNames = "client", key = "'Arbitrage:findMostUsedCoins:' + #pageSize")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:findMostUsedCoins:' + #pageSize")
     public PagedResponse<CoinUsageDTO> findMostUsedCoins(int pageSize) {
         long count = repository.countSince(LocalDateTime.now().minusDays(1));
         var page = repository.findMostUsedCoins(LocalDateTime.now().minusDays(1),PageRequest.ofSize(pageSize)).map(m->{
@@ -189,7 +189,7 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
     }
     @Override
     @Transactional(readOnly = true)
-//    @Cacheable(cacheNames = "client", key = "'Arbitrage:' + #userId.toString() + ':purchaseLimit'")
+//    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId.toString() + ':purchaseLimit'")
     public String purchaseLimit(UUID userId) {
         var subscription = subscriptionService.findByUserAndActivePackage(userId);
         if(subscription == null)

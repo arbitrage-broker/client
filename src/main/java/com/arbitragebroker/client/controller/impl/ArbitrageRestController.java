@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
+
+import static com.arbitragebroker.client.util.DateUtil.toLocalDateTime;
 
 @RestController
 @Tag(name = "Arbitrage Rest Service v1")
@@ -32,11 +35,11 @@ public class ArbitrageRestController extends BaseRestControllerImpl<ArbitrageFil
     }
     @GetMapping("count-by-user-and-date/{userId}/{epochDate}")
     public ResponseEntity<Long> countByUserIdAndDate(@PathVariable UUID userId, @PathVariable Long epochDate) {
-        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, new Date(epochDate)));
+        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, toLocalDateTime(epochDate)));
     }
     @GetMapping("count-today-by-user/{userId}")
     public ResponseEntity<Long> countByUserIdAndDate(@PathVariable UUID userId) {
-        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, new Date()));
+        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, LocalDateTime.now()));
     }
     @GetMapping("find-top-coins/{pageSize}")
     public ResponseEntity<PagedResponse<CoinUsageDTO>> findMostUsedCoins(@PathVariable int pageSize) {
