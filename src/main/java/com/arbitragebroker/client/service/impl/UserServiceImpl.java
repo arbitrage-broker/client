@@ -181,7 +181,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         }
         entity.setUid(getUid());
         var createdUser = mapper.toModel(repository.save(entity));
-        sessionHolder.setUserId(createdUser.getId());
+        sessionHolder.setUserModel(createdUser);
         subscriptionService.create(new SubscriptionModel()
                 .setUser(createdUser)
                 .setSubscriptionPackage(new SubscriptionPackageModel().setSubscriptionPackageId(6L))
@@ -269,7 +269,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserE
         filter.getParentId().ifPresent(v -> builder.and(path.parent.id.eq(v)));
         filter.getTreePath().ifPresent(v -> {
             if(v.contains("%"))
-                builder.and(Expressions.booleanTemplate("tree_path like {0}", v));
+                builder.and(Expressions.booleanTemplate("treePath like {0}", v));
             else builder.and(path.treePath.contains(v));
         });
         filter.getWalletAddress().ifPresent(v -> builder.and(path.walletAddress.eq(v)));

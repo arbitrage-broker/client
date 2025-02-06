@@ -304,6 +304,8 @@ function onLoad() {
                     if (data.error == null) {
                         clearAll();
                         loadLabelByEntity(currentUser.id);
+                        currentUser = data;
+                        userProfileOccupied();
                         show_success(resources.saveSuccess);
                     } else {
                         show_error(data.error);

@@ -13,6 +13,7 @@ import com.arbitragebroker.client.exception.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -42,6 +43,7 @@ public class RoleDetailServiceImpl extends BaseServiceImpl<RoleDetailFilter, Rol
     }
 
     @Override
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'RoleDetail:' + #role + ':' + #networkType + ':' + #currencyType")
     public RoleDetailModel getWalletAddress(String role, NetworkType networkType, CurrencyType currencyType) {
         return mapper.toModel(roleDetailRepository.findByRoleRoleAndNetworkAndCurrency(role, networkType, currencyType).orElseThrow(()->new NotFoundException("RoleDetail not found")));
     }

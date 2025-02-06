@@ -1,8 +1,6 @@
 package com.arbitragebroker.client.service;
 
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.model.BaseModel;
-import com.arbitragebroker.client.dto.PageDto;
 import com.arbitragebroker.client.model.Select2Model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

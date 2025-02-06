@@ -130,7 +130,10 @@ function toDateTimeString(inputDate) {
     return `${timeString} ${dateString}`;
 }
 function addDays(date, days) {
-    var result = new Date(date);
+    var result = truncateDate(date);
     result.setDate(result.getDate() + days);
     return result;
+}
+function truncateDate(date) {
+    return new Date(date.setHours(0, 0, 0, 0));
 }

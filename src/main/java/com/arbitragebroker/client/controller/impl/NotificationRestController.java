@@ -38,7 +38,7 @@ public class NotificationRestController extends BaseRestControllerImpl<Notificat
     @GetMapping("findAll-by-recipientId/{recipientId}")
     public ResponseEntity<Page<NotificationModel>> findAllByRecipientId(@PathVariable UUID recipientId, @PageableDefault Pageable pageable) {
         String key = "Notification:findAllByRecipientId:%s".formatted(recipientId);
-        return ResponseEntity.ok(notificationService.findAllByRecipientId(recipientId,pageable, key));
+        return ResponseEntity.ok(notificationService.findAllByRecipientId(recipientId, pageable, key));
     }
     @GetMapping("findAll-by-senderId/{senderId}")
     public ResponseEntity<Page<NotificationModel>> findAllBySenderId(@PathVariable UUID senderId, @PageableDefault Pageable pageable) {

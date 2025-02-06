@@ -27,10 +27,10 @@ $.postJSON = function(url, data, success, error, dataType) {
         dataType: dataType
     });
 };
-
-var currentUser = JSON.parse($("#currentUser").val());
 let userOccupied = 0;
+var currentUser = JSON.parse($("#currentUser").val());
 userProfileOccupied();
+
 
 const referralLink = window.location.origin + `/login?referralCode=${currentUser.uid}#signup`;
 $(".referral-code").attr("href", referralLink).html(`${currentUser.uid}`);

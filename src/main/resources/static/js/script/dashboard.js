@@ -171,9 +171,9 @@
         }
     };
     if ($("#chart_01").length) {
-        $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ new Date().getTime() + "/DEPOSIT", function (depositData) {
+        $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ truncateDate(new Date()).getTime() + "/DEPOSIT", function (depositData) {
             const depositArray = Object.entries(depositData).map(([key, value]) => [key, value]).sort((a, b) => Number(a[0]) - Number(b[0]));
-            $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ new Date().getTime() + "/WITHDRAWAL", function (withdrawalData) {
+            $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ truncateDate(new Date()).getTime() + "/WITHDRAWAL", function (withdrawalData) {
                 const withdrawalArray = Object.entries(withdrawalData).map(([key, value]) => [key, value]).sort((a, b) => Number(a[0]) - Number(b[0]));
                 $.plot($("#chart_01"),[depositArray, withdrawalArray],chart_plot_01_settings);
             });
@@ -181,9 +181,9 @@
     }
     //chart
     if ($("#chart_02").length) {
-        $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ new Date().getTime() + "/BONUS", function (bonusData) {
+        $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ truncateDate(new Date()).getTime() + "/BONUS", function (bonusData) {
             const bonusArray = Object.entries(bonusData).map(([key, value]) => [key, value]).sort((a, b) => Number(a[0]) - Number(b[0]));
-            $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ new Date().getTime() + "/REWARD", function (rewardData) {
+            $.getJSON("/api/v1/wallet/get-date-range/" + addDays(new Date(),-7).getTime() +"/"+ truncateDate(new Date()).getTime() + "/REWARD", function (rewardData) {
                 const rewardArray = Object.entries(rewardData).map(([key, value]) => [key, value]).sort((a, b) => Number(a[0]) - Number(b[0]));
                 $.plot($("#chart_02"), [bonusArray,rewardArray], chart_plot_01_settings);
             });

@@ -1,6 +1,5 @@
 package com.arbitragebroker.client.service.impl;
 
-import com.arbitragebroker.client.dto.PagedResponse;
 import com.arbitragebroker.client.entity.BaseEntity;
 import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.mapping.BaseMapper;
@@ -8,7 +7,6 @@ import com.arbitragebroker.client.model.BaseModel;
 import com.arbitragebroker.client.model.Select2Model;
 import com.arbitragebroker.client.repository.BaseRepository;
 import com.arbitragebroker.client.service.BaseService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +15,9 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @RequiredArgsConstructor
 public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends BaseEntity<ID>, ID extends Serializable> implements BaseService<F, M, ID> {
@@ -34,37 +30,20 @@ public abstract class BaseServiceImpl<F, M extends BaseModel<ID>, E extends Base
 
     public abstract Predicate queryBuilder(F filter);
 
+
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public Page<M> findAll(F filter, Pageable pageable, String key) {
-        TypeReference<PagedResponse<M>> typeRef = new TypeReference<>() {};
-        var page = redisService.getPage(key, typeRef);
-        if(page.isEmpty()){
-            page = repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
-            redisService.savePage(key, page);
-        }
-        return page;
+        return repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
     }
 
-//    @Override
-//    @Transactional(readOnly = true)
-//    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
-//    public PageDto<M> findAllTable(F filter, Pageable pageable, String key) {
-//        Predicate predicate = queryBuilder(filter);
-//        var page = repository.findAll(predicate, pageable);
-//        return new PageDto<>(repository.count(), page.getTotalElements(), mapper.toModel(page.getContent()));
-//    }
-
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "#key")
     public Page<Select2Model> findAllSelect(F filter, Pageable pageable, String key) {
-        var page = redisService.getPage(key, Select2Model.class);
-        if(page.isEmpty()) {
-            page = repository.findAll(queryBuilder(filter), pageable)
-                    .map(m -> new Select2Model(m.getId().toString(), m.getSelectTitle()));
-            redisService.savePage(key, page);
-        }
-        return page;
+        return repository.findAll(queryBuilder(filter), pageable)
+                .map(m -> new Select2Model(m.getId().toString(), m.getSelectTitle()));
     }
 
     @Override

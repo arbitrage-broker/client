@@ -156,48 +156,48 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalBalanceByUserId'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalBalanceByUserId'")
     public BigDecimal totalBalanceByUserId(UUID userId) {
         return walletRepository.calculateUserBalance(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalDeposit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalDeposit'")
     public BigDecimal totalDeposit(UUID userId) {
         return walletRepository.totalDeposit(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalWithdrawal'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalWithdrawal'")
     public BigDecimal totalWithdrawal(UUID userId) {
         return walletRepository.totalWithdrawal(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalBonus'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalBonus'")
     public BigDecimal totalBonus(UUID userId) {
         return walletRepository.totalBonus(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalReward'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalReward'")
     public BigDecimal totalReward(UUID userId) {
         return walletRepository.totalReward(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalProfit'")
     public BigDecimal totalProfit(UUID userId) {
         return walletRepository.totalProfit(userId);
     }
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':totalWithdrawalProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalWithdrawalProfit'")
     public BigDecimal totalWithdrawalProfit(UUID userId) {
         return walletRepository.totalWithdrawalProfit(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':dailyProfit'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':dailyProfit'")
     public BigDecimal dailyProfit(UUID userId) {
         QWalletEntity path = QWalletEntity.walletEntity;
         DateTemplate<LocalDateTime> truncatedDate = Expressions.dateTemplate(LocalDateTime.class, "date_trunc('day', {0})", path.createdDate);
@@ -249,7 +249,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':' + #transactionType.name() + ':allowedWithdrawalBalance'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':' + #transactionType.name() + ':allowedWithdrawalBalance'")
     public BigDecimal allowedWithdrawalBalance(UUID userId, TransactionType transactionType) {
         if (transactionType.equals(TransactionType.WITHDRAWAL)) {
             BigDecimal totalBalance = walletRepository.totalBalance(userId);
@@ -317,7 +317,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
 
     @Override
     @Transactional
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId.toString() + ':getClaimedReferrals'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':getClaimedReferrals'")
     public Integer getClaimedReferrals(UUID userId) {
         var rewardReferrals = walletRepository.findAllReferralRewardByUserId(userId);
         AtomicReference<Integer> count = new AtomicReference<>(0);

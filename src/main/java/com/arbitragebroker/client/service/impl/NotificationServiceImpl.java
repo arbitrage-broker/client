@@ -6,6 +6,7 @@ import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.filter.NotificationFilter;
 import com.arbitragebroker.client.mapping.NotificationMapper;
 import com.arbitragebroker.client.model.NotificationModel;
+import com.arbitragebroker.client.model.Select2Model;
 import com.arbitragebroker.client.model.UserModel;
 import com.arbitragebroker.client.repository.NotificationRepository;
 import com.arbitragebroker.client.repository.UserRepository;
@@ -112,7 +113,7 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationFilter,
 
     @Override
     public NotificationModel create(NotificationModel model, String allKey) {
-        var user = userRepository.findById(sessionHolder.getUserId()).orElseThrow(()->new NotFoundException("User not found."));
+        var user = sessionHolder.getCurrentUser();
         model.setRole(user.getRole());
         return super.create(model, allKey);
     }

@@ -9,10 +9,7 @@ import com.arbitragebroker.client.exception.NotAcceptableException;
 import com.arbitragebroker.client.exception.NotFoundException;
 import com.arbitragebroker.client.filter.ArbitrageFilter;
 import com.arbitragebroker.client.mapping.ArbitrageMapper;
-import com.arbitragebroker.client.model.ArbitrageModel;
-import com.arbitragebroker.client.model.CoinUsageDTO;
-import com.arbitragebroker.client.model.SubscriptionModel;
-import com.arbitragebroker.client.model.SubscriptionPackageModel;
+import com.arbitragebroker.client.model.*;
 import com.arbitragebroker.client.repository.ArbitrageRepository;
 import com.arbitragebroker.client.repository.SubscriptionPackageRepository;
 import com.arbitragebroker.client.repository.UserRepository;
@@ -160,12 +157,13 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
     }
 
     @Override
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId + ':countAllByUserId'")
     public long countAllByUserId(UUID userId) {
         return repository.countAllByUserId(userId);
     }
 
     @Override
-    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId.toString() + ':' + #date.atZone(T(java.time.ZoneOffset).UTC).toInstant().toEpochMilli() + ':countByUserIdAndDate'")
+    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId + ':' + #date.atZone(T(java.time.ZoneOffset).UTC).toInstant().toEpochMilli() + ':countByUserIdAndDate'")
     public long countByUserIdAndDate(UUID userId, LocalDateTime date) {
         QArbitrageEntity path = QArbitrageEntity.arbitrageEntity;
         DateTemplate<LocalDateTime> truncatedDate = Expressions.dateTemplate(LocalDateTime.class, "date_trunc('day', {0})", path.createdDate);
@@ -183,10 +181,12 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
             m.setUsagePercentage(m.getUsageCount()*100L/count);
             return m;
         });
+
+
     }
     @Override
     @Transactional(readOnly = true)
-//    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId.toString() + ':purchaseLimit'")
+//    @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Arbitrage:' + #userId + ':purchaseLimit'")
     public String purchaseLimit(UUID userId) {
         var subscription = subscriptionService.findByUserAndActivePackage(userId);
         if(subscription == null)

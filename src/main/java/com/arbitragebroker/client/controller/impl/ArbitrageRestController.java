@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static com.arbitragebroker.client.util.DateUtil.toLocalDateTime;
+import static com.arbitragebroker.client.util.DateUtil.truncate;
 
 @RestController
 @Tag(name = "Arbitrage Rest Service v1")
@@ -34,11 +35,11 @@ public class ArbitrageRestController extends BaseRestControllerImpl<ArbitrageFil
     }
     @GetMapping("count-by-user-and-date/{userId}/{epochDate}")
     public ResponseEntity<Long> countByUserIdAndDate(@PathVariable UUID userId, @PathVariable Long epochDate) {
-        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, toLocalDateTime(epochDate)));
+        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, truncate(toLocalDateTime(epochDate))));
     }
     @GetMapping("count-today-by-user/{userId}")
     public ResponseEntity<Long> countByUserIdAndDate(@PathVariable UUID userId) {
-        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, LocalDateTime.now()));
+        return ResponseEntity.ok(arbitrageService.countByUserIdAndDate(userId, truncate(LocalDateTime.now())));
     }
     @GetMapping("find-top-coins/{pageSize}")
     public ResponseEntity<Page<CoinUsageDTO>> findMostUsedCoins(@PathVariable int pageSize) {

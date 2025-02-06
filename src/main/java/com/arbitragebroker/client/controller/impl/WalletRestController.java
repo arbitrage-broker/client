@@ -52,7 +52,7 @@ public class WalletRestController extends BaseRestControllerImpl<WalletFilter, W
         return ResponseEntity.ok(walletService.totalWithdrawalProfit(userId));
     }
     @GetMapping("/daily-profit/{userId}")
-    public ResponseEntity<BigDecimal> dailyProfit(@PathVariable UUID userId){
+    public ResponseEntity<BigDecimal> dailyProfit(@PathVariable UUID userId) {
         return ResponseEntity.ok(walletService.dailyProfit(userId));
     }
     @GetMapping("/get-date-range/{startDate}/{endDate}/{transactionType}")

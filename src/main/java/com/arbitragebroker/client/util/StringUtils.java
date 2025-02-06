@@ -29,7 +29,7 @@ public class StringUtils {
         String filterString = MapperHelper.getOrDefault(()-> filter.toString(),"");
         String pageableString = MapperHelper.getOrDefault(()-> pageable.toString(),"");
 
-        return String.format("%s:%s:%s", className, name, hashSHA256(filterString + pageableString));
+        return String.format("%s:%s:%s", className, name, DigestUtils.md5DigestAsHex((filterString + pageableString).getBytes()));
     }
     public static String generateIdKey(String className,Object id) {
         return className + ":" + id.toString() + ":id";
