@@ -3,15 +3,16 @@ package com.arbitragebroker.client.config;
 import com.arbitragebroker.client.service.HCaptchaService;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CountryResponse;
-import lombok.SneakyThrows;
-import org.slf4j.MDC;
-import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
+import org.slf4j.MDC;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -24,11 +25,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private final HCaptchaService hCaptchaService;
 
     @SneakyThrows
-    public AuthenticationFilter(String honeypotFieldName, HCaptchaService hCaptchaService) {
+    public AuthenticationFilter(String honeypotFieldName, HCaptchaService hCaptchaService, ResourceLoader resourceLoader) {
         this.honeypotFieldName = honeypotFieldName;
         this.hCaptchaService = hCaptchaService;
-        InputStream databaseStream = getClass().getClassLoader().getResourceAsStream("GeoLite2-Country.mmdb");
-        dbReader = new DatabaseReader.Builder(databaseStream).build();
+
+        Resource databaseResource = resourceLoader.getResource("classpath:GeoLite2-Country.mmdb");
+        try (InputStream databaseStream = databaseResource.getInputStream()) {
+            dbReader = new DatabaseReader.Builder(databaseStream).build();
+        }
+
     }
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -46,7 +51,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String ipAddress = getClientIp(request);
         MDC.put("clientIp", ipAddress);
         boolean isLocalIp = false;
-        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1"))
+        var profile = System.getenv("SPRING_PROFILES_ACTIVE");
+        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1") || profile.equals("dev"))
             isLocalIp = true;
 
         if(!isLocalIp) {
@@ -67,8 +73,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.sendRedirect("/login?errorMsg=botDetected");
                 return;
             }
-            var profile = System.getenv("SPRING_PROFILES_ACTIVE");
-            if(StringUtils.hasLength(profile) && profile.equals("prod")) {
+            if(profile.equals("prod")) {
                 String captchaResponse = request.getParameter("h-captcha-response");
                 if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
                     // Handle failed captcha verification

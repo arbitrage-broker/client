@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,6 +32,7 @@ import static com.arbitragebroker.client.enums.RoleType.*;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final HCaptchaService hCaptchaService;
+    private final ResourceLoader resourceLoader;
     @Value("${site.url}")
     private String siteURL;
 
@@ -39,8 +41,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://" + siteURL,
-                "https://localhost:2025",  // For local development
-                "http://localhost:3000"   // For local development
+                "http://localhost:2025",  // For local development
+                "https://localhost:2025"  // For local development
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList(
@@ -102,7 +104,7 @@ public class SecurityConfig {
                                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                                 response.getWriter().write("Unauthorized");
                             } else {
-                                response.sendRedirect("/login?errorMsg=unauthorizedSession");
+                                response.sendRedirect("/index");
                             }
                         })
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
@@ -140,6 +142,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationFilter authenticationFilter() {
-        return new AuthenticationFilter("website", hCaptchaService);
+        return new AuthenticationFilter("website", hCaptchaService, resourceLoader);
     }
 }
