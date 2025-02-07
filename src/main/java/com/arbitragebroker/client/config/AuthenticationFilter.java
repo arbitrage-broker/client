@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
@@ -51,8 +52,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String ipAddress = getClientIp(request);
         MDC.put("clientIp", ipAddress);
         boolean isLocalIp = false;
-        var profile = System.getenv("SPRING_PROFILES_ACTIVE");
-        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1") || profile.equals("dev"))
+        var profile = Arrays.asList(getEnvironment().getActiveProfiles());
+
+        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1") || profile.contains("dev"))
             isLocalIp = true;
 
         if(!isLocalIp) {
@@ -73,7 +75,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 response.sendRedirect("/login?errorMsg=botDetected");
                 return;
             }
-            if(profile.equals("prod")) {
+            if(profile.contains("prod")) {
                 String captchaResponse = request.getParameter("h-captcha-response");
                 if (!hCaptchaService.verifyCaptcha(captchaResponse)) {
                     // Handle failed captcha verification

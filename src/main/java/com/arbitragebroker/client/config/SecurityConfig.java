@@ -41,6 +41,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://" + siteURL,
+                "https://client.crisp.chat",
+                "https://js.hcaptcha.com",
+                "https://api.hcaptcha.com",
                 "http://localhost:2025",  // For local development
                 "https://localhost:2025"  // For local development
         ));
