@@ -2,6 +2,7 @@ package com.arbitragebroker.client.config;
 
 import com.arbitragebroker.client.service.HCaptchaService;
 import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.model.CountryResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -30,10 +31,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         this.honeypotFieldName = honeypotFieldName;
         this.hCaptchaService = hCaptchaService;
 
-        Resource databaseResource = resourceLoader.getResource("classpath:GeoLite2-Country.mmdb");
-        try (InputStream databaseStream = databaseResource.getInputStream()) {
-            dbReader = new DatabaseReader.Builder(databaseStream).build();
-        }
+//        Resource databaseResource = resourceLoader.getResource("classpath:GeoLite2-Country.mmdb");
+//        try (InputStream databaseStream = databaseResource.getInputStream()) {
+//            dbReader = new DatabaseReader.Builder(databaseStream).build();
+//        }
 
     }
     @Override
@@ -57,17 +58,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1") || profile.contains("dev"))
             isLocalIp = true;
 
-        if(!isLocalIp) {
-            // Get country information
-            InetAddress ip = InetAddress.getByName(ipAddress);
-            CountryResponse countryResponse = dbReader.country(ip);
-            String countryCode = countryResponse.getCountry().getIsoCode();
-            // Block specific countries
-            if ("CN".equals(countryCode) || "RU".equals(countryCode) || "IR".equals(countryCode) || "KP".equals(countryCode)) {
-                response.sendRedirect("/region_denied");
-                return;
-            }
-        }
+//        if(!isLocalIp) {
+//            // Get country information
+//            InetAddress ip = InetAddress.getByName(ipAddress);
+//            CountryResponse countryResponse = dbReader.country(ip);
+//            String countryCode = countryResponse.getCountry().getIsoCode();
+//            // Block specific countries
+//            if ("CN".equals(countryCode) || "RU".equals(countryCode) || "IR".equals(countryCode) || "KP".equals(countryCode)) {
+//                response.sendRedirect("/region_denied");
+//                return;
+//            }
+//        }
         if (isLoginRequest(request)) {
             String honeypotValue = request.getParameter(honeypotFieldName);
             if (honeypotValue != null && !honeypotValue.isEmpty()) {
@@ -86,15 +87,24 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-    private String getClientIp(HttpServletRequest request) {
-        String xForwardedFor = request.getHeader("X-Forwarded-For");
-        if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
-            return xForwardedFor.split(",")[0].trim();
-        }
-        return request.getRemoteAddr();
-    }
+
     private boolean isLoginRequest(HttpServletRequest request) {
         return request.getMethod().equals("POST") &&
                 request.getServletPath().equals("/login");
     }
+    private String getClientIp(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        // If multiple IPs in X-Forwarded-For, take the first one
+        if (ip != null && ip.contains(",")) {
+            ip = ip.split(",")[0].trim();
+        }
+        return ip;
+    }
+
 }
