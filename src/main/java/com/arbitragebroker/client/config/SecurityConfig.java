@@ -89,7 +89,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?errorMsg=invalidUserNameOrPassword")
-                        .defaultSuccessUrl("/dashboard")
+                        .defaultSuccessUrl("/dashboard",true)
                         .usernameParameter("login")
                         .passwordParameter("password")
                         .permitAll()
@@ -121,7 +121,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .maximumSessions(1)
+                        .maximumSessions(3)
                         .expiredUrl("/login?errorMsg=sessionExpired")
                         .sessionRegistry(sessionRegistry())
                 );
