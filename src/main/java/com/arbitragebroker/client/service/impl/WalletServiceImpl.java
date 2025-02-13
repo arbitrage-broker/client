@@ -4,6 +4,7 @@ import com.arbitragebroker.client.entity.QWalletEntity;
 import com.arbitragebroker.client.entity.UserEntity;
 import com.arbitragebroker.client.entity.WalletEntity;
 import com.arbitragebroker.client.enums.*;
+import com.arbitragebroker.client.exception.ConflictException;
 import com.arbitragebroker.client.exception.ExpectationException;
 import com.arbitragebroker.client.exception.NotAcceptableException;
 import com.arbitragebroker.client.exception.NotFoundException;
@@ -34,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -107,6 +107,8 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
     @Override
     @Transactional
     public WalletModel create(WalletModel model, String allKey) {
+        if(walletRepository.countAllByUserIdAndTransactionTypeAndStatusAndAmountAndCreatedDate(model.getUser().getId(),model.getTransactionType(),EntityStatusType.Pending, model.getAmount(), LocalDate.now())>0)
+            throw new ConflictException("<strong>Duplicate Transaction Detected!</strong><br/>Please check your transaction history.");
         var user = userService.findById(model.getUser().getId(), generateIdKey("User", model.getUser().getId()));
         model.setRole(user.getRole());
         if(user.getEmailVerified() == null || !user.getEmailVerified()) {
@@ -120,7 +122,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
         }
         var transactionStrategy = transactionStrategyFactory.get(model.getTransactionType());
         transactionStrategy.execute(model);
-        clearCache("Wallet:");
+        clearCache("Wallet:%s:".formatted(model.getUser().getId().toString()));
         return super.create(model, allKey);
     }
 
@@ -136,24 +138,24 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
         var transactionStrategy = transactionStrategyFactory.get(model.getTransactionType());
         transactionStrategy.execute(model);
         var result = mapper.toModel(repository.save(mapper.updateEntity(model, entity)));
-        clearCache("Wallet:");
+        clearCache("Wallet:%s:".formatted(model.getUser().getId().toString()));
         return result;
     }
 
-    @Override
-    @Transactional
-    public void deleteById(Long id, String allKey) {
-        WalletEntity entity = repository.findById(id).orElseThrow(() -> new NotFoundException("id: " + id));
-        repository.delete(entity);
-
-        var balance = totalBalanceByUserId(entity.getUser().getId());
-        var subscriptionModel = subscriptionService.findByUserAndActivePackage(entity.getUser().getId());
-
-        if (subscriptionModel.getSubscriptionPackage().getPrice().compareTo(balance) > 0) {
-            subscriptionService.logicalDeleteById(subscriptionModel.getId());
-        }
-        clearCache("Wallet:");
-    }
+//    @Override
+//    @Transactional
+//    public void deleteById(Long id, String allKey) {
+//        WalletEntity entity = repository.findById(id).orElseThrow(() -> new NotFoundException("id: " + id));
+//        repository.delete(entity);
+//
+//        var balance = totalBalanceByUserId(entity.getUser().getId());
+//        var subscriptionModel = subscriptionService.findByUserAndActivePackage(entity.getUser().getId());
+//
+//        if (subscriptionModel.getSubscriptionPackage().getPrice().compareTo(balance) > 0) {
+//            subscriptionService.logicalDeleteById(subscriptionModel.getId());
+//        }
+//        clearCache("Wallet:%s:".formatted(entity.getUser().getId().toString()));
+//    }
 
     @Override
     @Cacheable(cacheNames = "client", unless = "#result == null", key = "'Wallet:' + #userId + ':totalBalanceByUserId'")
@@ -311,7 +313,7 @@ public class WalletServiceImpl extends BaseServiceImpl<WalletFilter, WalletModel
 
         var user = userService.findById(userId, generateIdKey("User",userId));
         entity.setRole(user.getRole());
-        clearCache("Wallet:");
+        clearCache("Wallet:%s:".formatted(userId.toString()));
         return mapper.toModel(repository.save(entity));
     }
 

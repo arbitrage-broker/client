@@ -15,6 +15,12 @@ public class ConflictException extends BaseException {
                 String.valueOf(this)
         );
     }
+    public ConflictException(String msg) {
+        super(msg, HttpStatus.CONFLICT);
+        log.error(
+                String.valueOf(this)
+        );
+    }
     @Override
     public Throwable fillInStackTrace() {
         return this;

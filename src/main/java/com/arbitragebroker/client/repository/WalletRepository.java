@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
@@ -104,6 +105,20 @@ public interface WalletRepository extends BaseRepository<WalletEntity, Long> {
 	BigDecimal totalProfit(UUID userId);
 
 	long countAllByUserIdAndTransactionTypeAndStatus(UUID userId, TransactionType transactionType, EntityStatusType status);
+
+	@Query("""
+			SELECT COUNT(w) FROM WalletEntity w
+			WHERE w.user.id = :userId
+			AND w.transactionType = :transactionType
+			AND w.status = :status
+			AND w.amount = :amount
+			AND CAST(w.createdDate AS date) = :date""")
+	long countAllByUserIdAndTransactionTypeAndStatusAndAmountAndCreatedDate(
+			UUID userId,
+			TransactionType transactionType,
+			EntityStatusType status,
+			BigDecimal amount,
+			LocalDate date);
 
 //	@Query(value = "SELECT currency, SUM(totalAmount) AS totalAmount" +
 //				   " FROM (" +

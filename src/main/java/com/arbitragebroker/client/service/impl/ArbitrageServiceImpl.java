@@ -143,7 +143,7 @@ public class ArbitrageServiceImpl extends BaseServiceImpl<ArbitrageFilter, Arbit
                     buyRewardGrandParent.setTransactionType(TransactionType.BONUS);
                     walletRepository.save(buyRewardGrandParent);
                 }
-                clearCache("Wallet:" + user.getId().toString());
+                clearCache("Wallet:%s:".formatted(user.getId().toString()));
                 model.setRole(user.getRole());
 
                 var nextSubscriptionPackage = subscriptionPackageRepository.findMatchedPackageByAmount(balance).orElse(null);

@@ -158,7 +158,7 @@ public class SubscriptionServiceImpl extends BaseServiceImpl<SubscriptionFilter,
             oldActive.setStatus(EntityStatusType.Passive);
             subscriptionRepository.saveAndFlush(oldActive);
         }
-        clearCache("Subscription:" + userId.toString());
+        clearCache("Subscription:%s:".formatted(userId.toString()));
     }
 
     @Override
@@ -211,6 +211,6 @@ public class SubscriptionServiceImpl extends BaseServiceImpl<SubscriptionFilter,
             parentWallet.setRole(entity.getRole());
             walletRepository.save(parentWallet);
         }
-        clearCache("Wallet:" + entity.getUser().getId().toString());
+        clearCache("Wallet:%s:".formatted(entity.getUser().getId().toString()));
     }
 }
