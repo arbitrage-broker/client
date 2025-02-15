@@ -122,7 +122,7 @@ logging:
       springframework:
         controllers: ${LOG_LEVEL:ERROR}
   pattern:
-    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} [%thread] %-5level [traceId:%X{traceId:-}, clientIp:%X{clientIp:-}, userId:%X{userId:-}] %logger{36} - %msg%n"
+    console: %d{yyyy-MMM-dd HH:mm:ss.SSS} %clr([%thread]){blue} %clr(%-5level){ERROR=red, WARN=yellow, INFO=green, DEBUG=blue, TRACE=cyan} %clr([traceId:%X{traceId:-}, clientIp:%X{clientIp:-}, userId:%X{userId:-}]){cyan} %clr(%logger{36}){magenta} - %clr(%msg%n){white}
     rolling-file-name: logs/client-%d{yyyy-MM-dd-HH}.%i.log
 
 site:

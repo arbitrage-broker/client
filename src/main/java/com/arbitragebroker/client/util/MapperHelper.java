@@ -12,28 +12,32 @@ import java.util.function.Supplier;
 public final class MapperHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(MapperHelper.class);
 
+    private MapperHelper(){
+        // because all methods are static
+    }
+
     @SafeVarargs
-    public static <I, O> Optional<O> option(Function<I, O> function, I input, Class<? extends Throwable>... expectedExceptions) {
+    public static <I, O> Optional<O> option(Function<I, O> function, I input, Class<? extends Exception>... expectedExceptions) {
         return option(() -> function.apply(input), expectedExceptions);
     }
 
     @SafeVarargs
-    public static <O> Optional<O> option(Supplier<O> supplier, Class<? extends Throwable>... expectedExceptions) {
+    public static <O> Optional<O> option(Supplier<O> supplier, Class<? extends Exception>... expectedExceptions) {
         return Optional.ofNullable(get(supplier, expectedExceptions));
     }
 
     @SafeVarargs
-    public static <I, O> O get(Function<I, O> function, I input, Class<? extends Throwable>... expectedExceptions) {
+    public static <I, O> O get(Function<I, O> function, I input, Class<? extends Exception>... expectedExceptions) {
         return get(() -> function.apply(input), expectedExceptions);
     }
 
     @SafeVarargs
-    public static <O> O get(Supplier<O> supplier, Class<? extends Throwable>... expectedExceptions) {
+    public static <O> O get(Supplier<O> supplier, Class<? extends Exception>... expectedExceptions) {
         return getOrDefault(supplier, null, expectedExceptions);
     }
 
     @SafeVarargs
-    public static <I, O> O getOrDefault(Function<I, O> function, I input, O defaultValue, Class<? extends Throwable>... expectedExceptions) {
+    public static <I, O> O getOrDefault(Function<I, O> function, I input, O defaultValue, Class<? extends Exception>... expectedExceptions) {
         return getOrDefault(() -> function.apply(input), defaultValue, expectedExceptions);
     }
 
@@ -47,10 +51,10 @@ public final class MapperHelper {
      * @return
      */
     @SafeVarargs
-    public static <O> O getOrDefault(Supplier<O> supplier, O defaultValue, Class<? extends Throwable>... expectedExceptions) {
+    public static <O> O getOrDefault(Supplier<O> supplier, O defaultValue, Class<? extends Exception>... expectedExceptions) {
         try {
             return Optional.ofNullable(supplier.get()).orElse(defaultValue);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             LOGGER.debug(e.toString(), e);
             if (e instanceof NullPointerException || Arrays.asList(expectedExceptions).contains(e.getClass())) {
                 return defaultValue;
