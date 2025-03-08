@@ -121,9 +121,9 @@ logging:
     guru:
       springframework:
         controllers: ${LOG_LEVEL:ERROR}
-  pattern:
-    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} [%thread] %-5level [traceId:%X{traceId:-}, clientIp:%X{clientIp:-}, userId:%X{userId:-}] %logger{36} - %msg%n"
-    rolling-file-name: logs/client-%d{yyyy-MM-dd-HH}.%i.log
+#  pattern:
+#    console: "%d{yyyy-MMM-dd HH:mm:ss.SSS} [%thread] %-5level [traceId:%X{traceId:-}, clientIp:%X{clientIp:-}, userId:%X{userId:-}] %logger{36} - %msg%n"
+#    rolling-file-name: logs/client-%d{yyyy-MM-dd-HH}.%i.log
 
 site:
   url: arbitrage-broker.com

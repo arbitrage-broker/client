@@ -1,9 +1,9 @@
 package com.arbitragebroker.client.config;
 
 import com.arbitragebroker.client.dto.UserDetailDto;
-import com.arbitragebroker.client.util.SessionHolder;
 import com.arbitragebroker.client.enums.RoleType;
-import com.arbitragebroker.client.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -12,8 +12,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component

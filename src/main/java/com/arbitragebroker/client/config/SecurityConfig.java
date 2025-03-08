@@ -2,6 +2,7 @@ package com.arbitragebroker.client.config;
 
 import com.arbitragebroker.client.enums.RoleType;
 import com.arbitragebroker.client.service.HCaptchaService;
+import com.arbitragebroker.client.util.SessionHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ import static com.arbitragebroker.client.enums.RoleType.*;
 public class SecurityConfig {
     private final HCaptchaService hCaptchaService;
     private final ResourceLoader resourceLoader;
+    private final SessionHolder sessionHolder;
     @Value("${site.url}")
     private String siteURL;
 
@@ -145,6 +147,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationFilter authenticationFilter() {
-        return new AuthenticationFilter("website", hCaptchaService, resourceLoader);
+        return new AuthenticationFilter("website", hCaptchaService, resourceLoader, sessionHolder);
     }
 }

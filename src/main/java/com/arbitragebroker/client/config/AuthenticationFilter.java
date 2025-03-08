@@ -1,6 +1,7 @@
 package com.arbitragebroker.client.config;
 
 import com.arbitragebroker.client.service.HCaptchaService;
+import com.arbitragebroker.client.util.SessionHolder;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.model.CountryResponse;
@@ -25,12 +26,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private final String honeypotFieldName;
     private DatabaseReader dbReader;
     private final HCaptchaService hCaptchaService;
+    private final SessionHolder sessionHolder;
 
     @SneakyThrows
-    public AuthenticationFilter(String honeypotFieldName, HCaptchaService hCaptchaService, ResourceLoader resourceLoader) {
+    public AuthenticationFilter(String honeypotFieldName, HCaptchaService hCaptchaService, ResourceLoader resourceLoader, SessionHolder sessionHolder) {
         this.honeypotFieldName = honeypotFieldName;
         this.hCaptchaService = hCaptchaService;
-
+        this.sessionHolder = sessionHolder;
 //        Resource databaseResource = resourceLoader.getResource("classpath:GeoLite2-Country.mmdb");
 //        try (InputStream databaseStream = databaseResource.getInputStream()) {
 //            dbReader = new DatabaseReader.Builder(databaseStream).build();
@@ -49,9 +51,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        MDC.put("traceId", UUID.randomUUID().toString());
+
         String ipAddress = getClientIp(request);
         MDC.put("clientIp", ipAddress);
+
+        var user = sessionHolder.getCurrentUser();
+        if(user != null)
+            MDC.put("userId", user.getId().toString());
+
         boolean isLocalIp = false;
         var profile = Arrays.asList(getEnvironment().getActiveProfiles());
 
