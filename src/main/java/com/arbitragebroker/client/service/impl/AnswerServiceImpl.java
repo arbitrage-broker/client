@@ -9,11 +9,13 @@ import com.arbitragebroker.client.repository.AnswerRepository;
 import com.arbitragebroker.client.service.AnswerService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Slf4j
 public class AnswerServiceImpl extends BaseServiceImpl<AnswerFilter, AnswerModel, AnswerEntity, Long> implements AnswerService {
 
     private AnswerRepository repository;
@@ -36,5 +38,10 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerFilter, AnswerModel
         filter.getActive().ifPresent(v->builder.and(p.active.eq(v)));
 
         return builder;
+    }
+
+    @Override
+    public void receiveMessage(String msg) {
+        log.info("called AnswerServiceImpl.receiveMessage {}", msg);
     }
 }

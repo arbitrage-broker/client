@@ -80,7 +80,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/index", "/aboutus", "/ourservices", "/ltr/**",
                                 "/page_404", "/page_200", "/page_403", "/region_denied", "/login",
                                 "/registration", "/send-OTP", "/reset-pass", "/api/v1/country/findAllSelect*",
-                                "/api/v1/user/verify-email/**", "/api/v1/user/register*", "/actuator/**").permitAll()
+                                "/api/v1/user/verify-email/**", "/api/v1/user/register*", "/actuator/**","/api/v1/answer/receive-message*/**").permitAll()
                         // Protected endpoints
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/user*/**").hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER), RoleType.name(MANAGER), RoleType.name(USER))
                         .requestMatchers(HttpMethod.POST, "/api/v1/wallet*/**","/api/v1/arbitrage*/**","/api/v1/notification*/**","/api/v1/subscription/purchase","/api/v1/files").hasAnyRole(RoleType.name(ADMIN), RoleType.name(SUPER_WISER), RoleType.name(MANAGER), RoleType.name(USER))

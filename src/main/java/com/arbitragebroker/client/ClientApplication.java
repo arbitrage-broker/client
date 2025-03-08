@@ -6,14 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import jakarta.annotation.PostConstruct;
 import java.net.InetAddress;
-import java.util.Objects;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @Slf4j
@@ -29,7 +29,7 @@ public class ClientApplication {
 
     @Profile("dev")
     @SneakyThrows
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     private void postConstruct() {
         String protocol = "https";
         if (!environment.containsProperty("server.ssl.key-store")) {
